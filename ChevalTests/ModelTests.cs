@@ -99,5 +99,18 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
             v.W.Should().Be(0.0);
             v.IsVector.Should().BeTrue();
         }
+
+        [Test]
+        public void Equality_is_correct()
+        {
+            //Assign
+            var v1 = new ChevalVector(4, -4, 3);
+            var v2 = new ChevalVector(4, -4, 3);
+            var v3 = new ChevalVector(4, 4, 3);
+            //Assert
+            Assert.IsTrue(v1 == v2);
+            Assert.IsFalse(v1 == v3);
+            
+        }
     }
 }
