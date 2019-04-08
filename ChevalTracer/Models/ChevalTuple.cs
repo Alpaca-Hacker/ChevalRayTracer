@@ -13,6 +13,8 @@ namespace Cheval.Models
         public bool IsPoint => Math.Abs(W - 1.0) < Cheval.Epsilon;
         public bool IsVector => Math.Abs(W) < Cheval.Epsilon;
 
+
+
         public ChevalTuple(double x, double y, double z, double w)
         {
             X = x;
@@ -20,6 +22,8 @@ namespace Cheval.Models
             Z = z;
             W = w;
         }
+
+
 
 
         #region Operators
@@ -128,7 +132,7 @@ namespace Cheval.Models
 
             return CreateReturnTuple(newW, newX, newY, newZ);
         }
-
+#endregion
         private static ChevalTuple CreateReturnTuple(double newW, double newX, double newY, double newZ)
         {
             switch (newW)
@@ -148,7 +152,6 @@ namespace Cheval.Models
             }
         }
 
-        #endregion
     }
 
 }
