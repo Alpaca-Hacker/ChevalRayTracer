@@ -104,13 +104,38 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
         public void Equality_is_correct()
         {
             //Assign
+            var t1 = new ChevalTuple(4, -4, 3, 1.0);
+            var t2 = new ChevalTuple(4, -4, 3, 1.0);
+            var t3 = new ChevalTuple(4, 4, 3, 0);
+
+            var p1 = new ChevalPoint(4, -4, 3);
+            var p2 = new ChevalPoint(4, -4, 3);
+            var p3 = new ChevalPoint(4, 4, 3);
+
             var v1 = new ChevalVector(4, -4, 3);
             var v2 = new ChevalVector(4, -4, 3);
             var v3 = new ChevalVector(4, 4, 3);
             //Assert
+
+            Assert.IsTrue(t1 == p2);
+            Assert.IsFalse(t1 == v1);
+
+            Assert.IsTrue(p2 == t1);
+            Assert.IsFalse(v1 == t1);
+            Assert.IsFalse(v1 == p1);
+
+            Assert.IsTrue(t1 == t2);
+            Assert.IsFalse(t1 == t3);
+
+            Assert.IsTrue(p1 == p2);
+            Assert.IsFalse(p1 == p3);
+
             Assert.IsTrue(v1 == v2);
             Assert.IsFalse(v1 == v3);
-            
+
+            Assert.IsTrue(v1.Equals(v2));
+            Assert.IsFalse(v1.Equals(v3));
+
         }
     }
 }
