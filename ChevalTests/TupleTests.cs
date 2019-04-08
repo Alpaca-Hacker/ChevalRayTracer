@@ -18,8 +18,6 @@ namespace ChevalTests
 
             Jamis Buck.The Ray Tracer Challenge(Kindle Locations 314-325). The Pragmatic Bookshelf, LLC.
         */
-
-
         [Test]
         public void A_tuple_with_w_equal_1_is_a_point()
         {
@@ -269,6 +267,62 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
             //Act
             var expected = new ChevalTuple(-1, 2, -3, 4);
             var result = -t1;
+            //Assert
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        /*
+         * Scenario: Multiplying a tuple by a scalar
+           Given a ← tuple(1, -2, 3, -4)
+           Then a * 3.5 = tuple(3.5, -7, 10.5, -14)
+
+         */
+        [Test]
+        public void Multiply_a_tuple()
+        {
+            //Assign
+            var t1 = new ChevalTuple(1, -2, 3, -4);
+            //Act
+            var expected = new ChevalTuple(3.5,-7, 10.5, -14);
+            var result1 = 3.5 * t1;
+            var result2 = t1 * 3.5;
+            //Assert
+            result1.Should().BeEquivalentTo(expected);
+            result2.Should().BeEquivalentTo(expected);
+        }
+        /*
+         * 
+           Scenario: Multiplying a tuple by a fraction
+           Given a ← tuple(1, -2, 3, -4)
+           Then a * 0.5 = tuple(0.5, -1, 1.5, -2)
+         */
+        [Test]
+        public void Multiply_a_tuple_by_fraction()
+        {
+            //Assign
+            var t1 = new ChevalTuple(1, -2, 3, -4);
+            //Act
+            var expected = new ChevalTuple(0.5, -1, 1.5, -2);
+            var result1 = 0.5 * t1;
+            var result2 = t1 * 0.5;
+            //Assert
+            result1.Should().BeEquivalentTo(expected);
+            result2.Should().BeEquivalentTo(expected);
+        }
+
+        /*
+         * Scenario: Dividing a tuple by a scalar
+           Given a ← tuple(1, -2, 3, -4)
+           Then a / 2 = tuple(0.5, -1, 1.5, -2)
+         */
+        [Test]
+        public void Dividing_a_tuple()
+        {
+            //Assign
+            var t1 = new ChevalTuple(1, -2, 3, -4);
+            //Act
+            var expected = new ChevalTuple(0.5, -1, 1.5, -2);
+            var result = t1 / 2;
             //Assert
             result.Should().BeEquivalentTo(expected);
         }

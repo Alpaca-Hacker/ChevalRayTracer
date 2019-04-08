@@ -77,21 +77,7 @@ namespace Cheval.Models
             var newZ = a.Z + b.Z;
             var newW = a.W + b.W;
 
-            switch (newW)
-            {
-                case 0.0:
-                {
-                    return new ChevalVector(newX, newY, newZ);
-                }
-                case 1.0:
-                {
-                    return new ChevalPoint(newX, newY, newZ);
-                }
-                default:
-                {
-                    return new ChevalTuple(newX, newY, newZ, newW);
-                }
-            }
+            return CreateReturnTuple(newW, newX, newY, newZ);
         }
 
         public static ChevalTuple operator -(ChevalTuple a, ChevalTuple b)
@@ -101,21 +87,7 @@ namespace Cheval.Models
             var newZ = a.Z - b.Z;
             var newW = a.W - b.W;
 
-            switch (newW)
-            {
-                case 0.0:
-                {
-                    return new ChevalVector(newX, newY, newZ);
-                }
-                case 1.0:
-                {
-                    return new ChevalPoint(newX, newY, newZ);
-                }
-                default:
-                {
-                    return new ChevalTuple(newX, newY, newZ, newW);
-                }
-            }
+            return CreateReturnTuple(newW, newX, newY, newZ);
         }
 
         public static ChevalTuple operator -(ChevalTuple a)
@@ -126,6 +98,39 @@ namespace Cheval.Models
             var newZ = -a.Z;
             var newW = -a.W;
 
+            return CreateReturnTuple(newW, newX, newY, newZ);
+        }
+        public static ChevalTuple operator *(ChevalTuple t, double x)
+        {
+            var newX = t.X * x;
+            var newY = t.Y * x;
+            var newZ = t.Z * x;
+            var newW = t.W * x;
+
+            return CreateReturnTuple(newW, newX, newY, newZ);
+        }
+        public static ChevalTuple operator *(double x, ChevalTuple t)
+        {
+            var newX = t.X * x;
+            var newY = t.Y * x;
+            var newZ = t.Z * x;
+            var newW = t.W * x;
+
+            return CreateReturnTuple(newW, newX, newY, newZ);
+        }
+
+        public static ChevalTuple operator /(ChevalTuple t, double x)
+        {
+            var newX = t.X / x;
+            var newY = t.Y / x;
+            var newZ = t.Z / x;
+            var newW = t.W / x;
+
+            return CreateReturnTuple(newW, newX, newY, newZ);
+        }
+
+        private static ChevalTuple CreateReturnTuple(double newW, double newX, double newY, double newZ)
+        {
             switch (newW)
             {
                 case 0.0:

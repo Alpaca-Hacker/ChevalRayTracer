@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cheval Tracer\Cheval.csproj" />
+    <ProjectReference Include="..\ChevalTracer\Cheval.csproj" />
   </ItemGroup>
 
 </Project>
