@@ -145,6 +145,10 @@ namespace Cheval.Models
                 {
                     return new ChevalPoint(newX, newY, newZ);
                 }
+                case double.NaN:
+                {
+                    return new ChevalColour(newX, newY, newZ);
+                }
                 default:
                 {
                     return new ChevalTuple(newX, newY, newZ, newW);
