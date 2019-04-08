@@ -1,4 +1,4 @@
-﻿namespace Cheval_Tracer.Models
+﻿namespace Cheval.Models
 {
     public class ChevalPoint : ChevalTuple
     {
