@@ -23,9 +23,6 @@ namespace Cheval.Models
             W = w;
         }
 
-
-
-
         #region Operators
         public static bool operator ==(ChevalTuple a, ChevalTuple b)
         {
@@ -38,7 +35,7 @@ namespace Cheval.Models
             var isEqual = (Math.Abs(a.X - b.X) < Cheval.Epsilon
                            && Math.Abs(a.Y - b.Y) < Cheval.Epsilon
                            && Math.Abs(a.Z - b.Z) < Cheval.Epsilon
-                           && Math.Abs(a.W - b.W) < Cheval.Epsilon);
+                           && a.W.Equals(b.W));
 
             return isEqual;
         }
@@ -52,7 +49,8 @@ namespace Cheval.Models
 
         protected bool Equals(ChevalTuple other)
         {
-            return X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z) && W.Equals(other.W);
+            return this == other;
+            // return X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z) && W.Equals(other.W);
         }
 
         public override bool Equals(object obj)
@@ -123,6 +121,15 @@ namespace Cheval.Models
             return CreateReturnTuple(newW, newX, newY, newZ);
         }
 
+        public static ChevalTuple operator *(ChevalTuple x, ChevalTuple y)
+        {
+            var newX = x.X * y.X;
+            var newY = x.Y * y.Y;
+            var newZ = x.Z * y.Z;
+            var newW = x.W * y.Z;
+
+            return CreateReturnTuple(newW, newX, newY, newZ);
+        }
         public static ChevalTuple operator /(ChevalTuple t, double x)
         {
             var newX = t.X / x;

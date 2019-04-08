@@ -56,7 +56,7 @@ namespace ChevalTests.ModelTests
             var c2 = new ChevalColour(0.7, 0.1, 0.25);
             //Act
             var expected = new ChevalColour(0.2, 0.5, 0.5);
-            var result = c1 - c2;
+            var result = (ChevalColour)c1 - c2;
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -66,14 +66,35 @@ namespace ChevalTests.ModelTests
            Then c * 2 = color(0.4, 0.6, 0.8)
          */
         [Test]
-        public void Colours_can_be_multiplied_by_a_scaler()
+        public void Colours_can_be_multiplied_by_a_scalar()
         {
             //Assign
             var c1 = new ChevalColour(0.2, 0.3, 0.4);
            // var c2 = new ChevalColour(0.7, 0.1, 0.25);
             //Act
             var expected = new ChevalColour(0.4, 0.6, 0.8);
-            var result = c1 * 2;
+            var result = c1 * 2D;
+            //Assert
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        /*
+         * Scenario ​: Multiplying colours ​   ​
+         * Given ​ c1 ← color( 1, 0.2, 0.4) ​   ​
+         * And ​ c2 ← color( 0.9, 1, 0.1) ​   ​
+         * Then ​ c1 * c2 = color( 0.9, 0.2, 0.04)
+           
+           Jamis Buck. The Ray Tracer Challenge (Kindle Locations 750-755). The Pragmatic Bookshelf, LLC. 
+         */
+        [Test]
+        public void Colours_can_be_multiplied()
+        {
+            //Assign
+            var c1 = new ChevalColour(1, 0.2, 0.4);
+            var c2 = new ChevalColour(0.9, 1, 0.1);
+            //Act
+            var expected = new ChevalColour(0.9, 0.2, 0.04);
+            var result = c1 * c2;
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
