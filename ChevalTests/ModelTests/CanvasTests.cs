@@ -125,5 +125,21 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 853-871). The Pragmatic B
             resultLines[5].Should().Be("0 0 0 0 0 0 0 0 0 0 0 0 0 0 255");
 
         }
+        /*
+         * Scenario: PPM files are terminated by a newline character
+           Given c ← canvas(5, 3)
+           When ppm ← canvas_to_ppm(c)
+           Then ppm ends with a newline character
+         */
+        [Test]
+        public void PPM_files_end_with_newline()
+        {
+            //Assign
+            var canvas = new Canvas(5,3);
+            //Act
+            var result = canvas.ToPPM();
+            //Assert
+            result.EndsWith('\n').Should().BeTrue();
+        }
     }
 }

@@ -6,6 +6,7 @@ namespace Cheval.Models
 {
     public class Canvas
     {
+        private const bool IgnoreOutOutBounds = true;
         public int Height { get; set; }
         public int Width { get; set; }
         private Pixel[,] CanvasPixels { get; set; }
@@ -32,6 +33,17 @@ namespace Cheval.Models
 
         public void WritePixel(int x, int y, ChevalColour colour)
         {
+            if (x >= Width || x < 0 )
+            {
+                if (IgnoreOutOutBounds) return;
+                throw new ArgumentOutOfRangeException(nameof(x), "Pixel location out of range");
+            }
+
+            if (y >= Height || y < 0)
+            {
+                if (IgnoreOutOutBounds) return;
+                throw new ArgumentOutOfRangeException(nameof(y), "Pixel location out of range");
+            }
             CanvasPixels[x, y].Colour = colour;
         }
 
