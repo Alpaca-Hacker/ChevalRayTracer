@@ -8,6 +8,7 @@ namespace Cheval.Models
         private readonly double[,] _data;
         public int Size => _data.GetUpperBound(0) + 1;
 
+        public static Matrix Identity = new Matrix(new double[,]{{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}}); 
 
         public Matrix(double[,] data)
         {

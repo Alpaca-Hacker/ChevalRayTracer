@@ -266,5 +266,49 @@ namespace ChevalTests.ModelTests
             result1.Should().BeEquivalentTo(expected);
             result2.Should().BeEquivalentTo(expected);
         }
+
+        /*
+         * Scenario: Multiplying a matrix by the identity matrix
+           Given the following matrix A:
+           | 0 | 1 | 2 | 4 |
+           | 1 | 2 | 4 | 8 |
+           | 2 | 4 | 8 | 16 |
+           | 4 | 8 | 16 | 32 |
+           Then A * identity_matrix = A
+
+         */
+        [Test]
+        public void Multiplying_a_matrix_by_identity_matrix_test()
+        {
+            //Assign
+            var mat = new Matrix(new double[,]
+            {
+                {0, 2, 3, 4},
+                {1, 2, 4, 8},
+                {2, 4, 8, 16},
+                {4, 8, 16, 32}
+            });
+            //Act
+            var expected = mat;
+            var result = mat * Matrix.Identity;
+            //Assert
+            result.Should().BeEquivalentTo(expected);
+        }
+        /*
+         * Scenario: Multiplying the identity matrix by a tuple
+           Given a ← tuple(1, 2, 3, 4)
+           Then identity_matrix * a = a
+         */
+        [Test]
+        public void Multiplying_a_tuple_by_identity_matrix_test()
+        {
+            //Assign
+            var tuple = new ChevalTuple(1,2,3,4);
+            //Act
+            var expected = tuple;
+            var result = tuple * Matrix.Identity;
+            //Assert
+            result.Should().BeEquivalentTo(expected);
+        }
     }
 }
