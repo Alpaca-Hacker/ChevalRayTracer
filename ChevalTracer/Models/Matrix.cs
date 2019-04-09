@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Cheval.Models
 {
-    public class Matrix
+    public class Matrix : IEquatable<Matrix>
     {
         private readonly double[,] _data;
         public int Size => _data.GetUpperBound(0) + 1;
@@ -33,15 +34,53 @@ namespace Cheval.Models
                 for (var j = 0; j < c.Size; j++)
                 {
                     double s = 0.0;
-                    for (var m = 0; m < c.Size; m++)
+                    for (var k = 0; k < c.Size; k++)
                     {
-                        s += a[i, m] * b[m, j];
+                        s += a[i, k] * b[k, j];
                     }
                     c[i, j] = s;
                 }
             }
             return c;
         }
+
+        public static ChevalTuple operator *(Matrix matrix, ChevalTuple tuple)
+        {
+            if (matrix.Size != 4)
+            {
+                throw new ArgumentException("Matrix must be of size 4");
+            }
+
+            var newX =   (matrix[0, 0] * tuple.X) 
+                       + (matrix[0, 1] * tuple.Y) 
+                       + (matrix[0, 2] * tuple.Z) 
+                       + (matrix[0, 3] * tuple.W);
+
+            var newY =   (matrix[1,0] * tuple.X)
+                       + (matrix[1,1] * tuple.Y)
+                       + (matrix[1,2] * tuple.Z)
+                       + (matrix[1,3] * tuple.W);
+
+            var newZ =   (matrix[2,0] * tuple.X)
+                       + (matrix[2,1] * tuple.Y)
+                       + (matrix[2,2] * tuple.Z)
+                       + (matrix[2,3] * tuple.W);
+
+            var newW =   (matrix[3,0] * tuple.X)
+                       + (matrix[3,1] * tuple.Y)
+                       + (matrix[3,2] * tuple.Z)
+                       + (matrix[3,3] * tuple.W);
+
+            var result = new ChevalTuple(newX, newY, newZ, newW);
+
+            return result;
+        }
+
+        public static ChevalTuple operator *(ChevalTuple tuple, Matrix matrix)
+        {
+            return matrix * tuple;
+        }
+
 
         public static Matrix operator +(Matrix a, Matrix b)
         {
@@ -58,6 +97,47 @@ namespace Cheval.Models
                 }
             }
             return c;
+        }
+
+        public static bool operator ==(Matrix left, Matrix right)
+        {
+            if (right is null || left is null || left.Size != right.Size)
+            {
+                return false;
+            }
+
+            for (var i = 0; i < left.Size; i++)
+            {
+                for (var j = 0; j < left.Size; j++)
+                {
+                    if (Math.Abs(left[i, j] - right[i, j]) > Cheval.Epsilon)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public static bool operator !=(Matrix left, Matrix right)
+        {
+            return !(left == right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Matrix);
+        }
+
+        public bool Equals(Matrix other)
+        {
+            return other != null &&
+                   this == other;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_data);
         }
     }
 }
