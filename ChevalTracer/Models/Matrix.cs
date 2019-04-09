@@ -140,5 +140,30 @@ namespace Cheval.Models
         {
             return HashCode.Combine(_data);
         }
+
+        public static Matrix Transpose(Matrix matrix)
+        {
+            var newMatrix = new Matrix(matrix.Size);
+            for (int column = 0; column < matrix.Size; column++)
+            {
+                for (var row = 0; row < matrix.Size; row++)
+                {
+                    newMatrix[row, column] = matrix[column, row];
+                }
+            }
+
+            return newMatrix;
+        }
+
+        public static double Determinant(Matrix matrix)
+        {
+            if (matrix.Size != 2)
+            {
+                throw new ArgumentException("Matrix must be of size 2");
+            }
+
+            var result = matrix[0, 0] * matrix[1, 1] - matrix[1, 0] * matrix[0, 1];
+            return result;
+        }
     }
 }
