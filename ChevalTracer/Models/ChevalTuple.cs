@@ -140,7 +140,7 @@ namespace Cheval.Models
             return CreateReturnTuple(newW, newX, newY, newZ);
         }
 #endregion
-        private static ChevalTuple CreateReturnTuple(double newW, double newX, double newY, double newZ)
+        public static ChevalTuple CreateReturnTuple(double newW, double newX, double newY, double newZ)
         {
             switch (newW)
             {

@@ -1,7 +1,7 @@
 ﻿using Cheval.Models;
 using FluentAssertions;
-using FluentAssertions.Common;
 using NUnit.Framework;
+using static Cheval.Helper.Transform;
 using static Cheval.Models.Matrix;
 
 namespace ChevalTests.ModelTests
@@ -266,7 +266,7 @@ namespace ChevalTests.ModelTests
             });
             var tup = new ChevalTuple(1, 2, 3, 1);
             //Act
-            var expected = new ChevalTuple(18, 24, 33, 1);
+            var expected = new ChevalPoint(18, 24, 33);
             var result1 = mat * tup;
             var result2 = tup * mat;
             //Assert

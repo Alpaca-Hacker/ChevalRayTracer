@@ -9,9 +9,6 @@ namespace Cheval.Models
         public int Size => _data.GetUpperBound(0) + 1;
         public bool IsInvertible => Math.Abs(Determinant(this)) > Cheval.Epsilon;
 
-        public static Matrix IdentityMatrix = new Matrix(new double[,]
-            {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}});
-
         public Matrix(double[,] data)
         {
             _data = data;
@@ -77,7 +74,7 @@ namespace Cheval.Models
                        + (matrix[3, 2] * tuple.Z)
                        + (matrix[3, 3] * tuple.W);
 
-            var result = new ChevalTuple(newX, newY, newZ, newW);
+            var result = ChevalTuple.CreateReturnTuple(newW, newX, newY, newZ);
 
             return result;
         }
