@@ -1,6 +1,7 @@
 ﻿using Cheval.Models;
 using FluentAssertions;
 using NUnit.Framework;
+using static Cheval.Models.Matrix;
 
 namespace ChevalTests.ModelTests
 {
@@ -295,7 +296,7 @@ namespace ChevalTests.ModelTests
             });
             //Act
             var expected = mat;
-            var result = mat * Matrix.Identity;
+            var result = mat * IdentityMatrix;
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -312,7 +313,7 @@ namespace ChevalTests.ModelTests
             var tuple = new ChevalTuple(1, 2, 3, 4);
             //Act
             var expected = tuple;
-            var result = tuple * Matrix.Identity;
+            var result = tuple * IdentityMatrix;
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -344,7 +345,7 @@ namespace ChevalTests.ModelTests
                 {0, 6}
 
             });
-            var result = Matrix.Submatrix(matrix, 0, 2);
+            var result = Submatrix(matrix, 0, 2);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -377,7 +378,7 @@ namespace ChevalTests.ModelTests
                 {-8, 8, 6},
                 {-7, -1, 1}
             });
-            var result = Matrix.Submatrix(matrix, 2, 1);
+            var result = Submatrix(matrix, 2, 1);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -418,7 +419,7 @@ namespace ChevalTests.ModelTests
                 {3, 0, 5, 5},
                 {0, 8, 3, 8}
             });
-            var result = Matrix.Transpose(mat);
+            var result = Transpose(mat);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -430,14 +431,14 @@ namespace ChevalTests.ModelTests
 Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic Bookshelf, LLC. 
          */
         [Test]
-        public void Transposing_identity_matrix_results_in_identiy_matrix()
+        public void Transposing_identity_matrix_results_in_identity_matrix()
         {
             //Assign
-            var ident = Matrix.Identity;
+            var ident = IdentityMatrix;
             //Act
-            var result = Matrix.Transpose(ident);
+            var result = Transpose(ident);
             //Assert
-            result.Should().BeEquivalentTo(Matrix.Identity);
+            result.Should().BeEquivalentTo(IdentityMatrix);
         }
         /*
          * Scenario ​: Calculating the determinant of a 2x2 matrix ​   ​
@@ -458,9 +459,69 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
                 {-3,2}
             });
             //Act
-            var result = Matrix.Determinant(matrix);
+            var result = Determinant(matrix);
             //Assert
             result.Should().Be(17);
+        }
+        /*
+         * Scenario: Calculating a minor of a 3x3 matrix
+           Given the following 3x3 matrix A:
+           | 3 | 5 | 0 |
+           | 2 | -1 | -7 |
+           | 6 | -1 | 5 |
+           And B ← submatrix(A, 1, 0)
+           Then determinant(B) = 25
+           And minor(A, 1, 0) = 25
+         */
+        [Test]
+        public void Minor_calculation_of_3_by_3_matrix_test()
+        {
+            //Assign
+            var matrix= new Matrix(new double[,]
+            {
+                {3, 5, 0},
+                {2,-1,-7},
+                {6,-1, 5}
+            });
+            //Act
+            var sub = Submatrix(matrix,1,0);
+            var det = Determinant(sub);
+            var result = Minor(matrix, 1, 0);
+            //Assert
+            det.Should().Be(25);
+            result.Should().Be(det);
+        }
+        /*
+         * Scenario: Calculating a cofactor of a 3x3 matrix
+           Given the following 3x3 matrix A:
+           | 3 | 5  | 0 |
+           | 2 | -1 | -7|
+           | 6 | -1 | 5 |
+           Then minor(A, 0, 0) = -12
+           And cofactor(A, 0, 0) = -12
+           And minor(A, 1, 0) = 25
+           And cofactor(A, 1, 0) = -25
+         */
+        [Test]
+        public void Calculating_cofactor_of_three_by_three_matrix()
+        {
+            //Assign
+            var matrix = new Matrix(new double[,]
+            {
+                {3, 5, 0},
+                {2,-1,-7},
+                {6,-1, 5}
+            });
+            //Act
+            var result1Minor = Minor(matrix, 0, 0);
+            var result1Cofactor = Cofactor(matrix, 0, 0);
+            var result2Minor = Minor(matrix, 1, 0);
+            var result2Cofactor = Cofactor(matrix, 1, 0);
+            //Assert
+            result1Minor.Should().Be(-12);
+            result1Cofactor.Should().Be(-12);
+            result2Minor.Should().Be(25);
+            result2Cofactor.Should().Be(-25);
         }
     }
 }

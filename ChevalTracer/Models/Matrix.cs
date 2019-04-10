@@ -8,7 +8,7 @@ namespace Cheval.Models
         private readonly double[,] _data;
         public int Size => _data.GetUpperBound(0) + 1;
 
-        public static Matrix Identity = new Matrix(new double[,]
+        public static Matrix IdentityMatrix = new Matrix(new double[,]
             {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}});
 
         public Matrix(double[,] data)
@@ -167,16 +167,19 @@ namespace Cheval.Models
                     {
                         continue;
                     }
+
                     newMat[newRow, newCol] = matrix[j, i];
                     newRow++;
                 }
+
                 newCol++;
                 newRow = 0;
             }
 
             return newMat;
         }
-                public static Matrix Transpose(Matrix matrix)
+
+        public static Matrix Transpose(Matrix matrix)
         {
             var newMatrix = new Matrix(matrix.Size);
             for (int column = 0; column < matrix.Size; column++)
@@ -201,5 +204,23 @@ namespace Cheval.Models
             return result;
         }
 
+        public static double Minor(Matrix matrix, int row, int column)
+        {
+            var sub = Submatrix(matrix, row, column);
+            var det = Determinant(sub);
+
+            return det;
+        }
+
+        public static double Cofactor(Matrix matrix, int row, int column)
+        {
+            var minor = Minor(matrix, row, column);
+            if ((row + column) % 2 != 0)
+            {
+                minor = -minor;
+            }
+
+            return minor;
+        }
     }
 }
