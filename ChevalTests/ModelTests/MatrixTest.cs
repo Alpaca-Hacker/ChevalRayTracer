@@ -25,9 +25,11 @@ namespace ChevalTests.ModelTests
         public void Four_by_Four_matrix_is_correct()
         {
             //Assign
-            var matrix = new Matrix(new double[,]
-            {
-                {1, 2, 3, 4}, {5.5, 6.5, 7.5, 8.5}, {9, 10, 11, 12}, {13.5, 14.5, 15.5, 16.5}
+            var matrix = new Matrix(new double[,]{
+                 {1,2,3,4}
+                ,{5.5,6.5,7.5,8.5}
+                ,{9,10,11,12}
+                ,{13.5,14.5,15.5,16.5}
             });
             //Assert
             matrix[0, 0].Should().Be(1);
@@ -135,13 +137,17 @@ namespace ChevalTests.ModelTests
         public void Matrix_equality_with_identical_matrices()
         {
             //Assign
-            var mat1 = new Matrix(new double[,]
-            {
-                {1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}
+            var mat1 = new Matrix(new double[,]{
+                 {1 ,2 ,3 ,4 }
+                ,{5 ,6 ,7 ,8 }
+                ,{9 ,10,11,12}
+                ,{13,14,15,16}
             });
-            var mat2 = new Matrix(new double[,]
-            {
-                {1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}
+            var mat2 = new Matrix(new double[,]{
+                 {1 ,2 ,3 ,4 }
+                ,{5 ,6 ,7 ,8 }
+                ,{9 ,10,11,12}
+                ,{13,14,15,16}
             });
             //Act
             var result = mat1 == mat2;
@@ -167,14 +173,18 @@ namespace ChevalTests.ModelTests
         public void Matrix_equality_with_differnt_matrices()
         {
             //Assign
-            var mat1 = new Matrix(new double[,]
-            {
-                {1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}
+            var mat1 = new Matrix(new double[,]{
+                {1 ,2 ,3 ,4 }
+                ,{5 ,6 ,7 ,8 }
+                ,{9 ,10,11,12}
+                ,{13,14,15,16}
             });
-            var mat2 = new Matrix(new double[,]
-            {
-                {1, 2, 3, 4}, {13, 14, 15, 16}, {5, 6, 7, 8}, {9, 10, 11, 12}
-
+            var mat2 = new Matrix(new double[,]{
+                {1 ,2 ,3 ,4 }
+                ,{13,14,15,16}
+                ,{5 ,6 ,7 ,8 }
+                ,{9 ,10,11,12}
+                
             });
             //Act
             var result = mat1 == mat2;
@@ -370,6 +380,87 @@ namespace ChevalTests.ModelTests
             var result = Matrix.Submatrix(matrix, 2, 1);
             //Assert
             result.Should().BeEquivalentTo(expected);
+        }
+
+        /*
+         * Scenario ​: Transposing a matrix ​   ​
+         * Given ​ the following matrix A: ​  
+         * | 0 | 9 | 3 | 0 | ​  
+         * | 9 | 8 | 0 | 8 | ​  
+         * | 1 | 8 | 5 | 3 | ​  
+         * | 0 | 0 | 5 | 8 | ​   ​
+         * Then ​
+         * transpose(A) is the following matrix: ​  
+         * | 0 | 9 | 1 | 0 | ​  
+         * | 9 | 8 | 8 | 0 | ​  
+         * | 3 | 0 | 5 | 5 | ​  
+         * | 0 | 8 | 3 | 8 |
+           
+           Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1187-1200). The Pragmatic Bookshelf, LLC. 
+         */
+
+        [Test]
+        public void Transposing_a_matrix_test()
+        {
+            //Assign
+            var mat = new Matrix(new double[,]
+            {
+                {0, 9, 3, 0},
+                {9, 8, 0, 8},
+                {1, 8, 5, 3},
+                {0, 0, 5, 8}
+            });
+            //Act
+            var expected = new Matrix(new double[,]
+            {
+                {0, 9, 1, 0},
+                {9, 8, 8, 0},
+                {3, 0, 5, 5},
+                {0, 8, 3, 8}
+            });
+            var result = Matrix.Transpose(mat);
+            //Assert
+            result.Should().BeEquivalentTo(expected);
+        }
+        /*
+         * Scenario ​: Transposing the identity matrix ​   ​
+         * Given ​ A ← transpose( identity_matrix) ​   ​
+         * Then ​ A = identity_matrix
+
+Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic Bookshelf, LLC. 
+         */
+        [Test]
+        public void Transposing_identity_matrix_results_in_identiy_matrix()
+        {
+            //Assign
+            var ident = Matrix.Identity;
+            //Act
+            var result = Matrix.Transpose(ident);
+            //Assert
+            result.Should().BeEquivalentTo(Matrix.Identity);
+        }
+        /*
+         * Scenario ​: Calculating the determinant of a 2x2 matrix ​   ​
+         * Given ​the following 2x2 matrix A: ​  
+         * | 1 | 5 | ​  
+         * |-3 | 2 | ​   ​
+         * Then ​determinant(A) = 17
+           
+           Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1229-1235). The Pragmatic Bookshelf, LLC. 
+         */
+        [Test]
+        public void Determinant_of_two_by_two_matrix_test()
+        {
+            //Assign
+            var matrix = new Matrix(new double[,]
+            {
+                {1 ,5},
+                {-3,2}
+            });
+            //Act
+            var result = Matrix.Determinant(matrix);
+            //Assert
+            result.Should().Be(17);
         }
     }
 }
