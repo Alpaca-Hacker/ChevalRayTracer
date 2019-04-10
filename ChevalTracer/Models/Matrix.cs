@@ -7,6 +7,7 @@ namespace Cheval.Models
     {
         private readonly double[,] _data;
         public int Size => _data.GetUpperBound(0) + 1;
+        public bool IsInvertible => Math.Abs(Determinant(this)) > Cheval.Epsilon;
 
         public static Matrix IdentityMatrix = new Matrix(new double[,]
             {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}});
@@ -195,12 +196,19 @@ namespace Cheval.Models
 
         public static double Determinant(Matrix matrix)
         {
-            if (matrix.Size != 2)
+            double result = 0;
+            if (matrix.Size == 2)
             {
-                throw new ArgumentException("Matrix must be of size 2");
+                 result = matrix[0, 0] * matrix[1, 1] - matrix[1, 0] * matrix[0, 1];
+            }
+            else
+            {
+                for (var i = 0; i < matrix.Size; i++)
+                {
+                    result += matrix[0, i] * Cofactor(matrix, 0, i);
+                }
             }
 
-            var result = matrix[0, 0] * matrix[1, 1] - matrix[1, 0] * matrix[0, 1];
             return result;
         }
 
@@ -221,6 +229,25 @@ namespace Cheval.Models
             }
 
             return minor;
+        }
+
+        public static Matrix Inverse(Matrix matrix)
+        {
+            if (!matrix.IsInvertible)
+            {
+                throw new ArgumentException("Matrix not invertible");
+            }
+            var newMatrix = new Matrix(matrix.Size);
+            var det = Determinant(matrix);
+            for (var row = 0; row < matrix.Size; row++)
+            {
+                for (var column = 0; column < matrix.Size; column++)
+                {
+                    var cof = Cofactor(matrix, row, column);
+                    newMatrix[column, row] = cof / det;
+                }
+            }
+            return newMatrix;
         }
     }
 }

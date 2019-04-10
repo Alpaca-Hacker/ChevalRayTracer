@@ -1,5 +1,6 @@
 ﻿using Cheval.Models;
 using FluentAssertions;
+using FluentAssertions.Common;
 using NUnit.Framework;
 using static Cheval.Models.Matrix;
 
@@ -523,5 +524,286 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
             result2Minor.Should().Be(25);
             result2Cofactor.Should().Be(-25);
         }
+        /*
+         * Scenario: Calculating the determinant of a 3x3 matrix
+           Given the following 3x3 matrix A:
+           | 1  | 2 | 6  |
+           | -5 | 8 | -4 |
+           | 2  | 6 | 4  |
+           Then cofactor(A, 0, 0) = 56
+           And cofactor(A, 0, 1) = 12
+           And cofactor(A, 0, 2) = -46
+           And determinant(A) = -196
+         */
+        [Test]
+        public void Determinant_of_three_by_three_matrix_test()
+        {
+            //Assign
+            var matrix = new Matrix(new double[,]
+            {
+                {1, 2, 6},
+                {-5,8,-4},
+                {2 ,6, 4}
+            });
+            //Act
+            var cofact1 = Cofactor(matrix, 0, 0);
+            var cofact2 = Cofactor(matrix, 0, 1);
+            var cofact3 = Cofactor(matrix, 0, 2);
+            var result = Determinant(matrix);
+            //Assert
+            cofact1.Should().Be(56);
+            cofact2.Should().Be(12);
+            cofact3.Should().Be(-46);
+            result.Should().Be(-196);
+        }
+
+        /*
+         * Scenario: Calculating the determinant of a 4x4 matrix
+           Given the following 4x4 matrix A:
+           | -2 | -8 | 3 | 5 |
+           | -3 | 1 | 7 | 3 |
+           | 1 | 2 | -9 | 6 |
+           | -6 | 7 | 7 | -9 |
+           Then cofactor(A, 0, 0) = 690
+           And cofactor(A, 0, 1) = 447
+           And cofactor(A, 0, 2) = 210
+           And cofactor(A, 0, 3) = 51
+           And determinant(A) = -4071
+         */
+        [Test]
+        public void Determinant_of_four_by_four_matrix_test()
+        {
+            //Assign
+            var matrix = new Matrix(new double[,]
+            {
+                {-2,-8, 3, 5},
+                {-3, 1, 7, 3},
+                { 1, 2,-9, 6},
+                {-6, 7, 7,-9 }
+            });
+            //Act
+            var cofact1 = Cofactor(matrix, 0, 0);
+            var cofact2 = Cofactor(matrix, 0, 1);
+            var cofact3 = Cofactor(matrix, 0, 2);
+            var cofact4 = Cofactor(matrix, 0, 3);
+            var result = Determinant(matrix);
+            //Assert
+            cofact1.Should().Be(690);
+            cofact2.Should().Be(447);
+            cofact3.Should().Be(210);
+            cofact4.Should().Be(51);
+            result.Should().Be(-4071);
+        }
+
+        /*
+         * Scenario: Testing an invertible matrix for invertibility
+           Given the following 4x4 matrix A:
+           | 6 | 4  | 4  |  4 |
+           | 5 | 5  | 7  |  6 |
+           | 4 | -9 | 3  | -7 |
+           | 9 | 1  | 7  | -6 |
+           Then determinant(A) = -2120
+           And A is invertible
+         */
+        [Test]
+        public void Invertible_matrix_is_invertible()
+        {
+            //Assign
+            var matrix = new Matrix(new double[,]
+            {
+                {6, 4, 4, 4},
+                {5, 5, 7, 6},
+                {4,-9, 3,-7},
+                {9, 1, 7,-6}
+            });
+            //Act
+            var det = Determinant(matrix);
+            bool result = matrix.IsInvertible;
+            //Assert
+            det.Should().Be(-2120);
+            result.Should().BeTrue();
+        }
+        /*
+         * Scenario: Testing a noninvertible matrix for invertibility
+           Given the following 4x4 matrix A:
+           | -4 | 2 | -2 | -3 |
+           | 9 | 6 | 2 | 6 |
+           | 0 | -5 | 1 | -5 |
+           | 0 | 0 | 0 | 0 |
+           Then determinant(A) = 0
+           And A is not invertible
+         */
+        [Test]
+        public void NonInvertible_matrix_is_not_invertible()
+        {
+            //Assign
+            var matrix = new Matrix(new double[,]
+            {
+                {-4, 2, -2, -3},
+                {9, 6, 2, 6},
+                {0,-5, 1,-5},
+                {0, 0, 0,0}
+            });
+            //Act
+            var det = Determinant(matrix);
+            var result = matrix.IsInvertible;
+            //Assert
+            det.Should().Be(0);
+            result.Should().BeFalse();
+        }
+        /*
+         * Scenario: Calculating the inverse of a matrix
+           Given the following 4x4 matrix A:
+           | -5| 2 | 6 | -8|
+           | 1 | -5| 1 | 8 |
+           | 7 | 7 | -6| -7|
+           | 1 | -3| 7 | 4 |
+           And B ← inverse(A)
+           Then determinant(A) = 532
+           And cofactor(A, 2, 3) = -160
+           And B[3,2] = -160/532
+           And cofactor(A, 3, 2) = 105
+           And B[2,3] = 105/532
+           And B is the following 4x4 matrix:
+           | 0.21805  |  0.45113 |  0.24060 |-0.04511 |
+           | -0.80827 | -1.45677 | -0.44361 | 0.52068 |
+           | -0.07895 | -0.22368 | -0.05263 | 0.19737 |
+           | -0.52256 | -0.81391 | -0.30075 | 0.30639 |
+         */
+        [Test]
+        public void Inverse_of_matrix_test()
+        {
+            //Assign
+            var matrix = new Matrix(new double[,]
+            {
+                { -5, 2 , 6 , -8},
+                { 1 , -5, 1 , 8 },
+                { 7 , 7 , -6, -7},
+                { 1 , -3, 7 , 4 }
+            });
+            //Act
+            var expected = new Matrix(new double[,]
+            {
+                {  0.21805 , 0.45113 , 0.24060 ,-0.04511},
+                { -0.80827 ,-1.45677 ,-0.44361 ,0.52068},
+                { -0.07895 ,-0.22368 ,-0.05263 ,0.19737},
+                { -0.52256 ,-0.81391 ,-0.30075 ,0.30639} 
+            });
+            var result = Inverse(matrix);
+            //Assert
+            result.Should().BeEquivalentTo(expected);
+        }
+        /*
+         * Scenario: Calculating the inverse of another matrix
+           Given the following 4x4 matrix A:
+           | 8 |-5| 9| 2 |
+           | 7 | 5| 6| 1 |
+           | -6| 0| 9| 6 |
+           | -3| 0|-9|-4 |
+           Then inverse(A) is the following 4x4 matrix:
+           | -0.15385 | -0.15385 | -0.28205 | -0.53846 |
+           | -0.07692 | 0.12308  | 0.02564  | 0.03077  |
+           | 0.35897  | 0.35897  | 0.43590  | 0.92308  |
+           | -0.69231 | -0.69231 | -0.76923 | -1.92308 |
+           */
+        [Test]
+        public void Inverse_of_another_matrix_test()
+        {
+            //Assign
+            var matrix = new Matrix(new double[,]
+            {
+                { 8 ,-5, 9, 2},
+                { 7 , 5, 6, 1},
+                { -6, 0, 9, 6},
+                { -3, 0,-9,-4}
+            });
+            //Act
+            var expected = new Matrix(new double[,]
+            {
+                {-0.15385, -0.15385,-0.28205,-0.53846},
+                {-0.07692, 0.12308 ,0.02564 ,0.03077 },
+                {0.35897 , 0.35897 ,0.43590 ,0.92308 },
+                {-0.69231, -0.69231,-0.76923,-1.92308}
+            });
+            var result = Inverse(matrix);
+            //Assert
+            result.Should().BeEquivalentTo(expected);
+        }
+        /*
+        Scenario: Calculating the inverse of a third matrix
+        Given the following 4x4 matrix A:
+        | 9  | 3 | 0 | 9 |
+        | -5 | -2|-6 |-3 |
+        | -4 | 9 | 6 | 4 |
+        | -7 | 6 | 6 | 2 |
+        Then inverse(A) is the following 4x4 matrix:
+        | -0.04074 | -0.07778| 0.14444 |-0.22222 |
+        | -0.07778 | 0.03333 | 0.36667 |-0.33333 |
+        | -0.02901 | -0.14630|-0.10926 | 0.12963 |
+        | 0.17778  | 0.06667 |-0.26667 | 0.33333 |
+      */
+        [Test]
+        public void Inverse_of_third_matrix_test()
+        {
+            //Assign
+            var matrix = new Matrix(new double[,]
+            {
+                {9 ,3 , 0, 9},
+                {-5,-2,-6,-3},
+                {-4,9 , 6, 4},
+                {-7,6 , 6, 2}
+            });
+            //Act
+            var expected = new Matrix(new double[,]
+            {
+                {-0.04074, -0.07778, 0.14444,-0.22222},
+                {-0.07778, 0.03333 , 0.36667,-0.33333},
+                {-0.02901, -0.14630,-0.10926, 0.12963},
+                {0.17778 , 0.06667 ,-0.26667, 0.33333}
+            });
+            var result = Inverse(matrix);
+            //Assert
+            result.Should().BeEquivalentTo(expected);
+        }
+        /*
+         * Scenario: Multiplying a product by its inverse
+           Given the following 4x4 matrix A:
+           | 3 | -9| 7 | 3 |
+           | 3 | -8| 2 |-9 |
+           | -4| 4 | 4 | 1 |
+           | -6| 5 |-1 | 1 |
+           And the following 4x4 matrix B:
+           | 8 | 2 | 2 | 2 |
+           | 3 |-1 | 7 | 0 |
+           | 7 | 0 | 5 | 4 |
+           | 6 |-2 | 0 | 5 |
+           And C ← A * B
+           Then C * inverse(B) = A
+         */
+        [Test]
+        public void Multiplying_product_by_its_inverse_test()
+        {
+            //Assign
+            var matrixA = new Matrix(new double[,]
+            {
+                {3 , -9, 7 , 3},
+                {3 , -8, 2 ,-9},
+                {-4, 4 , 4 , 1},
+                {-6, 5 ,-1 , 1}
+            });
+            var matrixB = new Matrix(new double[,]
+            {
+                {8, 2,2,2},
+                {3,-1,7,0},
+                {7, 0,5,4},
+                {6,-2,0,5}
+            });
+            //Act
+            var result = matrixA * matrixB;
+            result = result * Inverse(matrixB);
+            //Assert
+            result.Should().BeEquivalentTo(matrixA);
+        }
+
     }
 }
