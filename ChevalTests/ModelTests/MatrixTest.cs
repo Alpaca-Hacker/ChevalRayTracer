@@ -25,11 +25,9 @@ namespace ChevalTests.ModelTests
         public void Four_by_Four_matrix_is_correct()
         {
             //Assign
-            var matrix = new Matrix(new double[,]{
-                 {1,2,3,4}
-                ,{5.5,6.5,7.5,8.5}
-                ,{9,10,11,12}
-                ,{13.5,14.5,15.5,16.5}
+            var matrix = new Matrix(new double[,]
+            {
+                {1, 2, 3, 4}, {5.5, 6.5, 7.5, 8.5}, {9, 10, 11, 12}, {13.5, 14.5, 15.5, 16.5}
             });
             //Assert
             matrix[0, 0].Should().Be(1);
@@ -54,11 +52,12 @@ namespace ChevalTests.ModelTests
             matrix[1, 2].Should().Be(4.5);
             matrix.Size.Should().Be(4);
         }
+
         [Test]
         public void Matrix_does_not_blow_up_without_data()
         {
             //Assign
-            var matrix = new Matrix(new double [4,4]);
+            var matrix = new Matrix(new double [4, 4]);
             //Act
             matrix[1, 2] = 4.5D;
             //Assert
@@ -91,6 +90,7 @@ namespace ChevalTests.ModelTests
             matrix[1, 0].Should().Be(1);
             matrix[1, 1].Should().Be(-2);
         }
+
         /*
          * Scenario: A 3x3 matrix ought to be representable
            Given the following 3x3 matrix M:
@@ -105,11 +105,11 @@ namespace ChevalTests.ModelTests
         public void Three_by_three_matrix_test()
         {
             //Assign
-            var matrix = new Matrix(new double [,]
+            var matrix = new Matrix(new double[,]
             {
-                {-3, 5,   0 },
-                { 1 ,-2, -7 },
-                { 0,  1,  1 }
+                {-3, 5, 0},
+                {1, -2, -7},
+                {0, 1, 1}
             });
             //Assert
             matrix[0, 0].Should().Be(-3);
@@ -135,23 +135,20 @@ namespace ChevalTests.ModelTests
         public void Matrix_equality_with_identical_matrices()
         {
             //Assign
-            var mat1 = new Matrix(new double[,]{
-                 {1 ,2 ,3 ,4 }
-                ,{5 ,6 ,7 ,8 }
-                ,{9 ,10,11,12}
-                ,{13,14,15,16}
+            var mat1 = new Matrix(new double[,]
+            {
+                {1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}
             });
-            var mat2 = new Matrix(new double[,]{
-                 {1 ,2 ,3 ,4 }
-                ,{5 ,6 ,7 ,8 }
-                ,{9 ,10,11,12}
-                ,{13,14,15,16}
+            var mat2 = new Matrix(new double[,]
+            {
+                {1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}
             });
             //Act
             var result = mat1 == mat2;
             //Assert
             result.Should().BeTrue();
         }
+
         /*
          * Scenario: Matrix equality with different matrices
            Given the following matrix A:
@@ -170,24 +167,21 @@ namespace ChevalTests.ModelTests
         public void Matrix_equality_with_differnt_matrices()
         {
             //Assign
-            var mat1 = new Matrix(new double[,]{
-                {1 ,2 ,3 ,4 }
-                ,{5 ,6 ,7 ,8 }
-                ,{9 ,10,11,12}
-                ,{13,14,15,16}
+            var mat1 = new Matrix(new double[,]
+            {
+                {1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}
             });
-            var mat2 = new Matrix(new double[,]{
-                {1 ,2 ,3 ,4 }
-                ,{13,14,15,16}
-                ,{5 ,6 ,7 ,8 }
-                ,{9 ,10,11,12}
-                
+            var mat2 = new Matrix(new double[,]
+            {
+                {1, 2, 3, 4}, {13, 14, 15, 16}, {5, 6, 7, 8}, {9, 10, 11, 12}
+
             });
             //Act
             var result = mat1 == mat2;
             //Assert
             result.Should().BeFalse();
         }
+
         /*
          * Scenario: Multiplying two matrices
            Given the following matrix A:
@@ -236,6 +230,7 @@ namespace ChevalTests.ModelTests
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
+
         /*
          * Scenario: A matrix multiplied by a tuple
            Given the following matrix A:
@@ -257,9 +252,9 @@ namespace ChevalTests.ModelTests
                 {8, 6, 4, 1},
                 {0, 0, 0, 1}
             });
-            var tup = new ChevalTuple(1,2,3,1);
+            var tup = new ChevalTuple(1, 2, 3, 1);
             //Act
-            var expected = new ChevalTuple(18,24,33,1);
+            var expected = new ChevalTuple(18, 24, 33, 1);
             var result1 = mat * tup;
             var result2 = tup * mat;
             //Assert
@@ -294,6 +289,7 @@ namespace ChevalTests.ModelTests
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
+
         /*
          * Scenario: Multiplying the identity matrix by a tuple
            Given a ← tuple(1, 2, 3, 4)
@@ -303,10 +299,75 @@ namespace ChevalTests.ModelTests
         public void Multiplying_a_tuple_by_identity_matrix_test()
         {
             //Assign
-            var tuple = new ChevalTuple(1,2,3,4);
+            var tuple = new ChevalTuple(1, 2, 3, 4);
             //Act
             var expected = tuple;
             var result = tuple * Matrix.Identity;
+            //Assert
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        /*
+         * Scenario: A submatrix of a 3x3 matrix is a 2x2 matrix
+           Given the following 3x3 matrix A:
+           | 1  | 5 |  0 |
+           | -3 | 2 |  7 |
+           | 0  | 6 | -3 |
+           Then submatrix(A, 0, 2) is the following 2x2 matrix:
+           | -3 | 2 |
+           | 0  | 6 |
+         */
+        [Test]
+        public void Submatrix_of_three_by_three_test()
+        {
+            //Assign
+            var matrix = new Matrix(new double[,]
+            {
+                {1, 5, 0},
+                {-3, 2, 7},
+                {0, 6, -3}
+            });
+            //Act
+            var expected = new Matrix(new double[,]
+            {
+                {-3, 2},
+                {0, 6}
+
+            });
+            var result = Matrix.Submatrix(matrix, 0, 2);
+            //Assert
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        //Scenario: A submatrix of a 4x4 matrix is a 3x3 matrix
+        // Given the following 4x4 matrix A:
+        // | -6 | 1 | 1  | 6 |
+        // | -8 | 5 | 8  | 6 |
+        // | -1 | 0 | 8  | 2 |
+        // | -7 | 1 | -1 | 1 |
+        // Then submatrix(A, 2, 1) is the following 3x3 matrix:
+        // | -6 | 1  |  6 |
+        // | -8 | 8  |  6 |
+        // | -7 | -1 |  1 |
+        [Test]
+        public void Submatrix_of_four_by_four_tes()
+        {
+            //Assign
+            var matrix = new Matrix(new double[,]
+            {
+                {-6, 1, 1, 6},
+                {-8, 5, 8, 6},
+                {-1, 0, 8, 2},
+                {-7, 1, -1, 1}
+            });
+            //Act
+            var expected = new Matrix(new double[,]
+            {
+                {-6, 1, 6},
+                {-8, 8, 6},
+                {-7, -1, 1}
+            });
+            var result = Matrix.Submatrix(matrix, 2, 1);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }

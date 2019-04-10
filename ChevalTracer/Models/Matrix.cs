@@ -8,7 +8,8 @@ namespace Cheval.Models
         private readonly double[,] _data;
         public int Size => _data.GetUpperBound(0) + 1;
 
-        public static Matrix Identity = new Matrix(new double[,]{{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}}); 
+        public static Matrix Identity = new Matrix(new double[,]
+            {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}});
 
         public Matrix(double[,] data)
         {
@@ -17,7 +18,7 @@ namespace Cheval.Models
 
         public Matrix(int size)
         {
-            _data = new double[size,size];
+            _data = new double[size, size];
         }
 
         public ref double this[int row, int column] => ref _data[row, column];
@@ -29,6 +30,7 @@ namespace Cheval.Models
             {
                 throw new ArgumentException("Matrices must be of the same size");
             }
+
             var c = new Matrix(a.Size);
             for (var i = 0; i < c.Size; i++)
             {
@@ -39,9 +41,11 @@ namespace Cheval.Models
                     {
                         s += a[i, k] * b[k, j];
                     }
+
                     c[i, j] = s;
                 }
             }
+
             return c;
         }
 
@@ -52,25 +56,25 @@ namespace Cheval.Models
                 throw new ArgumentException("Matrix must be of size 4");
             }
 
-            var newX =   (matrix[0, 0] * tuple.X) 
-                       + (matrix[0, 1] * tuple.Y) 
-                       + (matrix[0, 2] * tuple.Z) 
+            var newX = (matrix[0, 0] * tuple.X)
+                       + (matrix[0, 1] * tuple.Y)
+                       + (matrix[0, 2] * tuple.Z)
                        + (matrix[0, 3] * tuple.W);
 
-            var newY =   (matrix[1,0] * tuple.X)
-                       + (matrix[1,1] * tuple.Y)
-                       + (matrix[1,2] * tuple.Z)
-                       + (matrix[1,3] * tuple.W);
+            var newY = (matrix[1, 0] * tuple.X)
+                       + (matrix[1, 1] * tuple.Y)
+                       + (matrix[1, 2] * tuple.Z)
+                       + (matrix[1, 3] * tuple.W);
 
-            var newZ =   (matrix[2,0] * tuple.X)
-                       + (matrix[2,1] * tuple.Y)
-                       + (matrix[2,2] * tuple.Z)
-                       + (matrix[2,3] * tuple.W);
+            var newZ = (matrix[2, 0] * tuple.X)
+                       + (matrix[2, 1] * tuple.Y)
+                       + (matrix[2, 2] * tuple.Z)
+                       + (matrix[2, 3] * tuple.W);
 
-            var newW =   (matrix[3,0] * tuple.X)
-                       + (matrix[3,1] * tuple.Y)
-                       + (matrix[3,2] * tuple.Z)
-                       + (matrix[3,3] * tuple.W);
+            var newW = (matrix[3, 0] * tuple.X)
+                       + (matrix[3, 1] * tuple.Y)
+                       + (matrix[3, 2] * tuple.Z)
+                       + (matrix[3, 3] * tuple.W);
 
             var result = new ChevalTuple(newX, newY, newZ, newW);
 
@@ -89,6 +93,7 @@ namespace Cheval.Models
             {
                 throw new ArgumentException("Matrices must be of the same size");
             }
+
             var c = new Matrix(a.Size);
             for (var i = 0; i < c.Size; i++)
             {
@@ -97,6 +102,7 @@ namespace Cheval.Models
                     c[i, j] = a[i, j] + b[i, j];
                 }
             }
+
             return c;
         }
 
@@ -117,6 +123,7 @@ namespace Cheval.Models
                     }
                 }
             }
+
             return true;
         }
 
@@ -139,6 +146,35 @@ namespace Cheval.Models
         public override int GetHashCode()
         {
             return HashCode.Combine(_data);
+        }
+
+        public static Matrix Submatrix(Matrix matrix, int row, int column)
+        {
+            var newMat = new Matrix(matrix.Size - 1);
+
+            var newRow = 0;
+            var newCol = 0;
+            for (var i = 0; i < matrix.Size; i++)
+            {
+                if (i == column)
+                {
+                    continue;
+                }
+
+                for (var j = 0; j < matrix.Size; j++)
+                {
+                    if (j == row)
+                    {
+                        continue;
+                    }
+                    newMat[newRow, newCol] = matrix[j, i];
+                    newRow++;
+                }
+                newCol++;
+                newRow = 0;
+            }
+
+            return newMat;
         }
     }
 }
