@@ -1,4 +1,5 @@
-﻿using Cheval.Models;
+﻿using System;
+using Cheval.Models;
 using FluentAssertions;
 using NUnit.Framework;
 using static Cheval.Models.ChevalTuple;
@@ -329,6 +330,44 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
             var expected = new ChevalTuple(0.5, -1, 1.5, -2);
             var result = t1 / 2;
             //Assert
+            result.Should().BeEquivalentTo(expected);
+        }
+        /*
+         * Scenario: Reflecting a vector approaching at 45°
+           Given v ← vector(1, -1, 0)
+           And n ← vector(0, 1, 0)
+           When r ← reflect(v, n)
+           Then r = vector(1, 1, 0)
+         */
+        [Test]
+        public void Reflecting_vector_approaching_45()
+        {
+            //Assign
+            var v = Vector(1, -1, 0);
+            var n = Vector(0, 1, 0);
+            //Act
+            ChevalTuple result = ChevalTuple.Reflect(v, n);
+            var expected = Vector(1, 1, 0);
+            //Assign
+            result.Should().BeEquivalentTo(expected);
+        }
+        /*
+         * Scenario: Reflecting a vector off a slanted surface
+           Given v ← vector(0, -1, 0)
+           And n ← vector(√2/2, √2/2, 0)
+           When r ← reflect(v, n)
+           Then r = vector(1, 0, 0)
+         */
+        [Test]
+        public void Reflecting_vector_off_slanted()
+        {
+            //Assign
+            var v = Vector(0, -1, 0);
+            var n = Vector(Math.Sqrt(2)/2, Math.Sqrt(2)/2, 0);
+            //Act
+            ChevalTuple result = ChevalTuple.Reflect(v, n);
+            var expected = Vector(1, 0, 0);
+            //Assign
             result.Should().BeEquivalentTo(expected);
         }
     }

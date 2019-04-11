@@ -20,11 +20,13 @@ namespace Cheval.Models
             Z = z;
             W = w;
         }
-        public static ChevalTuple Point(double x, double y, double z) 
+
+        public static ChevalTuple Point(double x, double y, double z)
         {
-            return new ChevalTuple(x,y,z, 1.0);
+            return new ChevalTuple(x, y, z, 1.0);
         }
-        public static ChevalTuple Vector(double x, double y, double z) 
+
+        public static ChevalTuple Vector(double x, double y, double z)
         {
             return new ChevalTuple(x, y, z, 0.0);
         }
@@ -59,9 +61,13 @@ namespace Cheval.Models
                 a.Z * b.X - a.X * b.Z,
                 a.X * b.Y - a.Y * b.X);
         }
-
+        public static ChevalTuple Reflect(ChevalTuple vectorIn, ChevalTuple vectorNormal)
+        {
+            return vectorIn - vectorNormal * 2 * Dot(vectorIn, vectorNormal);
+        }
 
         #region Operators
+
         public static bool operator ==(ChevalTuple a, ChevalTuple b)
         {
             if (a is null || b is null)
@@ -96,7 +102,7 @@ namespace Cheval.Models
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((ChevalTuple)obj);
+            return Equals((ChevalTuple) obj);
         }
 
         public override int GetHashCode()
@@ -108,7 +114,7 @@ namespace Cheval.Models
                 hashCode = (hashCode * 397) ^ Z.GetHashCode();
                 return hashCode;
             }
-        } 
+        }
 
         public static ChevalTuple operator +(ChevalTuple a, ChevalTuple b)
         {
@@ -140,6 +146,7 @@ namespace Cheval.Models
 
             return new ChevalTuple(newX, newY, newZ, newW);
         }
+
         public static ChevalTuple operator *(ChevalTuple t, double x)
         {
             var newX = t.X * x;
@@ -149,6 +156,7 @@ namespace Cheval.Models
 
             return new ChevalTuple(newX, newY, newZ, newW);
         }
+
         public static ChevalTuple operator *(double x, ChevalTuple t)
         {
             var newX = t.X * x;
@@ -168,6 +176,7 @@ namespace Cheval.Models
 
             return new ChevalTuple(newX, newY, newZ, newW);
         }
+
         public static ChevalTuple operator /(ChevalTuple t, double x)
         {
             var newX = t.X / x;
@@ -175,9 +184,10 @@ namespace Cheval.Models
             var newZ = t.Z / x;
             var newW = t.W / x;
 
-            return new ChevalTuple(newX, newY, newZ,newW);
+            return new ChevalTuple(newX, newY, newZ, newW);
         }
-#endregion
+
+        #endregion
 
 
     }
