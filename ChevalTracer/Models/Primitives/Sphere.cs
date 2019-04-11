@@ -1,4 +1,6 @@
 ﻿using System;
+using static Cheval.Models.ChevalVector;
+using static Cheval.Models.Matrix;
 
 namespace Cheval.Models.Primitives
 {
@@ -17,7 +19,14 @@ namespace Cheval.Models.Primitives
             Size = 1.0;
             Transform = Helper.Transform.IdentityMatrix;
         }
+        public ChevalVector NormalAt(ChevalPoint point)
+        {
+            var objectPoint = (ChevalPoint)(Inverse(Transform) * point);
+            var normal = Normalize((ChevalVector)(objectPoint - Origin));
+            var objectNormal = (Transpose(Inverse(Transform)) * normal);
+            normal = new ChevalVector(objectNormal.X,objectNormal.Y,objectNormal.Z);
 
-
+            return Normalize(normal);
+        }
     }
 }
