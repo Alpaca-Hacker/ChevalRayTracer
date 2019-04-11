@@ -1,5 +1,7 @@
 ﻿
 using System.Collections.Generic;
+using System.Xml.Linq;
+using Cheval.Helper;
 using Cheval.Models;
 using Cheval.Models.Primitives;
 using FluentAssertions;
@@ -184,5 +186,95 @@ namespace ChevalTests.ModelTests
             xs[0].Object.Should().BeEquivalentTo(s);
             xs[1].Object.Should().BeEquivalentTo(s);
         }
+        /*
+         * Scenario: Translating a ray
+           Given r ← ray(point(1, 2, 3), vector(0, 1, 0))
+           And m ← translation(3, 4, 5)
+           When r2 ← transform(r, m)
+           Then r2.origin = point(4, 6, 8)
+           And r2.direction = vector(0, 1, 0)
+         */
+        [Test]
+        public void Translating_a_ray_tests()
+        {
+            //Assign
+            var r = new Ray(new ChevalPoint(1,2,3), new ChevalVector(0,1,0));
+            var m = Transform.Translation(3, 4, 5);
+            //Act
+            var result = r.Transform(m);
+            var expectedOrigin = new ChevalPoint(4,6,8);
+            var expectedDirection = new ChevalVector(0,1,0);
+            //Assert
+            result.Origin.Should().BeEquivalentTo(expectedOrigin);
+            result.Direction.Should().BeEquivalentTo(expectedDirection);
+        }
+        /*
+         *Scenario: Scaling a ray
+           Given r ← ray(point(1, 2, 3), vector(0, 1, 0))
+           And m ← scaling(2, 3, 4)
+           When r2 ← transform(r, m)
+           Then r2.origin = point(2, 6, 12)
+           And r2.direction = vector(0, 3, 0)
+         */
+        [Test]
+        public void scaling_a_ray_test()
+        {
+            //Assign
+            var r = new Ray(new ChevalPoint(1, 2, 3), new ChevalVector(0, 1, 0));
+            var m = Transform.Scaling(2,3, 4);
+            //Act
+            var result = r.Transform(m);
+            var expectedOrigin = new ChevalPoint(2, 6, 12);
+            var expectedDirection = new ChevalVector(0, 3, 0);
+            //Assert
+            result.Origin.Should().BeEquivalentTo(expectedOrigin);
+            result.Direction.Should().BeEquivalentTo(expectedDirection);
+        }
+        /*
+         * Scenario: Intersecting a scaled sphere with a ray
+           Given r ← ray(point(0, 0, -5), vector(0, 0, 1))
+           And s ← sphere()
+           When set_transform(s, scaling(2, 2, 2))
+           And xs ← intersect(s, r)
+           Then xs.count = 2
+           And xs[0].t = 3
+           And xs[1].t = 7
+         */
+        [Test]
+        public void Intersecting_a_scaled_sphere_with_a_ray()
+        {
+            //Assign
+            var r= new Ray(new ChevalPoint(0,0,-5), new ChevalVector(0,0,1));
+            var s = new Sphere();
+            //Act
+            s.Transform = Transform.Scaling(2, 2, 2);
+            var xs = r.Intersect(s);
+            //Assert
+            xs.Should().HaveCount(2);
+            xs[0].T.Should().Be(3);
+            xs[1].T.Should().Be(7);
+        }
+
+        /*
+          Scenario: Intersecting a translated sphere with a ray
+          Given r ← ray(point(0, 0, -5), vector(0, 0, 1))
+          And s ← sphere()
+          When set_transform(s, translation(5, 0, 0))
+          And xs ← intersect(s, r)
+          Then xs.count = 0
+        */
+        [Test]
+        public void Intersecting_a_translated_sphere_with_a_ray()
+        {
+            //Assign
+            var r = new Ray(new ChevalPoint(0, 0, -5), new ChevalVector(0, 0, 1));
+            var s = new Sphere();
+            //Act
+            s.Transform = Transform.Translation(5, 0, 0);
+            var xs = r.Intersect(s);
+            //Assert
+            xs.Should().BeEmpty();
+        }
     }
+
 }

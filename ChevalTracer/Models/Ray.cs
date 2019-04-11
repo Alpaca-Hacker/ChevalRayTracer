@@ -25,9 +25,11 @@ namespace Cheval.Models
 
         public List<Intersection> Intersect(Sphere sphere)
         {
-            var sphereToRay = Origin - sphere.Origin;
-            var a = ChevalVector.Dot(Direction, Direction);
-            var b = 2 * ChevalVector.Dot(Direction, sphereToRay);
+            var ray2 = Transform(Matrix.Inverse(sphere.Transform));
+
+            var sphereToRay = ray2.Origin - sphere.Origin;
+            var a = ChevalVector.Dot(ray2.Direction, ray2.Direction);
+            var b = 2 * ChevalVector.Dot(ray2.Direction, sphereToRay);
             var c = ChevalVector.Dot(sphereToRay, sphereToRay)-1;
 
             var discriminant = b * b - 4 * a * c;
@@ -44,6 +46,14 @@ namespace Cheval.Models
                 new Intersection(t1, sphere),
                 new Intersection(t2,sphere)
             };
+        }
+
+        public Ray Transform(Matrix matrix)
+        {
+            var newOrigin = (ChevalPoint) (Origin * matrix);
+            var newDirection = (ChevalVector) (Direction * matrix);
+
+            return new Ray(newOrigin, newDirection);
         }
     }
 }
