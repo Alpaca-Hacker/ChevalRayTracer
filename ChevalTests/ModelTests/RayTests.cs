@@ -76,7 +76,8 @@ namespace ChevalTests.ModelTests
             var xs = ray.Intersect(s);
             //Assert
             xs.Should().HaveCount(2);
-            xs.Should().Contain(4.0).And.Contain(6.0);
+            xs[0].T.Should().Be(4.0);
+            xs[1].T.Should().Be(6.0);
         }
         /*
          * Scenario: A ray intersects a sphere at a tangent
@@ -97,7 +98,8 @@ namespace ChevalTests.ModelTests
             var xs = ray.Intersect(s);
             //Assert
             xs.Should().HaveCount(2);
-            xs.Should().Contain(5.0).And.Contain(5.0);
+            xs[0].T.Should().Be(5.0);
+            xs[1].T.Should().Be(5.0);
         }
         /*
          * Scenario: A ray misses a sphere
@@ -136,7 +138,8 @@ namespace ChevalTests.ModelTests
             var xs = ray.Intersect(s);
             //Assert
             xs.Should().HaveCount(2);
-            xs.Should().Contain(-1.0).And.Contain(1.0);
+            xs[0].T.Should().Be(-1.0);
+            xs[1].T.Should().Be(1.0);
         }
         /*
          * Scenario: A sphere is behind a ray
@@ -157,7 +160,29 @@ namespace ChevalTests.ModelTests
             var xs = ray.Intersect(s);
             //Assert
             xs.Should().HaveCount(2);
-            xs.Should().Contain(-6.0).And.Contain(-4.0);
+            xs[0].T.Should().Be(-6.0);
+            xs[1].T.Should().Be(-4.0);
+        }
+        /*
+         * Scenario: Intersect sets the object on the intersection
+           Given r ← ray(point(0, 0, -5), vector(0, 0, 1))
+           And s ← sphere()
+           When xs ← intersect(s, r)
+           Then xs.count = 2
+           And xs[0].object = s
+           And xs[1].object = s
+         */
+        public void Intersect_sets_object_on_intersection()
+        {
+            //Assign
+            var ray = new Ray(new ChevalPoint(0, 0, -5), new ChevalVector(0, 0, 1));
+            var s = new Sphere();
+            //Act
+            var xs = ray.Intersect(s);
+            //Assert
+            xs.Should().HaveCount(2);
+            xs[0].Object.Should().BeEquivalentTo(s);
+            xs[1].Object.Should().BeEquivalentTo(s);
         }
     }
 }

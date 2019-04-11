@@ -23,7 +23,7 @@ namespace Cheval.Models
             return position;
         }
 
-        public double[] Intersect(Sphere sphere)
+        public List<Intersection> Intersect(Sphere sphere)
         {
             var sphereToRay = Origin - sphere.Origin;
             var a = ChevalVector.Dot(Direction, Direction);
@@ -34,12 +34,16 @@ namespace Cheval.Models
 
             if (discriminant < 0)
             {
-                return new double[0];
+                return new List<Intersection>();
             }
 
             var t1 = (-b - Math.Sqrt(discriminant)) / (2 * a);
             var t2 = (-b + Math.Sqrt(discriminant)) / (2 * a);
-            return new double[]{t1,t2};
+            return new List<Intersection>
+            {
+                new Intersection(t1, sphere),
+                new Intersection(t2,sphere)
+            };
         }
     }
 }
