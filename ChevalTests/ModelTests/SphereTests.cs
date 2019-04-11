@@ -6,6 +6,7 @@ using Cheval.Models;
 using Cheval.Models.Primitives;
 using FluentAssertions;
 using NUnit.Framework;
+using static Cheval.Models.ChevalTuple;
 
 namespace ChevalTests.ModelTests
 {
@@ -56,8 +57,8 @@ namespace ChevalTests.ModelTests
             //Assign
             var s = new Sphere();
             //Act
-            var expected = new ChevalVector(1, 0, 0);
-            var n = s.NormalAt(new ChevalPoint(1, 0, 0));
+            var expected = Vector(1, 0, 0);
+            var n = s.NormalAt(Point(1, 0, 0));
             //Assert
             n.Should().BeEquivalentTo(expected);
         }
@@ -74,8 +75,8 @@ namespace ChevalTests.ModelTests
             //Assign
             var s = new Sphere();
             //Act
-            var expected = new ChevalVector(0, 1, 0);
-            var n = s.NormalAt(new ChevalPoint(0, 1, 0));
+            var expected = Vector(0, 1, 0);
+            var n = s.NormalAt(Point(0, 1, 0));
             //Assert
             n.Should().BeEquivalentTo(expected);
         }
@@ -92,8 +93,8 @@ namespace ChevalTests.ModelTests
             //Assign
             var s = new Sphere();
             //Act
-            var expected = new ChevalVector(0, 0, 1);
-            var n = s.NormalAt(new ChevalPoint(0, 0, 1));
+            var expected = Vector(0, 0, 1);
+            var n = s.NormalAt(Point(0, 0, 1));
             //Assert
             n.Should().BeEquivalentTo(expected);
         }
@@ -110,8 +111,8 @@ namespace ChevalTests.ModelTests
             //Assign
             var s = new Sphere();
             //Act
-            var expected = new ChevalVector(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3);
-            var n = s.NormalAt(new ChevalPoint(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3));
+            var expected = Vector(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3);
+            var n = s.NormalAt(Point(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3));
             //Assert
             n.Should().BeEquivalentTo(expected);
         }
@@ -128,8 +129,8 @@ namespace ChevalTests.ModelTests
             //Assign
             var s = new Sphere();
             //Act
-            var n = s.NormalAt(new ChevalPoint(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3));
-            var result = ChevalVector.Normalize(n);
+            var n = s.NormalAt(Point(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3));
+            var result = Normalize(n);
             //Assert
             result.Should().BeEquivalentTo(n);
         }
@@ -148,8 +149,8 @@ namespace ChevalTests.ModelTests
             var s = new Sphere();
             s.Transform = Transform.Translation(0, 1, 0);
             //Act
-            var result = s.NormalAt(new ChevalPoint(0, 1.70711, -0.70711));
-            var expected = new ChevalVector(0, 0.70711, -0.70711);
+            var result = s.NormalAt(Point(0, 1.70711, -0.70711));
+            var expected = Vector(0, 0.70711, -0.70711);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -169,8 +170,8 @@ namespace ChevalTests.ModelTests
             var s = new Sphere();
             s.Transform = Transform.Scaling(1, 0.5, 1) * Transform.RotationZ(Math.PI / 5);
             //Act
-            var result = s.NormalAt(new ChevalPoint(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2));
-            var expected = new ChevalVector(0, 0.9701425, -0.2425356);
+            var result = s.NormalAt(Point(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2));
+            var expected = Vector(0, 0.9701425, -0.2425356);
 
             //Assert
             result.Should().BeEquivalentTo(expected);

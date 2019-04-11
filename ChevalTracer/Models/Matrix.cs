@@ -74,9 +74,8 @@ namespace Cheval.Models
                        + (matrix[3, 2] * tuple.Z)
                        + (matrix[3, 3] * tuple.W);
 
-            var result = ChevalTuple.CreateReturnTuple(newW, newX, newY, newZ);
+            return new ChevalTuple(newX, newY, newZ, newW);
 
-            return result;
         }
 
         public static ChevalTuple operator *(ChevalTuple tuple, Matrix matrix)

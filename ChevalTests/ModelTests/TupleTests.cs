@@ -1,6 +1,7 @@
 ﻿using Cheval.Models;
 using FluentAssertions;
 using NUnit.Framework;
+using static Cheval.Models.ChevalTuple;
 
 namespace ChevalTests.ModelTests
 {
@@ -76,7 +77,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
         public void A_point_is_a_tuple_with_w_equal_1()
         {
             //Assign
-            var p = new ChevalPoint(4, -4, 3);
+            var p = Point(4, -4, 3);
             //Assert
             p.Should().BeAssignableTo<ChevalTuple>();
             p.W.Should().Be(1.0);
@@ -93,7 +94,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
         public void A_vector_is_a_tuple_with_w_equal_0()
         {
             //Assign
-            var v = new ChevalVector(4, -4, 3);
+            var v = Vector(4, -4, 3);
             //Assert
             v.Should().BeAssignableTo<ChevalTuple>();
             v.W.Should().Be(0.0);
@@ -108,13 +109,13 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
             var t2 = new ChevalTuple(4, -4, 3, 1.0);
             var t3 = new ChevalTuple(4, 4, 3, 0);
 
-            var p1 = new ChevalPoint(4, -4, 3);
-            var p2 = new ChevalPoint(4, -4, 3);
-            var p3 = new ChevalPoint(4, 4, 3);
+            var p1 = Point(4, -4, 3);
+            var p2 = Point(4, -4, 3);
+            var p3 = Point(4, 4, 3);
 
-            var v1 = new ChevalVector(4, -4, 3);
-            var v2 = new ChevalVector(4, -4, 3);
-            var v3 = new ChevalVector(4, 4, 3);
+            var v1 = Vector(4, -4, 3);
+            var v2 = Vector(4, -4, 3);
+            var v3 = Vector(4, 4, 3);
             //Assert
 
             Assert.IsTrue(t1 == p2);
@@ -162,11 +163,11 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
         public void Adding_Two_Vectors_Results_In_Vector()
         {
             //Assign
-            var a1 = new ChevalVector(3, -2, 5);
-            var a2 = new ChevalVector(-2, 3, 1);
+            var a1 = Vector(3, -2, 5);
+            var a2 = Vector(-2, 3, 1);
 
             //Act
-            var expected = new ChevalVector(1, 1, 6);
+            var expected = Vector(1, 1, 6);
             var result = a1 + a2;
 
             //Assert
@@ -178,11 +179,11 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
         public void Adding_Vectors_To_Point_Results_In_Point()
         {
             //Assign
-            var a1 = new ChevalPoint(3, -2, 5);
-            var a2 = new ChevalVector(-2, 3, 1);
+            var a1 = Point(3, -2, 5);
+            var a2 = Vector(-2, 3, 1);
 
             //Act
-            var expected = new ChevalPoint(1, 1, 6);
+            var expected = Point(1, 1, 6);
             var result = a1 + a2;
 
             //Assert
@@ -201,11 +202,11 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
         public void Subtracting_two_points_results_in_vector()
         {
             //Assign
-            var p1 = new ChevalPoint(3, 2, 1);
-            var p2 = new ChevalPoint(5, 6, 7);
+            var p1 = Point(3, 2, 1);
+            var p2 = Point(5, 6, 7);
 
             //Act
-            var expected = new ChevalVector(-2, -4, -6);
+            var expected = Vector(-2, -4, -6);
             var result = p1 - p2;
 
             //Assert
@@ -223,11 +224,11 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
         public void Subtracting_point_from_a_vector_results_in_point()
         {
             //Assign
-            var p1 = new ChevalPoint(3, 2, 1);
-            var v1 = new ChevalVector(5, 6, 7);
+            var p1 = Point(3, 2, 1);
+            var v1 = Vector(5, 6, 7);
 
             //Act
-            var expected = new ChevalPoint(-2, -4, -6);
+            var expected = Point(-2, -4, -6);
             var result = p1 - v1;
 
             //Assert
@@ -245,11 +246,11 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
         public void Subtracting_two_vectors_results_in_vector()
         {
             //Assign
-            var v1 = new ChevalVector(3, 2, 1);
-            var v2 = new ChevalVector(5, 6, 7);
+            var v1 = Vector(3, 2, 1);
+            var v2 = Vector(5, 6, 7);
 
             //Act
-            var expected = new ChevalVector(-2, -4, -6);
+            var expected = Vector(-2, -4, -6);
             var result = v1 - v2;
 
             //Assert

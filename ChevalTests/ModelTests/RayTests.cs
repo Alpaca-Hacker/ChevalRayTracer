@@ -6,6 +6,7 @@ using Cheval.Models;
 using Cheval.Models.Primitives;
 using FluentAssertions;
 using NUnit.Framework;
+using static Cheval.Models.ChevalTuple;
 
 namespace ChevalTests.ModelTests
 {
@@ -23,8 +24,8 @@ namespace ChevalTests.ModelTests
         public void Creating_ray_test()
         {
             //Assign
-            var origin = new ChevalPoint(1, 2, 3);
-            var dir = new ChevalVector(4,5,6);
+            var origin = Point(1, 2, 3);
+            var dir = Vector(4,5,6);
             //Act
             var ray = new Ray(origin, dir);
             //Assert
@@ -43,16 +44,16 @@ namespace ChevalTests.ModelTests
         public void Computing_a_point_from_a_distance()
         {
             //Assign
-            var ray = new Ray(new ChevalPoint(2,3,4), new ChevalVector(1,0,0) );
+            var ray = new Ray(Point(2,3,4), Vector(1,0,0) );
             //Act
             var result0 = ray.Position(0);
-            var expected0 = new ChevalPoint(2,3,4);
+            var expected0 = Point(2,3,4);
             var result1 = ray.Position(1);
-            var expected1 = new ChevalPoint(3, 3, 4);
+            var expected1 = Point(3, 3, 4);
             var resultM1 = ray.Position(-1);
-            var expectedM1 = new ChevalPoint(1, 3, 4);
+            var expectedM1 = Point(1, 3, 4);
             var result25 = ray.Position(2.5);
-            var expected25 = new ChevalPoint(4.5, 3, 4);
+            var expected25 = Point(4.5, 3, 4);
             //Assert
             result0.Should().BeEquivalentTo(expected0);
             result1.Should().BeEquivalentTo(expected1);
@@ -72,7 +73,7 @@ namespace ChevalTests.ModelTests
         public void Ray_interacts_with_sphere_twice()
         {
             //Assign
-            var ray = new Ray(new ChevalPoint(0,0, -5), new ChevalVector(0,0,1) );
+            var ray = new Ray(Point(0,0, -5), Vector(0,0,1) );
             var s = new Sphere();
             //Act
             var xs = ray.Intersect(s);
@@ -94,7 +95,7 @@ namespace ChevalTests.ModelTests
         public void Ray_interacts_with_sphere_at_tangent()
         {
             //Assign
-            var ray = new Ray(new ChevalPoint(0, 1, -5), new ChevalVector(0, 0, 1));
+            var ray = new Ray(Point(0, 1, -5), Vector(0, 0, 1));
             var s = new Sphere();
             //Act
             var xs = ray.Intersect(s);
@@ -114,7 +115,7 @@ namespace ChevalTests.ModelTests
         public void Ray_misses_sphere()
         {
             //Assign
-            var ray = new Ray(new ChevalPoint(0, 2, -5), new ChevalVector(0, 0, 1));
+            var ray = new Ray(Point(0, 2, -5), Vector(0, 0, 1));
             var s = new Sphere();
             //Act
             var xs = ray.Intersect(s);
@@ -134,7 +135,7 @@ namespace ChevalTests.ModelTests
         public void Ray_interacts_with_sphere_when_inside()
         {
             //Assign
-            var ray = new Ray(new ChevalPoint(0, 0, -0), new ChevalVector(0, 0, 1));
+            var ray = new Ray(Point(0, 0, -0), Vector(0, 0, 1));
             var s = new Sphere();
             //Act
             var xs = ray.Intersect(s);
@@ -156,7 +157,7 @@ namespace ChevalTests.ModelTests
         public void Ray_interacts_with_sphere_when_behind()
         {
             //Assign
-            var ray = new Ray(new ChevalPoint(0, 0, 5), new ChevalVector(0, 0, 1));
+            var ray = new Ray(Point(0, 0, 5), Vector(0, 0, 1));
             var s = new Sphere();
             //Act
             var xs = ray.Intersect(s);
@@ -177,7 +178,7 @@ namespace ChevalTests.ModelTests
         public void Intersect_sets_object_on_intersection()
         {
             //Assign
-            var ray = new Ray(new ChevalPoint(0, 0, -5), new ChevalVector(0, 0, 1));
+            var ray = new Ray(Point(0, 0, -5), Vector(0, 0, 1));
             var s = new Sphere();
             //Act
             var xs = ray.Intersect(s);
@@ -198,12 +199,12 @@ namespace ChevalTests.ModelTests
         public void Translating_a_ray_tests()
         {
             //Assign
-            var r = new Ray(new ChevalPoint(1,2,3), new ChevalVector(0,1,0));
+            var r = new Ray(Point(1,2,3), Vector(0,1,0));
             var m = Transform.Translation(3, 4, 5);
             //Act
             var result = r.Transform(m);
-            var expectedOrigin = new ChevalPoint(4,6,8);
-            var expectedDirection = new ChevalVector(0,1,0);
+            var expectedOrigin = Point(4,6,8);
+            var expectedDirection = Vector(0,1,0);
             //Assert
             result.Origin.Should().BeEquivalentTo(expectedOrigin);
             result.Direction.Should().BeEquivalentTo(expectedDirection);
@@ -220,12 +221,12 @@ namespace ChevalTests.ModelTests
         public void scaling_a_ray_test()
         {
             //Assign
-            var r = new Ray(new ChevalPoint(1, 2, 3), new ChevalVector(0, 1, 0));
+            var r = new Ray(Point(1, 2, 3), Vector(0, 1, 0));
             var m = Transform.Scaling(2,3, 4);
             //Act
             var result = r.Transform(m);
-            var expectedOrigin = new ChevalPoint(2, 6, 12);
-            var expectedDirection = new ChevalVector(0, 3, 0);
+            var expectedOrigin = Point(2, 6, 12);
+            var expectedDirection = Vector(0, 3, 0);
             //Assert
             result.Origin.Should().BeEquivalentTo(expectedOrigin);
             result.Direction.Should().BeEquivalentTo(expectedDirection);
@@ -244,7 +245,7 @@ namespace ChevalTests.ModelTests
         public void Intersecting_a_scaled_sphere_with_a_ray()
         {
             //Assign
-            var r= new Ray(new ChevalPoint(0,0,-5), new ChevalVector(0,0,1));
+            var r= new Ray(Point(0,0,-5), Vector(0,0,1));
             var s = new Sphere();
             //Act
             s.Transform = Transform.Scaling(2, 2, 2);
@@ -267,7 +268,7 @@ namespace ChevalTests.ModelTests
         public void Intersecting_a_translated_sphere_with_a_ray()
         {
             //Assign
-            var r = new Ray(new ChevalPoint(0, 0, -5), new ChevalVector(0, 0, 1));
+            var r = new Ray(Point(0, 0, -5), Vector(0, 0, 1));
             var s = new Sphere();
             //Act
             s.Transform = Transform.Translation(5, 0, 0);

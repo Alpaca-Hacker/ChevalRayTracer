@@ -3,6 +3,7 @@ using Cheval.Helper;
 using Cheval.Models;
 using FluentAssertions;
 using NUnit.Framework;
+using static Cheval.Models.ChevalTuple;
 
 namespace ChevalTests.HelperTests
 {
@@ -19,9 +20,9 @@ namespace ChevalTests.HelperTests
         {
             //Assign
             var transform = Transform.Translation(5, -3, 2);
-            var p = new ChevalPoint(-3, 4, 5);
+            var p = Point(-3, 4, 5);
             //Act
-            var expected = new ChevalPoint(2,1,7);
+            var expected = Point(2,1,7);
             var result = transform * p;
             //Assert
             result.Should().BeEquivalentTo(expected);
@@ -38,10 +39,10 @@ namespace ChevalTests.HelperTests
         {
             //Assign
             var transform = Transform.Translation(5, -3, 2);
-            var p = new ChevalPoint(-3, 4, 5);
+            var p = Point(-3, 4, 5);
             var inv = Matrix.Inverse(transform);
             //Act
-            var expected = new ChevalPoint(-8, 7, 3);
+            var expected = Point(-8, 7, 3);
             var result = inv * p;
             //Assert
             result.Should().BeEquivalentTo(expected);
@@ -57,7 +58,7 @@ namespace ChevalTests.HelperTests
         {
             //Assign
             var transform = Transform.Translation(5, -3, 2);
-            var v = new ChevalVector(-3, 4, 5);
+            var v = Vector(-3, 4, 5);
             //Act
             var result = transform * v;
             //Assert
@@ -74,9 +75,9 @@ namespace ChevalTests.HelperTests
         {
             //Assign
             var transform = Transform.Scaling(2, 3, 4);
-            var p = new ChevalPoint(-4, 6, 8);
+            var p = Point(-4, 6, 8);
             //Act
-            var expected = new ChevalPoint(-8, 18, 32);
+            var expected = Point(-8, 18, 32);
             var result = transform * p;
             //Assert
             result.Should().BeEquivalentTo(expected);
@@ -92,9 +93,9 @@ namespace ChevalTests.HelperTests
         {
             //Assign
             var transform = Transform.Scaling(2, 3, 4);
-            var v = new ChevalVector(-4, 6, 8);
+            var v = Vector(-4, 6, 8);
             //Act
-            var expected = new ChevalVector(-8, 18, 32);
+            var expected = Vector(-8, 18, 32);
             var result = transform * v;
             //Assert
             result.Should().BeEquivalentTo(expected);
@@ -111,10 +112,10 @@ namespace ChevalTests.HelperTests
         {
             //Assign
             var transform = Transform.Scaling(2, 3, 4);
-            var v = new ChevalVector(-4, 6, 8); 
+            var v = Vector(-4, 6, 8); 
             //Act
             var inv = Matrix.Inverse(transform);
-            var expected = new ChevalVector(-2, 2, 2);
+            var expected = Vector(-2, 2, 2);
             var result = inv * v;
             //Assert
             result.Should().BeEquivalentTo(expected);
@@ -130,9 +131,9 @@ namespace ChevalTests.HelperTests
         {
             //Assign
             var transform = Transform.Scaling(-1, 1, 1);
-            var p = new ChevalPoint(2, 3, 4);
+            var p = Point(2, 3, 4);
             //Act
-            var expected = new ChevalPoint(-2, 3, 4);
+            var expected = Point(-2, 3, 4);
             var result = transform * p;
             //Assert
             result.Should().BeEquivalentTo(expected);
@@ -149,12 +150,12 @@ namespace ChevalTests.HelperTests
         public void Rotating_around_X_test()
         {
             //Assign
-            var p = new ChevalPoint(0,1,0);
+            var p = Point(0,1,0);
             //Act
             var hq = Transform.RotationX(Math.PI / 4);
             var fq = Transform.RotationX(Math.PI / 2);
-            var expected1 = new ChevalPoint(0, Math.Sqrt(2)/2, Math.Sqrt(2) / 2);
-            var expected2 = new ChevalPoint(0,0,1);
+            var expected1 = Point(0, Math.Sqrt(2)/2, Math.Sqrt(2) / 2);
+            var expected2 = Point(0,0,1);
             var result1 = hq * p;
             var result2 = fq * p;
             //Assert
@@ -171,11 +172,11 @@ namespace ChevalTests.HelperTests
         public void Rotating_around_X_inv_test()
         {
             //Assign
-            var p = new ChevalPoint(0, 1, 0);
+            var p = Point(0, 1, 0);
             //Act
             var hq = Transform.RotationX(Math.PI / 4);
             var inv = Matrix.Inverse(hq);
-            var expected = new ChevalPoint(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2);
+            var expected = Point(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2);
             
             var result = inv * p;
             //Assert
@@ -193,12 +194,12 @@ namespace ChevalTests.HelperTests
         public void Rotating_around_Y_test()
         {
             //Assign
-            var p = new ChevalPoint(0, 0, 1);
+            var p = Point(0, 0, 1);
             //Act
             var hq = Transform.RotationY(Math.PI / 4);
             var fq = Transform.RotationY(Math.PI / 2);
-            var expected1 = new ChevalPoint(Math.Sqrt(2) / 2,0, Math.Sqrt(2) / 2);
-            var expected2 = new ChevalPoint(1, 0, 0);
+            var expected1 = Point(Math.Sqrt(2) / 2,0, Math.Sqrt(2) / 2);
+            var expected2 = Point(1, 0, 0);
             var result1 = hq * p;
             var result2 = fq * p;
             //Assert
@@ -217,12 +218,12 @@ namespace ChevalTests.HelperTests
         public void Rotating_around_Z_test()
         {
             //Assign
-            var p = new ChevalPoint(0, 1, 0);
+            var p = Point(0, 1, 0);
             //Act
             var hq = Transform.RotationZ(Math.PI / 4);
             var fq = Transform.RotationZ(Math.PI / 2);
-            var expected1 = new ChevalPoint(-Math.Sqrt(2) / 2,  Math.Sqrt(2) / 2,0);
-            var expected2 = new ChevalPoint(-1, 0, 0);
+            var expected1 = Point(-Math.Sqrt(2) / 2,  Math.Sqrt(2) / 2,0);
+            var expected2 = Point(-1, 0, 0);
             var result1 = hq * p;
             var result2 = fq * p;
             //Assert
@@ -240,10 +241,10 @@ namespace ChevalTests.HelperTests
         {
             //Assign
             var transform = Transform.Shearing(1, 0, 0, 0, 0, 0);
-            var p = new ChevalPoint(2, 3, 4);
+            var p = Point(2, 3, 4);
             //Act
             var result = transform * p;
-            var expected = new ChevalPoint(5, 3, 4);
+            var expected = Point(5, 3, 4);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -258,10 +259,10 @@ namespace ChevalTests.HelperTests
         {
             //Assign
             var transform = Transform.Shearing(0, 1, 0, 0, 0, 0);
-            var p = new ChevalPoint(2, 3, 4);
+            var p = Point(2, 3, 4);
             //Act
             var result = transform * p;
-            var expected = new ChevalPoint(6,3,4);
+            var expected = Point(6,3,4);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -276,10 +277,10 @@ namespace ChevalTests.HelperTests
         {
             //Assign
             var transform = Transform.Shearing(0, 0, 1, 0, 0, 0);
-            var p = new ChevalPoint(2, 3, 4);
+            var p = Point(2, 3, 4);
             //Act
             var result = transform * p;
-            var expected = new ChevalPoint(2, 5, 4);
+            var expected = Point(2, 5, 4);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -294,10 +295,10 @@ namespace ChevalTests.HelperTests
         {
             //Assign
             var transform = Transform.Shearing(0, 0, 0, 1, 0, 0);
-            var p = new ChevalPoint(2, 3, 4);
+            var p = Point(2, 3, 4);
             //Act
             var result = transform * p;
-            var expected = new ChevalPoint(2, 7, 4);
+            var expected = Point(2, 7, 4);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -312,10 +313,10 @@ namespace ChevalTests.HelperTests
         {
             //Assign
             var transform = Transform.Shearing(0, 0, 0, 0, 1, 0);
-            var p = new ChevalPoint(2, 3, 4);
+            var p = Point(2, 3, 4);
             //Act
             var result = transform * p;
-            var expected = new ChevalPoint(2, 3, 6);
+            var expected = Point(2, 3, 6);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -330,10 +331,10 @@ namespace ChevalTests.HelperTests
         {
             //Assign
             var transform = Transform.Shearing(0, 0, 0, 0, 0, 1);
-            var p = new ChevalPoint(2, 3, 4);
+            var p = Point(2, 3, 4);
             //Act
             var result = transform * p;
-            var expected = new ChevalPoint(2, 3, 7);
+            var expected = Point(2, 3, 7);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }

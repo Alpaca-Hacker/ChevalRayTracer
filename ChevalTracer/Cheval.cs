@@ -1,10 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Cheval.Helper;
 using Cheval.Models;
 using Cheval.Models.Primitives;
 using Cheval.Services;
-using static Cheval.Models.ChevalVector;
+using static Cheval.Models.ChevalTuple;
 
 namespace Cheval
 {
@@ -14,7 +13,7 @@ namespace Cheval
 
         static void Main(string[] args)
         {
-            var cameraOrigin = new ChevalPoint(0,0,-5);
+            var cameraOrigin = Point(0,0,-5);
             var hits = 0;
             var wallZ = 10;
             var canvasSize = 200;
@@ -32,9 +31,9 @@ namespace Cheval
                 for (var x = 0; x < canvasSize; x++)
                 {
                     var worldX = -halfCanvas + pixelSize * x;
-                    var wallHit = new ChevalPoint(worldX, worldY, wallZ);
+                    var wallHit = Point(worldX, worldY, wallZ);
 
-                    var ray = new Ray(cameraOrigin, Normalize((ChevalVector)(wallHit - cameraOrigin)));
+                    var ray = new Ray(cameraOrigin, Normalize(wallHit - cameraOrigin));
                     var inters = new Intersections(ray.Intersect(scene));
                     if (inters.List.Any())
                     {

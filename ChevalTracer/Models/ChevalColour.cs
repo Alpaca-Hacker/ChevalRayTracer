@@ -1,32 +1,100 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
 
 namespace Cheval.Models
 {
-    public class ChevalColour : ChevalTuple
+    public class ChevalColour 
     {
-        public double Red
+        public double Red { get; set; }
+        public double Green { get; set; }
+        public double Blue { get; set; }
+
+        public ChevalColour(double red, double green, double blue)
         {
-            get => X;
-            set => X = value;
+            Red = red;
+            Green = green;
+            Blue = blue;
         }
 
-        public double Green
+        public static bool operator ==(ChevalColour a, ChevalColour b)
         {
-            get => Y;
-            set => Y = value;
+            if (a is null || b is null)
+            {
+                return false;
+
+            }
+
+            var isEqual = Math.Abs(a.Red - b.Red) < Cheval.Epsilon
+                           && Math.Abs(a.Green - b.Green) < Cheval.Epsilon
+                           && Math.Abs(a.Blue - b.Blue) < Cheval.Epsilon;
+
+            return isEqual;
         }
 
-        public double Blue
+        public static bool operator !=(ChevalColour a, ChevalColour b)
         {
-            get => Z;
-            set => Z = value;
+
+            return !(a == b);
         }
 
-        public ChevalColour(double red, double green, double blue) : base(red, green, blue, double.NaN)
+
+        protected bool Equals(ChevalColour other)
         {
+            return this == other;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((ChevalColour)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = Red.GetHashCode();
+                hashCode = (hashCode * 697) ^ Green.GetHashCode();
+                hashCode = (hashCode * 697) ^ Blue.GetHashCode();
+                return hashCode;
+            }
+        }
+
+        public static ChevalColour operator +(ChevalColour a, ChevalColour b)
+        {
+            var newRed = a.Red + b.Red;
+            var newGreen = a.Green + b.Green;
+            var newBlue = a.Blue + b.Blue;
+
+            return new ChevalColour(newRed, newGreen, newBlue);
+        }
+
+        public static ChevalColour operator -(ChevalColour a, ChevalColour b)
+        {
+            var newRed = a.Red - b.Red;
+            var newGreen = a.Green - b.Green;
+            var newBlue = a.Blue - b.Blue;
+
+            return new ChevalColour(newRed, newGreen, newBlue);
+        }
+
+        public static ChevalColour operator *(ChevalColour a, ChevalColour b)
+        {
+            var newRed = a.Red * b.Red;
+            var newGreen = a.Green * b.Green;
+            var newBlue = a.Blue * b.Blue;
+
+            return new ChevalColour(newRed, newGreen, newBlue);
+        }
+
+        public static ChevalColour operator *(ChevalColour a, double b)
+        {
+            var newRed = a.Red * b;
+            var newGreen = a.Green * b;
+            var newBlue = a.Blue * b;
+
+            return new ChevalColour(newRed, newGreen, newBlue);
         }
     }
 }

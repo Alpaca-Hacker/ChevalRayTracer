@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using Cheval.Models.Primitives;
+using static Cheval.Models.ChevalTuple;
 
 namespace Cheval.Models
 {
     public class Ray
     {
-        public ChevalPoint Origin { get; set; }
-        public ChevalVector Direction { get; set; }
+        public ChevalTuple Origin { get; set; }
+        public ChevalTuple Direction { get; set; }
 
-        public Ray(ChevalPoint origin, ChevalVector direction)
+        public Ray(ChevalTuple origin, ChevalTuple direction)
         {
             Origin = origin;
             Direction = direction;
         }
 
-        public ChevalPoint Position(double t)
+        public ChevalTuple Position(double t)
         {
-            var position = (ChevalPoint)(Origin + Direction * t);
+            var position = (Origin + Direction * t);
             return position;
         }
 
@@ -28,9 +29,9 @@ namespace Cheval.Models
             var ray2 = Transform(Matrix.Inverse(sphere.Transform));
 
             var sphereToRay = ray2.Origin - sphere.Origin;
-            var a = ChevalVector.Dot(ray2.Direction, ray2.Direction);
-            var b = 2 * ChevalVector.Dot(ray2.Direction, sphereToRay);
-            var c = ChevalVector.Dot(sphereToRay, sphereToRay)-1;
+            var a = Dot(ray2.Direction, ray2.Direction);
+            var b = 2 * Dot(ray2.Direction, sphereToRay);
+            var c = Dot(sphereToRay, sphereToRay)-1;
 
             var discriminant = b * b - 4 * a * c;
 
@@ -50,8 +51,8 @@ namespace Cheval.Models
 
         public Ray Transform(Matrix matrix)
         {
-            var newOrigin = (ChevalPoint) (Origin * matrix);
-            var newDirection = (ChevalVector) (Direction * matrix);
+            var newOrigin = Origin * matrix;
+            var newDirection = Direction * matrix;
 
             return new Ray(newOrigin, newDirection);
         }

@@ -13,8 +13,6 @@ namespace Cheval.Models
         public bool IsPoint => Math.Abs(W - 1.0) < Cheval.Epsilon;
         public bool IsVector => Math.Abs(W) < Cheval.Epsilon;
 
-
-
         public ChevalTuple(double x, double y, double z, double w)
         {
             X = x;
@@ -22,6 +20,46 @@ namespace Cheval.Models
             Z = z;
             W = w;
         }
+        public static ChevalTuple Point(double x, double y, double z) 
+        {
+            return new ChevalTuple(x,y,z, 1.0);
+        }
+        public static ChevalTuple Vector(double x, double y, double z) 
+        {
+            return new ChevalTuple(x, y, z, 0.0);
+        }
+
+        public static double Magnitude(ChevalTuple vector)
+        {
+            return Math.Sqrt(vector.X * vector.X
+                             + vector.Y * vector.Y
+                             + vector.Z * vector.Z);
+        }
+
+        public static ChevalTuple Normalize(ChevalTuple vector)
+        {
+            var mag = Magnitude(vector);
+            var newX = vector.X / mag;
+            var newY = vector.Y / mag;
+            var newZ = vector.Z / mag;
+
+            return Vector(newX, newY, newZ);
+        }
+
+        public static double Dot(ChevalTuple a, ChevalTuple b)
+        {
+            var result = (a.X * b.X) + (a.Y * b.Y) + (a.Z * b.Z);
+
+            return result;
+        }
+
+        public static ChevalTuple Cross(ChevalTuple a, ChevalTuple b)
+        {
+            return Vector(a.Y * b.Z - a.Z * b.Y,
+                a.Z * b.X - a.X * b.Z,
+                a.X * b.Y - a.Y * b.X);
+        }
+
 
         #region Operators
         public static bool operator ==(ChevalTuple a, ChevalTuple b)
@@ -79,7 +117,7 @@ namespace Cheval.Models
             var newZ = a.Z + b.Z;
             var newW = a.W + b.W;
 
-            return CreateReturnTuple(newW, newX, newY, newZ);
+            return new ChevalTuple(newX, newY, newZ, newW);
         }
 
         public static ChevalTuple operator -(ChevalTuple a, ChevalTuple b)
@@ -89,7 +127,7 @@ namespace Cheval.Models
             var newZ = a.Z - b.Z;
             var newW = a.W - b.W;
 
-            return CreateReturnTuple(newW, newX, newY, newZ);
+            return new ChevalTuple(newX, newY, newZ, newW);
         }
 
         public static ChevalTuple operator -(ChevalTuple a)
@@ -100,7 +138,7 @@ namespace Cheval.Models
             var newZ = -a.Z;
             var newW = -a.W;
 
-            return CreateReturnTuple(newW, newX, newY, newZ);
+            return new ChevalTuple(newX, newY, newZ, newW);
         }
         public static ChevalTuple operator *(ChevalTuple t, double x)
         {
@@ -109,7 +147,7 @@ namespace Cheval.Models
             var newZ = t.Z * x;
             var newW = t.W * x;
 
-            return CreateReturnTuple(newW, newX, newY, newZ);
+            return new ChevalTuple(newX, newY, newZ, newW);
         }
         public static ChevalTuple operator *(double x, ChevalTuple t)
         {
@@ -118,7 +156,7 @@ namespace Cheval.Models
             var newZ = t.Z * x;
             var newW = t.W * x;
 
-            return CreateReturnTuple(newW, newX, newY, newZ);
+            return new ChevalTuple(newX, newY, newZ, newW);
         }
 
         public static ChevalTuple operator *(ChevalTuple x, ChevalTuple y)
@@ -128,7 +166,7 @@ namespace Cheval.Models
             var newZ = x.Z * y.Z;
             var newW = x.W * y.Z;
 
-            return CreateReturnTuple(newW, newX, newY, newZ);
+            return new ChevalTuple(newX, newY, newZ, newW);
         }
         public static ChevalTuple operator /(ChevalTuple t, double x)
         {
@@ -137,31 +175,10 @@ namespace Cheval.Models
             var newZ = t.Z / x;
             var newW = t.W / x;
 
-            return CreateReturnTuple(newW, newX, newY, newZ);
+            return new ChevalTuple(newX, newY, newZ,newW);
         }
 #endregion
-        public static ChevalTuple CreateReturnTuple(double newW, double newX, double newY, double newZ)
-        {
-            switch (newW)
-            {
-                case 0.0:
-                {
-                    return new ChevalVector(newX, newY, newZ);
-                }
-                case 1.0:
-                {
-                    return new ChevalPoint(newX, newY, newZ);
-                }
-                case double.NaN:
-                {
-                    return new ChevalColour(newX, newY, newZ);
-                }
-                default:
-                {
-                    return new ChevalTuple(newX, newY, newZ, newW);
-                }
-            }
-        }
+
 
     }
 
