@@ -14,7 +14,6 @@ namespace Cheval
         static void Main(string[] args)
         {
             var cameraOrigin = Point(0,0,-5);
-            var hits = 0;
             var wallZ = 10;
             var canvasSize = 200;
             double wallSize = 7.0;
@@ -22,9 +21,19 @@ namespace Cheval
             var halfCanvas = wallSize / 2;
 
             var canvas = new Canvas(canvasSize,canvasSize);
-            var colour = new ChevalColour(1,0,0);
             var scene = new Sphere();
-            scene.Transform = Transform.Shearing(1, 0, 0, 0, 0, 0);
+            var mat = new Material(new ChevalColour(1, 0.2, 1),.1, .9, .9,300);
+            scene.Material = mat;
+              //  Transform = Transform.Shearing(1, 0, 0, 0, 0, 0)
+           
+            var lightPos = Point(-10, 10, 1);
+            var lightColour = new ChevalColour(1,1,1);
+            var light = new Light
+            {
+                Position = lightPos,
+                Intensity = lightColour
+            };
+
             for (var y = 0; y < canvasSize; y++)
             {
                 var worldY = halfCanvas - pixelSize * y;
@@ -35,12 +44,14 @@ namespace Cheval
 
                     var ray = new Ray(cameraOrigin, Normalize(wallHit - cameraOrigin));
                     var inters = new Intersections(ray.Intersect(scene));
-                    if (inters.List.Any())
+                    var hit = inters.Hit();
+                    if (hit != null)
                     {
-                        hits++;
-                    }
-                    if (inters.Hit() != null)
-                    {
+                        var point = ray.Position(hit.T);
+                        var normal = scene.NormalAt(point);
+                        var eyeV = -ray.Direction;
+                        var colour = scene.Material.Lighting(light, point, eyeV, normal);
+
                         canvas.WritePixel(x, y, colour);
                     }
                 }

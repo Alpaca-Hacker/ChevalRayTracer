@@ -10,6 +10,7 @@ namespace Cheval.Models.Primitives
         public ChevalTuple Origin { get; set; }
         public double Size { get; set; }
         public Matrix Transform { get; set; }
+        public Material Material { get; set; }
 
         public Sphere()
         {
@@ -17,6 +18,7 @@ namespace Cheval.Models.Primitives
             Origin = Point(0,0,0);
             Size = 1.0;
             Transform = Helper.Transform.IdentityMatrix;
+            Material = new Material();
         }
         public ChevalTuple NormalAt(ChevalTuple point)
         {

@@ -176,5 +176,44 @@ namespace ChevalTests.ModelTests
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
+        /*
+         * Scenario: A sphere has a default material
+           Given s ← sphere()
+           When m ← s.material
+           Then m = material()
+
+         */
+        public void Sphere_has_default_material()
+        {
+            //Assign
+            var s = new Sphere();
+            //Act
+            var m = s.Material;
+            var expected = new Material(new ChevalColour(1,1,1),0.1,0.9,0.9, 200.0 );
+            //Assert
+            m.Should().BeEquivalentTo(expected);
+        }
+        /*
+         * Scenario: A sphere may be assigned a material
+           Given s ← sphere()
+           And m ← material()
+           And m.ambient ← 1
+           When s.material ← m
+           Then s.material = m
+         */
+        [Test]
+        public void Sphere_may_be_assigned_material()
+        {
+            //Assign
+            var s= new Sphere();
+            var m = new Material
+            {
+                Ambient = 1
+            };
+            //Act
+            s.Material = m;
+            //Assert
+            s.Material.Should().BeEquivalentTo(m);
+        }
     }
 }
