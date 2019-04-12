@@ -1,9 +1,10 @@
 ﻿using System.Linq;
+using Cheval.DataStructure;
 using Cheval.Helper;
 using Cheval.Models;
-using Cheval.Models.Primitives;
+using Cheval.Models.Shapes;
 using Cheval.Services;
-using static Cheval.Models.ChevalTuple;
+using static Cheval.DataStructure.ChevalTuple;
 
 namespace Cheval
 {
@@ -21,9 +22,9 @@ namespace Cheval
             var halfCanvas = wallSize / 2;
 
             var canvas = new Canvas(canvasSize,canvasSize);
-            var scene = new Sphere();
-            var mat = new Material(new ChevalColour(1, 0.2, 1),.1, .9, .9,300);
-            scene.Material = mat;
+            var scene = Scene.Default();
+          //  var mat = new Material(new ChevalColour(1, 0.2, 1),.1, .9, .9,300);
+           // scene.Material = mat;
               //  Transform = Transform.Shearing(1, 0, 0, 0, 0, 0)
            
             var lightPos = Point(-10, 10, 1);
@@ -33,7 +34,8 @@ namespace Cheval
                 Position = lightPos,
                 Intensity = lightColour
             };
-
+           // scene.Light = light;
+            scene.Shapes[1].Transform = Transform.Translation(-2, 0, 2);
             for (var y = 0; y < canvasSize; y++)
             {
                 var worldY = halfCanvas - pixelSize * y;
@@ -43,17 +45,7 @@ namespace Cheval
                     var wallHit = Point(worldX, worldY, wallZ);
 
                     var ray = new Ray(cameraOrigin, Normalize(wallHit - cameraOrigin));
-                    var inters = new Intersections(ray.Intersect(scene));
-                    var hit = inters.Hit();
-                    if (hit != null)
-                    {
-                        var point = ray.Position(hit.T);
-                        var normal = scene.NormalAt(point);
-                        var eyeV = -ray.Direction;
-                        var colour = scene.Material.Lighting(light, point, eyeV, normal);
-
-                        canvas.WritePixel(x, y, colour);
-                    }
+                    canvas.WritePixel(x, y, scene.ColourAt(ray));
                 }
             }
             System.IO.File.WriteAllText(@".\Scene.ppm", canvas.ToPPM());

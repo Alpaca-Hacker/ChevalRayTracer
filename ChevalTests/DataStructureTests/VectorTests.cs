@@ -1,14 +1,13 @@
 ﻿using System;
+using Cheval.DataStructure;
 using FluentAssertions;
 using NUnit.Framework;
-using static Cheval.Models.ChevalTuple;
 
-namespace ChevalTests.ModelTests
+namespace ChevalTests.DataStructureTests
 {
     [TestFixture]
     public class VectorTests
     {
-   
         /*
          * Scenario: Computing the magnitude of vector(1, 0, 0)
            Given v ← vector(1, 0, 0)
@@ -36,9 +35,9 @@ namespace ChevalTests.ModelTests
         public double MagnitudeTest(double x, double y, double z)
         {
             //Assign
-            var test = Vector(x, y, z);
+            var test = ChevalTuple.Vector(x, y, z);
             //Act
-            return Magnitude(test);
+            return ChevalTuple.Magnitude(test);
         }
 
         /*
@@ -55,14 +54,14 @@ namespace ChevalTests.ModelTests
         public void NormalizeTests()
         {
             //Assign
-            var v1 = Vector(4, 0, 0);
-            var v2 = Vector(1, 2, 3);
+            var v1 = ChevalTuple.Vector(4, 0, 0);
+            var v2 = ChevalTuple.Vector(1, 2, 3);
 
             //Act
-            var expected1 = Vector(1, 0, 0);
-            var result1 = Normalize(v1);
-            var expected2 = Vector(1/Math.Sqrt(14), 2 / Math.Sqrt(14), 3 / Math.Sqrt(14));
-            var result2 = Normalize(v2);
+            var expected1 = ChevalTuple.Vector(1, 0, 0);
+            var result1 = ChevalTuple.Normalize(v1);
+            var expected2 = ChevalTuple.Vector(1/Math.Sqrt(14), 2 / Math.Sqrt(14), 3 / Math.Sqrt(14));
+            var result2 = ChevalTuple.Normalize(v2);
             //Assert
             result1.Should().BeEquivalentTo(expected1);
             result2.Should().BeEquivalentTo(expected2);
@@ -77,10 +76,10 @@ namespace ChevalTests.ModelTests
         public void Magnitude_of_normalized_vector_is_one()
         {
             //Assign
-            var v1 = Vector(1,2,3);
+            var v1 = ChevalTuple.Vector(1,2,3);
             //Act
-            var norm = Normalize(v1);
-            var result = Magnitude(norm);
+            var norm = ChevalTuple.Normalize(v1);
+            var result = ChevalTuple.Magnitude(norm);
             //Assert
             result.Should().Be(1);
         }
@@ -94,10 +93,10 @@ namespace ChevalTests.ModelTests
         public void Dot_product_test()
         {
             //Assign
-            var a = Vector(1,2,3);
-            var b = Vector(2,3,4);
+            var a = ChevalTuple.Vector(1,2,3);
+            var b = ChevalTuple.Vector(2,3,4);
             //Act
-            var result = Dot(a, b);
+            var result = ChevalTuple.Dot(a, b);
             //Assert
             result.Should().Be(20);
         }
@@ -112,13 +111,13 @@ namespace ChevalTests.ModelTests
         public void Cross_product_tests()
         {
             //Assign
-            var a = Vector(1,2,3);
-            var b = Vector(2,3,4);
+            var a = ChevalTuple.Vector(1,2,3);
+            var b = ChevalTuple.Vector(2,3,4);
             //Act
-            var expected1 = Vector(-1, 2, -1);
-            var result1 = Cross(a, b);
-            var expected2 = Vector(1,-2,1);
-            var result2 = Cross(b, a);
+            var expected1 = ChevalTuple.Vector(-1, 2, -1);
+            var result1 = ChevalTuple.Cross(a, b);
+            var expected2 = ChevalTuple.Vector(1,-2,1);
+            var result2 = ChevalTuple.Cross(b, a);
             //Assert
             result1.Should().BeEquivalentTo(expected1);
             result2.Should().BeEquivalentTo(expected2);

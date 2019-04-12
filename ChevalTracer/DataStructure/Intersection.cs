@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
-using System.Text;
+using Cheval.Models.Shapes;
 
-namespace Cheval.Models
+namespace Cheval.DataStructure
 {
     public class Intersection
     {
         public double T { get; set; }
-        public object Object { get; set; }
+        public Shape Object { get; set; }
 
-        public Intersection(double t, object o)
+        public Intersection(double t, Shape o)
         {
             T = t;
             Object = o;

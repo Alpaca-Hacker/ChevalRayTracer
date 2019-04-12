@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace Cheval.Models
+namespace Cheval.DataStructure
 {
     public class Matrix : IEquatable<Matrix>
     {

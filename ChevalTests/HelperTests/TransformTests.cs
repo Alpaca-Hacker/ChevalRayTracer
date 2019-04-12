@@ -1,9 +1,10 @@
 ﻿using System;
+using Cheval.DataStructure;
 using Cheval.Helper;
 using Cheval.Models;
 using FluentAssertions;
 using NUnit.Framework;
-using static Cheval.Models.ChevalTuple;
+using static Cheval.DataStructure.ChevalTuple;
 
 namespace ChevalTests.HelperTests
 {

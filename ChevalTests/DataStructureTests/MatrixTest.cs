@@ -1,11 +1,9 @@
-﻿using Cheval.Models;
+﻿using Cheval.DataStructure;
+using Cheval.Helper;
 using FluentAssertions;
 using NUnit.Framework;
-using static Cheval.Helper.Transform;
-using static Cheval.Models.ChevalTuple;
-using static Cheval.Models.Matrix;
 
-namespace ChevalTests.ModelTests
+namespace ChevalTests.DataStructureTests
 {
     public class MatrixTest
     {
@@ -267,7 +265,7 @@ namespace ChevalTests.ModelTests
             });
             var tup = new ChevalTuple(1, 2, 3, 1);
             //Act
-            var expected = Point(18, 24, 33);
+            var expected = ChevalTuple.Point(18, 24, 33);
             var result1 = mat * tup;
             var result2 = tup * mat;
             //Assert
@@ -298,7 +296,7 @@ namespace ChevalTests.ModelTests
             });
             //Act
             var expected = mat;
-            var result = mat * IdentityMatrix;
+            var result = mat * Transform.IdentityMatrix;
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -315,7 +313,7 @@ namespace ChevalTests.ModelTests
             var tuple = new ChevalTuple(1, 2, 3, 4);
             //Act
             var expected = tuple;
-            var result = tuple * IdentityMatrix;
+            var result = tuple * Transform.IdentityMatrix;
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -347,7 +345,7 @@ namespace ChevalTests.ModelTests
                 {0, 6}
 
             });
-            var result = Submatrix(matrix, 0, 2);
+            var result = Matrix.Submatrix(matrix, 0, 2);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -380,7 +378,7 @@ namespace ChevalTests.ModelTests
                 {-8, 8, 6},
                 {-7, -1, 1}
             });
-            var result = Submatrix(matrix, 2, 1);
+            var result = Matrix.Submatrix(matrix, 2, 1);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -421,7 +419,7 @@ namespace ChevalTests.ModelTests
                 {3, 0, 5, 5},
                 {0, 8, 3, 8}
             });
-            var result = Transpose(mat);
+            var result = Matrix.Transpose(mat);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -436,11 +434,11 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
         public void Transposing_identity_matrix_results_in_identity_matrix()
         {
             //Assign
-            var ident = IdentityMatrix;
+            var ident = Transform.IdentityMatrix;
             //Act
-            var result = Transpose(ident);
+            var result = Matrix.Transpose(ident);
             //Assert
-            result.Should().BeEquivalentTo(IdentityMatrix);
+            result.Should().BeEquivalentTo(Transform.IdentityMatrix);
         }
         /*
          * Scenario ​: Calculating the determinant of a 2x2 matrix ​   ​
@@ -461,7 +459,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
                 {-3,2}
             });
             //Act
-            var result = Determinant(matrix);
+            var result = Matrix.Determinant(matrix);
             //Assert
             result.Should().Be(17);
         }
@@ -486,9 +484,9 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
                 {6,-1, 5}
             });
             //Act
-            var sub = Submatrix(matrix,1,0);
-            var det = Determinant(sub);
-            var result = Minor(matrix, 1, 0);
+            var sub = Matrix.Submatrix(matrix,1,0);
+            var det = Matrix.Determinant(sub);
+            var result = Matrix.Minor(matrix, 1, 0);
             //Assert
             det.Should().Be(25);
             result.Should().Be(det);
@@ -515,10 +513,10 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
                 {6,-1, 5}
             });
             //Act
-            var result1Minor = Minor(matrix, 0, 0);
-            var result1Cofactor = Cofactor(matrix, 0, 0);
-            var result2Minor = Minor(matrix, 1, 0);
-            var result2Cofactor = Cofactor(matrix, 1, 0);
+            var result1Minor = Matrix.Minor(matrix, 0, 0);
+            var result1Cofactor = Matrix.Cofactor(matrix, 0, 0);
+            var result2Minor = Matrix.Minor(matrix, 1, 0);
+            var result2Cofactor = Matrix.Cofactor(matrix, 1, 0);
             //Assert
             result1Minor.Should().Be(-12);
             result1Cofactor.Should().Be(-12);
@@ -547,10 +545,10 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
                 {2 ,6, 4}
             });
             //Act
-            var cofact1 = Cofactor(matrix, 0, 0);
-            var cofact2 = Cofactor(matrix, 0, 1);
-            var cofact3 = Cofactor(matrix, 0, 2);
-            var result = Determinant(matrix);
+            var cofact1 = Matrix.Cofactor(matrix, 0, 0);
+            var cofact2 = Matrix.Cofactor(matrix, 0, 1);
+            var cofact3 = Matrix.Cofactor(matrix, 0, 2);
+            var result = Matrix.Determinant(matrix);
             //Assert
             cofact1.Should().Be(56);
             cofact2.Should().Be(12);
@@ -583,11 +581,11 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
                 {-6, 7, 7,-9 }
             });
             //Act
-            var cofact1 = Cofactor(matrix, 0, 0);
-            var cofact2 = Cofactor(matrix, 0, 1);
-            var cofact3 = Cofactor(matrix, 0, 2);
-            var cofact4 = Cofactor(matrix, 0, 3);
-            var result = Determinant(matrix);
+            var cofact1 = Matrix.Cofactor(matrix, 0, 0);
+            var cofact2 = Matrix.Cofactor(matrix, 0, 1);
+            var cofact3 = Matrix.Cofactor(matrix, 0, 2);
+            var cofact4 = Matrix.Cofactor(matrix, 0, 3);
+            var result = Matrix.Determinant(matrix);
             //Assert
             cofact1.Should().Be(690);
             cofact2.Should().Be(447);
@@ -618,7 +616,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
                 {9, 1, 7,-6}
             });
             //Act
-            var det = Determinant(matrix);
+            var det = Matrix.Determinant(matrix);
             bool result = matrix.IsInvertible;
             //Assert
             det.Should().Be(-2120);
@@ -646,7 +644,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
                 {0, 0, 0,0}
             });
             //Act
-            var det = Determinant(matrix);
+            var det = Matrix.Determinant(matrix);
             var result = matrix.IsInvertible;
             //Assert
             det.Should().Be(0);
@@ -690,7 +688,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
                 { -0.07895 ,-0.22368 ,-0.05263 ,0.19737},
                 { -0.52256 ,-0.81391 ,-0.30075 ,0.30639} 
             });
-            var result = Inverse(matrix);
+            var result = Matrix.Inverse(matrix);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -726,7 +724,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
                 {0.35897 , 0.35897 ,0.43590 ,0.92308 },
                 {-0.69231, -0.69231,-0.76923,-1.92308}
             });
-            var result = Inverse(matrix);
+            var result = Matrix.Inverse(matrix);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -762,7 +760,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
                 {-0.02901, -0.14630,-0.10926, 0.12963},
                 {0.17778 , 0.06667 ,-0.26667, 0.33333}
             });
-            var result = Inverse(matrix);
+            var result = Matrix.Inverse(matrix);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -801,7 +799,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
             });
             //Act
             var result = matrixA * matrixB;
-            result = result * Inverse(matrixB);
+            result = result * Matrix.Inverse(matrixB);
             //Assert
             result.Should().BeEquivalentTo(matrixA);
         }

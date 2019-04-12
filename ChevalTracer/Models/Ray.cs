@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
-using Cheval.Models.Primitives;
-using static Cheval.Models.ChevalTuple;
+using Cheval.DataStructure;
+using Cheval.Models.Shapes;
+using static Cheval.DataStructure.ChevalTuple;
 
 namespace Cheval.Models
 {
@@ -47,6 +49,18 @@ namespace Cheval.Models
                 new Intersection(t1, sphere),
                 new Intersection(t2,sphere)
             };
+        }
+
+        public List<Intersection> Intersect(Scene scene)
+        {
+            var xs = new List<Intersection>();
+            foreach (var shape in scene.Shapes)
+            {
+                var objectXs = Intersect(shape);
+                xs.AddRange(objectXs);
+            }
+
+            return xs.OrderBy(x => x.T).ToList();
         }
 
         public Ray Transform(Matrix matrix)

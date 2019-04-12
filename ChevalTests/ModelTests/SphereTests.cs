@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using Cheval.Helper;
 using Cheval.Models;
-using Cheval.Models.Primitives;
+using Cheval.Models.Shapes;
 using FluentAssertions;
 using NUnit.Framework;
-using static Cheval.Models.ChevalTuple;
+using static Cheval.DataStructure.ChevalTuple;
 
 namespace ChevalTests.ModelTests
 {

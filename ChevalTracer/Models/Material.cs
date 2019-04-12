@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Reflection.Metadata.Ecma335;
-using static Cheval.Models.ChevalTuple;
+using Cheval.DataStructure;
+using static Cheval.DataStructure.ChevalTuple;
 
 namespace Cheval.Models
 {
@@ -37,8 +37,8 @@ namespace Cheval.Models
             var ambient = effectiveColour * Ambient;
 
             var lightDotNormal = Dot(lightV, normalV);
-            var diffuse = new ChevalColour(0,0,0);
-            var specular = new ChevalColour(0, 0, 0);
+            var diffuse = new ChevalColour(0.0,0.0,0.0);
+            var specular = new ChevalColour(0.0, 0.0, 0.0);
 
             if (lightDotNormal >= 0)
             {

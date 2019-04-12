@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using Cheval.Models;
-using Cheval.Models.Primitives;
+using Cheval.DataStructure;
+using Cheval.Models.Shapes;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace ChevalTests.ModelTests
+namespace ChevalTests.DataStructureTests
 {
     public class IntersectionTests
     {

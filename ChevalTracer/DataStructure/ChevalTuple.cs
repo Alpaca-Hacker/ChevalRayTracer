@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cheval.Models
+namespace Cheval.DataStructure
 {
     public class ChevalTuple
     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using Cheval.DataStructure;
 using Cheval.Models;
 
 namespace Cheval.Helper
