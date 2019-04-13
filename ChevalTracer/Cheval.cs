@@ -1,8 +1,5 @@
-﻿using System.Linq;
-using Cheval.DataStructure;
-using Cheval.Helper;
+﻿using Cheval.Helper;
 using Cheval.Models;
-using Cheval.Models.Shapes;
 using Cheval.Services;
 using static Cheval.DataStructure.ChevalTuple;
 
@@ -14,10 +11,10 @@ namespace Cheval
 
         static void Main(string[] args)
         {
-            var cameraOrigin = Point(0,0,-5);
+            var cameraOrigin = Point(-2,0,-10);
             var wallZ = 10;
             var canvasSize = 200;
-            double wallSize = 7.0;
+            double wallSize = 9.0;
             double pixelSize = wallSize / canvasSize;
             var halfCanvas = wallSize / 2;
 
@@ -27,15 +24,15 @@ namespace Cheval
            // scene.Material = mat;
               //  Transform = Transform.Shearing(1, 0, 0, 0, 0, 0)
            
-            var lightPos = Point(-10, 10, 1);
+            var lightPos = Point(-10, -10, 1);
             var lightColour = new ChevalColour(1,1,1);
             var light = new Light
             {
                 Position = lightPos,
                 Intensity = lightColour
             };
-           // scene.Light = light;
-            scene.Shapes[1].Transform = Transform.Translation(-2, 0, 2);
+            scene.Lights.Add(light);
+            scene.Shapes[1].Transform = Transform.Translation(-2, 1, 2);
             for (var y = 0; y < canvasSize; y++)
             {
                 var worldY = halfCanvas - pixelSize * y;

@@ -21,7 +21,7 @@ namespace ChevalTests.ModelTests
             //Assign
             var w = new Scene();
             //Assert
-            w.Light.Should().BeNull();
+            w.Lights.Should().BeNull();
             w.Shapes.Should().BeEmpty();
         }
 
@@ -60,11 +60,10 @@ namespace ChevalTests.ModelTests
             //Act
             var result = Scene.Default();
             //Assert
-            
-            result.Light.Should().BeEquivalentTo(light);
+            result.Lights[0].Should().BeEquivalentTo(light);
             result.Shapes.Should().HaveCount(2);
-            result.Shapes[0].Should().BeEquivalentTo(sphere1, options => options.Excluding(s => s.Id));
-            result.Shapes[1].Should().BeEquivalentTo(sphere2, options => options.Excluding(s => s.Id));
+            result.Shapes[0].Material.Should().BeEquivalentTo(sphere1.Material);
+            result.Shapes[1].Transform.Should().BeEquivalentTo(sphere2.Transform);
         }
         /*
          * Scenario: Intersect a world with a ray

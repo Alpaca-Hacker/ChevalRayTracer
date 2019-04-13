@@ -9,7 +9,7 @@ namespace Cheval.Models
 {
     public class Scene
     {
-        public Light Light { get; set; }
+        public List<Light> Lights { get; set; }
         public List<Sphere> Shapes { get; set; }
 
         public Scene()
@@ -34,18 +34,23 @@ namespace Cheval.Models
                 Transform = Transform.Scaling(0.5, 0.5, 0.5)
             };
             var shapeList = new List<Sphere> {sphere1, sphere2};
+            var lights = new List<Light> {light};
             var defaultScene = new Scene
             {
                 Shapes = shapeList,
-                Light = light
+                Lights = lights
             };
             return defaultScene;
         }
 
         public ChevalColour ShadeHit(Computations comps)
         {
-            //TODO Add more lights!
-            var lighting = comps.Object.Material.Lighting(Light, comps.Point, comps.EyeV, comps.NormalV);
+            var lighting = new ChevalColour(0,0,0);
+            foreach (var light in Lights)
+            {
+                lighting += comps.Object.Material.Lighting(light, comps.Point, comps.EyeV, comps.NormalV);
+             
+            }
             return lighting;
         }
 
