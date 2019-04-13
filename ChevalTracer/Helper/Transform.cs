@@ -1,6 +1,7 @@
 ﻿using System;
 using Cheval.DataStructure;
 using Cheval.Models;
+using static Cheval.DataStructure.ChevalTuple;
 
 namespace Cheval.Helper
 {
@@ -75,6 +76,23 @@ namespace Cheval.Helper
                {  0,  0,  0, 1}
             });
             return shear;
+        }
+
+        public static Matrix ViewTransform(ChevalTuple from,  ChevalTuple to, ChevalTuple up)
+        {
+            var forward = Normalize(to - from);
+            var upN = Normalize(up);
+            var left = Cross(forward, upN);
+            var trueUp = Cross(left, forward);
+            var orientation = new Matrix(new double[,]
+            {
+                { left.X, left.Y, left.Z, 0},
+                { trueUp.X, trueUp.Y, trueUp.Z, 0},
+                {-forward.X, -forward.Y, -forward.Z, 0},
+                { 0, 0, 0, 1}
+            });
+            var result = orientation * Translation(-from.X, -from.Y, -from.Z);
+            return result;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Cheval.Helper;
+﻿using System;
+using Cheval.Helper;
 using Cheval.Models;
 using Cheval.Services;
 using static Cheval.DataStructure.ChevalTuple;
@@ -33,18 +34,7 @@ namespace Cheval
             };
             scene.Lights.Add(light);
             scene.Shapes[1].Transform = Transform.Translation(-2, 1, 2);
-            for (var y = 0; y < canvasSize; y++)
-            {
-                var worldY = halfCanvas - pixelSize * y;
-                for (var x = 0; x < canvasSize; x++)
-                {
-                    var worldX = -halfCanvas + pixelSize * x;
-                    var wallHit = Point(worldX, worldY, wallZ);
-
-                    var ray = new Ray(cameraOrigin, Normalize(wallHit - cameraOrigin));
-                    canvas.WritePixel(x, y, scene.ColourAt(ray));
-                }
-            }
+            var camera = new Camera(canvasSize,canvasSize,Math.PI/2);
             System.IO.File.WriteAllText(@".\Scene.ppm", canvas.ToPPM());
         }
 
