@@ -151,5 +151,30 @@ namespace ChevalTests.ModelTests
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
+        /*
+         * Scenario: Lighting with the surface in shadow
+           Given eyev ← vector(0, 0, -1)
+           And normalv ← vector(0, 0, -1)
+           And light ← point_light(point(0, 0, -10), color(1, 1, 1))
+           And in_shadow ← true
+           When result ← lighting(m, light, position, eyev, normalv, in_shadow)
+           Then result = color(0.1, 0.1, 0.1)
+         */
+        [Test]
+        public void Lighting_with_surface_in_shadow()
+        {
+            //Assign
+            var m = new Material();
+            var position = Point(0, 0, 0);
+            var eyeV = Vector(0, 0, -1);
+            var normalV = Vector(0, 0, -1);
+            var light = PointLight(Point(0, 0, -10), new ChevalColour(1, 1, 1));
+            var inShadow = true;
+            //Act
+            var result = m.Lighting(light, position, eyeV, normalV, inShadow);
+            var expected = new ChevalColour(0.1, 0.1, 0.1);
+            //Assert
+            result.Should().BeEquivalentTo(expected);
+        }
     }
 }

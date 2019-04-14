@@ -15,6 +15,7 @@ namespace Cheval.Models
         public Scene()
         {
             Shapes = new List<Sphere>();
+            Lights = new List<Light>();
         }
 
         public static Scene Default()
@@ -48,7 +49,8 @@ namespace Cheval.Models
             var lighting = new ChevalColour(0,0,0);
             foreach (var light in Lights)
             {
-                lighting += comps.Object.Material.Lighting(light, comps.Point, comps.EyeV, comps.NormalV);
+                var inShadow = IsShadowed(comps.OverPoint);
+                lighting += comps.Object.Material.Lighting(light, comps.Point, comps.EyeV, comps.NormalV, inShadow);
              
             }
             return lighting;
@@ -57,8 +59,8 @@ namespace Cheval.Models
         public ChevalColour ColourAt(Ray ray)
         {
             var colour = new ChevalColour(0,0,0);
-            var inter = new Intersections(ray.Intersect(this));
-            var hit = inter.Hit();
+            var inters = new Intersections(ray.Intersect(this));
+            var hit = inters.Hit();
             if (hit != null)
             {
                 var comps = new Computations(hit,ray);
@@ -67,6 +69,18 @@ namespace Cheval.Models
 
             return colour;
 
+        }
+
+        public bool IsShadowed(ChevalTuple point)
+        {
+            //TODO Add lights
+            var v = Lights[0].Position - point;
+            var distance = Magnitude(v);
+            var direction = Normalize(v);
+            var ray = new Ray(point, direction);
+            var inters = new Intersections(ray.Intersect(this));
+            var hit = inters.Hit();
+            return hit != null && hit.T < distance;
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Cheval.DataStructure
         public ChevalTuple Point { get; set; }
         public ChevalTuple EyeV { get; set; }
         public ChevalTuple NormalV { get; set; }
+        public ChevalTuple OverPoint { get; set; }
         public bool Inside { get; set; }
 
         public Computations(Intersection intersection, Ray ray)
@@ -24,6 +25,8 @@ namespace Cheval.DataStructure
                 Inside = true;
                 NormalV = -NormalV;
             }
+
+            OverPoint = Point + NormalV * Cheval.Epsilon;
         }
 
     }

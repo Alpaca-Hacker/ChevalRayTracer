@@ -30,7 +30,7 @@ namespace Cheval.Models
             Shininess = shininess;
         }
 
-        public ChevalColour Lighting(Light light, ChevalTuple point, ChevalTuple eyeV, ChevalTuple normalV)
+        public ChevalColour Lighting(Light light, ChevalTuple point, ChevalTuple eyeV, ChevalTuple normalV, bool inShadow = false)
         {
             var effectiveColour = Colour * light.Intensity;
             var lightV = Normalize(light.Position - point);
@@ -52,7 +52,14 @@ namespace Cheval.Models
                     specular = light.Intensity * Specular * factor;
                 }
             }
-            return ambient + diffuse+ specular;
+
+            var returnValue = ambient;
+            if (!inShadow)
+            {
+                returnValue += diffuse + specular;
+            }
+
+            return returnValue;
         }
     }
 }
