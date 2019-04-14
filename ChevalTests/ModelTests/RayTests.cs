@@ -1,12 +1,10 @@
-﻿
-using System.Collections.Generic;
-using System.Xml.Linq;
-using Cheval.Helper;
+﻿using Cheval.Helper;
 using Cheval.Models;
 using Cheval.Models.Shapes;
 using FluentAssertions;
 using NUnit.Framework;
 using static Cheval.DataStructure.ChevalTuple;
+// ReSharper disable UseObjectOrCollectionInitializer
 
 namespace ChevalTests.ModelTests
 {
@@ -76,7 +74,7 @@ namespace ChevalTests.ModelTests
             var ray = new Ray(Point(0,0, -5), Vector(0,0,1) );
             var s = new Sphere();
             //Act
-            var xs = ray.Intersect(s);
+            var xs = s.Intersect(ray);
             //Assert
             xs.Should().HaveCount(2);
             xs[0].T.Should().Be(4.0);
@@ -98,7 +96,7 @@ namespace ChevalTests.ModelTests
             var ray = new Ray(Point(0, 1, -5), Vector(0, 0, 1));
             var s = new Sphere();
             //Act
-            var xs = ray.Intersect(s);
+            var xs = s.Intersect(ray);
             //Assert
             xs.Should().HaveCount(2);
             xs[0].T.Should().Be(5.0);
@@ -118,7 +116,7 @@ namespace ChevalTests.ModelTests
             var ray = new Ray(Point(0, 2, -5), Vector(0, 0, 1));
             var s = new Sphere();
             //Act
-            var xs = ray.Intersect(s);
+            var xs = s.Intersect(ray);
             //Assert
             xs.Should().HaveCount(0);
         }
@@ -138,7 +136,7 @@ namespace ChevalTests.ModelTests
             var ray = new Ray(Point(0, 0, -0), Vector(0, 0, 1));
             var s = new Sphere();
             //Act
-            var xs = ray.Intersect(s);
+            var xs = s.Intersect(ray);
             //Assert
             xs.Should().HaveCount(2);
             xs[0].T.Should().Be(-1.0);
@@ -160,7 +158,7 @@ namespace ChevalTests.ModelTests
             var ray = new Ray(Point(0, 0, 5), Vector(0, 0, 1));
             var s = new Sphere();
             //Act
-            var xs = ray.Intersect(s);
+            var xs = s.Intersect(ray);
             //Assert
             xs.Should().HaveCount(2);
             xs[0].T.Should().Be(-6.0);
@@ -181,7 +179,7 @@ namespace ChevalTests.ModelTests
             var ray = new Ray(Point(0, 0, -5), Vector(0, 0, 1));
             var s = new Sphere();
             //Act
-            var xs = ray.Intersect(s);
+            var xs = s.Intersect(ray);
             //Assert
             xs.Should().HaveCount(2);
             xs[0].Object.Should().BeEquivalentTo(s);
@@ -218,7 +216,7 @@ namespace ChevalTests.ModelTests
            And r2.direction = vector(0, 3, 0)
          */
         [Test]
-        public void scaling_a_ray_test()
+        public void Scaling_a_ray_test()
         {
             //Assign
             var r = new Ray(Point(1, 2, 3), Vector(0, 1, 0));
@@ -245,11 +243,11 @@ namespace ChevalTests.ModelTests
         public void Intersecting_a_scaled_sphere_with_a_ray()
         {
             //Assign
-            var r= new Ray(Point(0,0,-5), Vector(0,0,1));
+            var ray= new Ray(Point(0,0,-5), Vector(0,0,1));
             var s = new Sphere();
             //Act
             s.Transform = Transform.Scaling(2, 2, 2);
-            var xs = r.Intersect(s);
+            var xs = s.Intersect(ray);
             //Assert
             xs.Should().HaveCount(2);
             xs[0].T.Should().Be(3);
@@ -268,11 +266,11 @@ namespace ChevalTests.ModelTests
         public void Intersecting_a_translated_sphere_with_a_ray()
         {
             //Assign
-            var r = new Ray(Point(0, 0, -5), Vector(0, 0, 1));
+            var ray = new Ray(Point(0, 0, -5), Vector(0, 0, 1));
             var s = new Sphere();
             //Act
             s.Transform = Transform.Translation(5, 0, 0);
-            var xs = r.Intersect(s);
+            var xs = s.Intersect(ray);
             //Assert
             xs.Should().BeEmpty();
         }

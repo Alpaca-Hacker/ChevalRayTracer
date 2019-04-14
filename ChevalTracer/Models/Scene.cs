@@ -10,11 +10,11 @@ namespace Cheval.Models
     public class Scene
     {
         public List<Light> Lights { get; set; }
-        public List<Sphere> Shapes { get; set; }
+        public List<Shape> Shapes { get; set; }
 
         public Scene()
         {
-            Shapes = new List<Sphere>();
+            Shapes = new List<Shape>();
             Lights = new List<Light>();
         }
 
@@ -34,7 +34,7 @@ namespace Cheval.Models
             {
                 Transform = Transform.Scaling(0.5, 0.5, 0.5)
             };
-            var shapeList = new List<Sphere> {sphere1, sphere2};
+            var shapeList = new List<Shape> {sphere1, sphere2};
             var lights = new List<Light> {light};
             var defaultScene = new Scene
             {
@@ -49,7 +49,7 @@ namespace Cheval.Models
             var lighting = new ChevalColour(0,0,0);
             foreach (var light in Lights)
             {
-                var inShadow = IsShadowed(comps.OverPoint);
+                var inShadow = IsShadowed(comps.OverPoint, light);
                 lighting += comps.Object.Material.Lighting(light, comps.Point, comps.EyeV, comps.NormalV, inShadow);
              
             }
@@ -71,10 +71,9 @@ namespace Cheval.Models
 
         }
 
-        public bool IsShadowed(ChevalTuple point)
+        public bool IsShadowed(ChevalTuple point, Light light)
         {
-            //TODO Add lights
-            var v = Lights[0].Position - point;
+            var v = light.Position - point;
             var distance = Magnitude(v);
             var direction = Normalize(v);
             var ray = new Ray(point, direction);

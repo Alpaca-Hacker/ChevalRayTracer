@@ -105,7 +105,7 @@ namespace ChevalTests.ModelTests
             var w = Scene.Default();
             var p = Point(0, 10, 0);
             //Assert
-            w.IsShadowed(p).Should().BeFalse();
+            w.IsShadowed(p, w.Lights[0]).Should().BeFalse();
         }
         /*
          * Scenario: The shadow when an object is between the point and the light
@@ -120,7 +120,7 @@ namespace ChevalTests.ModelTests
             var w = Scene.Default();
             var p = Point(10, -10, 10);
             //Assert
-            w.IsShadowed(p).Should().BeTrue();
+            w.IsShadowed(p,w.Lights[0]).Should().BeTrue();
         }
         /*
          * Scenario: There is no shadow when an object is behind the light
@@ -135,7 +135,7 @@ namespace ChevalTests.ModelTests
             var w = Scene.Default();
             var p = Point(-20, 20, -20);
             //Assert
-            w.IsShadowed(p).Should().BeFalse();
+            w.IsShadowed(p, w.Lights[0]).Should().BeFalse();
         }
         /*
          *Scenario: There is no shadow when an object is behind the point
@@ -151,7 +151,7 @@ namespace ChevalTests.ModelTests
             var w = Scene.Default();
             var p = Point(-2, 2, -2);
             //Assert
-            w.IsShadowed(p).Should().BeFalse();
+            w.IsShadowed(p,w.Lights[0]).Should().BeFalse();
         }
         /*
          * Scenario: shade_hit() is given an intersection in shadow

@@ -10,7 +10,7 @@ namespace Cheval
     {
         public const double Epsilon = 0.00001;
 
-        public static void Render()
+        public static void Run()
         {
             var cameraOrigin = Point(0,1.5,-5);
             var cameraDirection = Point(0, 1, 0);

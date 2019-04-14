@@ -1,32 +1,42 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using Cheval.DataStructure;
+using static Cheval.DataStructure.ChevalTuple;
 
 namespace Cheval.Models.Shapes
 {
     public class Sphere : Shape
     {
-        public override Guid Id { get; }
-        public override ChevalTuple Origin { get; set; }
-        public override double Size { get; set; }
-        public override Matrix Transform { get; set; }
-        public override Material Material { get; set; }
-
-        public Sphere()
+        protected override ChevalTuple LocalNormalAt(ChevalTuple point)
         {
-            Id = Guid.NewGuid();
-            Origin = ChevalTuple.Point(0,0,0);
-            Size = 1.0;
-            Transform = Helper.Transform.IdentityMatrix;
-            Material = new Material();
+            var objectNormal = Normalize(point - Point(0,0,0));
+            objectNormal = Vector(objectNormal.X,objectNormal.Y,objectNormal.Z);
+
+            return Normalize(objectNormal);
         }
-        public override ChevalTuple NormalAt(ChevalTuple point)
-        {
-            var objectPoint = (Matrix.Inverse(Transform) * point);
-            var normal = ChevalTuple.Normalize((objectPoint - Origin));
-            var objectNormal = (Matrix.Transpose(Matrix.Inverse(Transform)) * normal);
-            normal = ChevalTuple.Vector(objectNormal.X,objectNormal.Y,objectNormal.Z);
 
-            return ChevalTuple.Normalize(normal);
+        protected override List<Intersection> LocalIntersect(Ray ray)
+        {
+            var sphereToRay = ray.Origin - Point(0,0,0);
+            var a = Dot(ray.Direction, ray.Direction);
+            var b = 2 * Dot(ray.Direction, sphereToRay);
+            var c = Dot(sphereToRay, sphereToRay) - 1;
+
+            var discriminant = b * b - 4 * a * c;
+
+            if (discriminant < 0)
+            {
+                return new List<Intersection>();
+            }
+
+            var t1 = (-b - Math.Sqrt(discriminant)) / (2 * a);
+            var t2 = (-b + Math.Sqrt(discriminant)) / (2 * a);
+            return new List<Intersection>
+            {
+                new Intersection(t1, this),
+                new Intersection(t2,this)
+            };
         }
     }
 }

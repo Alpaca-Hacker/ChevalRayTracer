@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Cheval.DataStructure;
 using Cheval.Helper;
 using Cheval.Models;
 using Cheval.Models.Shapes;
 using FluentAssertions;
 using NUnit.Framework;
-using static Cheval.DataStructure.ChevalTuple;
 
-namespace ChevalTests.ModelTests
+namespace ChevalTests.ShapeTests
 {
     public class SphereTests
     {
@@ -18,7 +16,7 @@ namespace ChevalTests.ModelTests
            Then s.transform = identity_matrix
            */
         [Test]
-        public void sphere_default_translation_is_identity()
+        public void Sphere_default_translation_is_identity()
         {
             //Assign
             var s = new Sphere();
@@ -57,8 +55,8 @@ namespace ChevalTests.ModelTests
             //Assign
             var s = new Sphere();
             //Act
-            var expected = Vector(1, 0, 0);
-            var n = s.NormalAt(Point(1, 0, 0));
+            var expected = ChevalTuple.Vector(1, 0, 0);
+            var n = s.NormalAt(ChevalTuple.Point(1, 0, 0));
             //Assert
             n.Should().BeEquivalentTo(expected);
         }
@@ -75,8 +73,8 @@ namespace ChevalTests.ModelTests
             //Assign
             var s = new Sphere();
             //Act
-            var expected = Vector(0, 1, 0);
-            var n = s.NormalAt(Point(0, 1, 0));
+            var expected = ChevalTuple.Vector(0, 1, 0);
+            var n = s.NormalAt(ChevalTuple.Point(0, 1, 0));
             //Assert
             n.Should().BeEquivalentTo(expected);
         }
@@ -93,8 +91,8 @@ namespace ChevalTests.ModelTests
             //Assign
             var s = new Sphere();
             //Act
-            var expected = Vector(0, 0, 1);
-            var n = s.NormalAt(Point(0, 0, 1));
+            var expected = ChevalTuple.Vector(0, 0, 1);
+            var n = s.NormalAt(ChevalTuple.Point(0, 0, 1));
             //Assert
             n.Should().BeEquivalentTo(expected);
         }
@@ -111,8 +109,8 @@ namespace ChevalTests.ModelTests
             //Assign
             var s = new Sphere();
             //Act
-            var expected = Vector(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3);
-            var n = s.NormalAt(Point(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3));
+            var expected = ChevalTuple.Vector(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3);
+            var n = s.NormalAt(ChevalTuple.Point(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3));
             //Assert
             n.Should().BeEquivalentTo(expected);
         }
@@ -129,8 +127,8 @@ namespace ChevalTests.ModelTests
             //Assign
             var s = new Sphere();
             //Act
-            var n = s.NormalAt(Point(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3));
-            var result = Normalize(n);
+            var n = s.NormalAt(ChevalTuple.Point(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3));
+            var result = ChevalTuple.Normalize(n);
             //Assert
             result.Should().BeEquivalentTo(n);
         }
@@ -149,8 +147,8 @@ namespace ChevalTests.ModelTests
             var s = new Sphere();
             s.Transform = Transform.Translation(0, 1, 0);
             //Act
-            var result = s.NormalAt(Point(0, 1.70711, -0.70711));
-            var expected = Vector(0, 0.70711, -0.70711);
+            var result = s.NormalAt(ChevalTuple.Point(0, 1.70711, -0.70711));
+            var expected = ChevalTuple.Vector(0, 0.70711, -0.70711);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -170,8 +168,8 @@ namespace ChevalTests.ModelTests
             var s = new Sphere();
             s.Transform = Transform.Scaling(1, 0.5, 1) * Transform.RotationZ(Math.PI / 5);
             //Act
-            var result = s.NormalAt(Point(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2));
-            var expected = Vector(0, 0.9701425, -0.2425356);
+            var result = s.NormalAt(ChevalTuple.Point(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2));
+            var expected = ChevalTuple.Vector(0, 0.9701425, -0.2425356);
 
             //Assert
             result.Should().BeEquivalentTo(expected);
@@ -183,6 +181,7 @@ namespace ChevalTests.ModelTests
            Then m = material()
 
          */
+        [Test]
         public void Sphere_has_default_material()
         {
             //Assign

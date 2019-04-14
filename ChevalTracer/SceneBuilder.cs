@@ -12,33 +12,33 @@ namespace Cheval
         {
             var scene = new Scene();
 
-            var floor = new Sphere
+            var floor = new Plane
             {
-                Transform = Scaling(10, 0.01, 10),
                 Material = new Material
                 {
                     Colour = new ChevalColour(1, 0.9, 0.9),
                     Specular = 0
                 }
             };
-            scene.Shapes.Add(floor);
-            scene.Shapes.Add(new Sphere
-            {
-                Transform = Translation(0, 0, 5) *
-                            RotationY(-Math.PI /4) *
-                            RotationX(Math.PI /2) *
-                            Scaling(10,0.01,10),
-                Material = floor.Material
-            });
 
-            scene.Shapes.Add(new Sphere
-            {
-                Transform = Translation(0, 0, 5) *
-                            RotationY(Math.PI / 4) *
-                            RotationX(Math.PI / 2) *
-                            Scaling(10, 0.01, 10),
-                Material = floor.Material
-            });
+            scene.Shapes.Add(floor);
+            //scene.Shapes.Add(new Sphere
+            //{
+            //    Transform = Translation(0, 0, 5) *
+            //                RotationY(-Math.PI / 4) *
+            //                RotationX(Math.PI / 2) *
+            //                Scaling(10, 0.01, 10),
+            //    Material = floor.Material
+            //});
+
+            //scene.Shapes.Add(new Sphere
+            //{
+            //    Transform = Translation(0, 0, 5) *
+            //                RotationY(Math.PI / 4) *
+            //                RotationX(Math.PI / 2) *
+            //                Scaling(10, 0.01, 10),
+            //    Material = floor.Material
+            //});
 
             scene.Shapes.Add(new Sphere
             {
@@ -76,12 +76,18 @@ namespace Cheval
             var lightPos = Point(-10, 10, -10);
             var lightColour = new ChevalColour(1, 1, 1);
 
-            var light = new Light
+            var light1 = new Light
             {
                 Position = lightPos,
                 Intensity = lightColour
             };
-            scene.Lights.Add(light);
+            var light2 = new Light
+            {
+                Position = Point(10, 10, -10),
+                Intensity = new ChevalColour(0.5, 0.5, 0.5)
+        };
+            scene.Lights.Add(light1);
+            scene.Lights.Add(light2);
 
             return scene;
         }
