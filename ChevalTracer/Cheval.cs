@@ -10,16 +10,16 @@ namespace Cheval
     {
         public const double Epsilon = 0.00001;
 
-        static void Main(string[] args)
+        public static void Render()
         {
             var cameraOrigin = Point(-2,0,-10);
-            var wallZ = 10;
-            var canvasSize = 200;
-            double wallSize = 9.0;
-            double pixelSize = wallSize / canvasSize;
-            var halfCanvas = wallSize / 2;
+            var cameraDirection = Point(-1, 0, 0);
+            var up = Point(0, 1, 1);
+            var fov = Math.PI / 10;
+            var viewTransform = Transform.ViewTransform(cameraOrigin, cameraDirection, up);
 
-            var canvas = new Canvas(canvasSize,canvasSize);
+            var canvasSize = 200;
+
             var scene = Scene.Default();
           //  var mat = new Material(new ChevalColour(1, 0.2, 1),.1, .9, .9,300);
            // scene.Material = mat;
@@ -34,7 +34,10 @@ namespace Cheval
             };
             scene.Lights.Add(light);
             scene.Shapes[1].Transform = Transform.Translation(-2, 1, 2);
-            var camera = new Camera(canvasSize,canvasSize,Math.PI/2);
+
+            var camera = new Camera(canvasSize,canvasSize,fov);
+            camera.Transform = viewTransform;
+            var canvas = camera.Render(scene);
             System.IO.File.WriteAllText(@".\Scene.ppm", canvas.ToPPM());
         }
 
