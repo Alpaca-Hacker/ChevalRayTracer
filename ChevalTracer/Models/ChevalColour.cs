@@ -4,6 +4,9 @@ namespace Cheval.Models
 {
     public class ChevalColour 
     {
+        public static ChevalColour Black => new ChevalColour(0, 0, 0);
+        public static ChevalColour White => new ChevalColour(1, 1, 1);
+
         public double Red { get; set; }
         public double Green { get; set; }
         public double Blue { get; set; }

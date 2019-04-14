@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using Cheval.DataStructure;
 using static Cheval.DataStructure.ChevalTuple;
 

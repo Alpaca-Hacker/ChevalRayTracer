@@ -35,7 +35,7 @@ namespace ChevalTests.DataStructureTests
             var expectedNormalV = Vector(0, 0, -1);
             //Assert
             comps.T.Should().Be(i.T);
-            comps.Object.Should().BeEquivalentTo(i.Object);
+            comps.Shape.Should().BeEquivalentTo(i.Object);
             comps.Point.Should().BeEquivalentTo(expectedPoint);
             comps.EyeV.Should().BeEquivalentTo(expectedEyeV);
             comps.NormalV.Should().BeEquivalentTo(expectedNormalV);

@@ -7,7 +7,20 @@ namespace Cheval.Models.Shapes
     public abstract class Shape
     {
         public Guid Id { get; }
-        public Matrix Transform { get; set; }
+        private Matrix _transform;
+        private Matrix _inverseTransform;
+        public Matrix Transform
+        {
+            get => _transform;
+            set
+            {
+                _transform = value;
+                _inverseTransform = Matrix.Inverse(value);
+            }
+        }
+
+        public Matrix InverseTransform => _inverseTransform;
+
         public Material Material { get; set; } = new Material();
 
         protected Shape()
@@ -21,17 +34,17 @@ namespace Cheval.Models.Shapes
 
         public ChevalTuple NormalAt(ChevalTuple point)
         {
-            var localPoint = Matrix.Inverse(Transform) * point;
+            var localPoint = _inverseTransform * point;
 
             var localNormal = LocalNormalAt(localPoint);
-            var worldNormal = Matrix.Transpose(Matrix.Inverse(Transform)) * localNormal;
+            var worldNormal = Matrix.Transpose(_inverseTransform) * localNormal;
 
             return ChevalTuple.Normalize(worldNormal);
         }
 
         public List<Intersection> Intersect(Ray ray)
         {
-            var localRay = ray.Transform(Matrix.Inverse(Transform));
+            var localRay = ray.Transform(_inverseTransform);
             return LocalIntersect(localRay);
         }
     }

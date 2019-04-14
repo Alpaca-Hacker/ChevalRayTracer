@@ -7,7 +7,7 @@ namespace Cheval.DataStructure
     public class Computations
     {
         public double T { get; set; }
-        public Shape Object { get; set; }
+        public Shape Shape { get; set; }
         public ChevalTuple Point { get; set; }
         public ChevalTuple EyeV { get; set; }
         public ChevalTuple NormalV { get; set; }
@@ -17,10 +17,10 @@ namespace Cheval.DataStructure
         public Computations(Intersection intersection, Ray ray)
         {
             T = intersection.T;
-            Object = intersection.Object;
+            Shape = intersection.Object;
             Point = ray.Position(T);
             EyeV = -ray.Direction;
-            NormalV = Object.NormalAt(Point);
+            NormalV = Shape.NormalAt(Point);
             if (ChevalTuple.Dot(NormalV, EyeV) < 0){
                 Inside = true;
                 NormalV = -NormalV;

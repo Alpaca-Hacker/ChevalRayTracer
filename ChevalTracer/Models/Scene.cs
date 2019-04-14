@@ -50,7 +50,7 @@ namespace Cheval.Models
             foreach (var light in Lights)
             {
                 var inShadow = IsShadowed(comps.OverPoint, light);
-                lighting += comps.Object.Material.Lighting(light, comps.Point, comps.EyeV, comps.NormalV, inShadow);
+                lighting += comps.Shape.Material.Lighting(comps.Shape, light, comps.Point, comps.EyeV, comps.NormalV, inShadow);
              
             }
             return lighting;

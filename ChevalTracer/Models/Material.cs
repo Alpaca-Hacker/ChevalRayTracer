@@ -1,5 +1,7 @@
 ﻿using System;
 using Cheval.DataStructure;
+using Cheval.Models.Shapes;
+using Cheval.Patterns;
 using static Cheval.DataStructure.ChevalTuple;
 
 namespace Cheval.Models
@@ -11,6 +13,7 @@ namespace Cheval.Models
         public double Specular { get; set; } 
         public double Shininess { get; set; }
         public ChevalColour Colour { get; set; }
+        public Pattern Pattern { get; set; }
 
         public Material()
         {
@@ -30,9 +33,14 @@ namespace Cheval.Models
             Shininess = shininess;
         }
 
-        public ChevalColour Lighting(Light light, ChevalTuple point, ChevalTuple eyeV, ChevalTuple normalV, bool inShadow = false)
+        public ChevalColour Lighting(Shape shape, Light light, ChevalTuple point, ChevalTuple eyeV, ChevalTuple normalV, bool inShadow = false)
         {
-            var effectiveColour = Colour * light.Intensity;
+            var localColour = Colour;
+            if (Pattern != null)
+            {
+                localColour = Pattern.ColourAtObject(shape, point);
+            }
+            var effectiveColour = localColour * light.Intensity;
             var lightV = Normalize(light.Position - point);
             var ambient = effectiveColour * Ambient;
 
