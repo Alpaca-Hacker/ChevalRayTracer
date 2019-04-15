@@ -68,7 +68,7 @@ namespace Cheval.Models
             var hit = inters.Hit();
             if (hit != null)
             {
-                var comps = new Computations(hit,ray);
+                var comps = new Computations(hit,ray, inters);
                 colour = ShadeHit(comps, remaining);
             }
 

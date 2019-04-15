@@ -3,6 +3,7 @@ using Cheval.DataStructure;
 using Cheval.Helper;
 using Cheval.Models;
 using Cheval.Models.Shapes;
+using Cheval.Templates;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -188,7 +189,7 @@ namespace ChevalTests.ShapeTests
             var s = new Sphere();
             //Act
             var m = s.Material;
-            var expected = new Material(new ChevalColour(1,1,1),0.1,0.9,0.9, 200.0 );
+            var expected = MaterialTemplate.Default;
             //Assert
             m.Should().BeEquivalentTo(expected);
         }
