@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Cheval.Helper;
 using Cheval.Models;
 using Cheval.Models.Shapes;
 using Cheval.Patterns;
+using static System.Math;
 using static Cheval.DataStructure.ChevalTuple;
 using static Cheval.Helper.Transform;
 
@@ -58,6 +59,9 @@ namespace Cheval
                         new ChevalColour(0,1,0),
                         new ChevalColour(0,0,1)
                     })
+                    {
+                        Transform = RotationZ(PI/4)*Scaling(.5, .5, .5)
+                    }
                 }
             });
 
@@ -68,7 +72,16 @@ namespace Cheval
                 {
                     Colour = new ChevalColour(0.5, 1, 0.1),
                     Diffuse = 0.7,
-                    Specular = 0.3
+                    Specular = 0.3,
+                    Pattern = new Ring(new List<ChevalColour>
+                    {
+                    new ChevalColour(1,0,0),
+                    new ChevalColour(0,1,0),
+                    new ChevalColour(0,0,1)
+                    })
+                    {
+                        Transform = RotationX(PI/1.5)*Scaling(.25,.25,.25)
+                    }
                 }
             });
 
@@ -79,7 +92,8 @@ namespace Cheval
                 {
                     Colour = new ChevalColour(1, 0.8, 0.1),
                     Diffuse = 0.7,
-                    Specular = 0.3
+                    Specular = 0.3,
+                    Pattern = new Gradient(new ChevalColour(0.1, 0.1, 0.5), new ChevalColour(0.5, 1, 0.1))
                 }
             });
 

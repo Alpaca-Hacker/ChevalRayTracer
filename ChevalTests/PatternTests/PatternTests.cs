@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Cheval.DataStructure;
 using Cheval.Helper;
 using Cheval.Models;
 using Cheval.Models.Shapes;
 using Cheval.Patterns;
 using FluentAssertions;
 using NUnit.Framework;
+using static Cheval.DataStructure.ChevalTuple;
 using static Cheval.Models.ChevalColour;
 
 namespace ChevalTests.PatternTests
@@ -42,9 +42,9 @@ namespace ChevalTests.PatternTests
             //Assign
             var pattern = new Stripe(White, Black);
             //Act
-            var result1 = pattern.ColourAt(ChevalTuple.Point(0, 0, 0));
-            var result2 = pattern.ColourAt(ChevalTuple.Point(0, 1, 0));
-            var result3 = pattern.ColourAt(ChevalTuple.Point(0, 2, 0));
+            var result1 = pattern.ColourAt(Point(0, 0, 0));
+            var result2 = pattern.ColourAt(Point(0, 1, 0));
+            var result3 = pattern.ColourAt(Point(0, 2, 0));
             //Assert
             result1.Should().BeEquivalentTo(White);
             result2.Should().BeEquivalentTo(White);
@@ -65,9 +65,9 @@ namespace ChevalTests.PatternTests
             //Assign
             var pattern = new Stripe(White, Black);
             //Act
-            var result1 = pattern.ColourAt(ChevalTuple.Point(0, 0, 0));
-            var result2 = pattern.ColourAt(ChevalTuple.Point(0, 0, 1));
-            var result3 = pattern.ColourAt(ChevalTuple.Point(0, 0, 2));
+            var result1 = pattern.ColourAt(Point(0, 0, 0));
+            var result2 = pattern.ColourAt(Point(0, 0, 1));
+            var result3 = pattern.ColourAt(Point(0, 0, 2));
             //Assert
             result1.Should().BeEquivalentTo(White);
             result2.Should().BeEquivalentTo(White);
@@ -89,12 +89,12 @@ namespace ChevalTests.PatternTests
             //Assign
             var pattern = new Stripe(White, Black);
             //Act
-            var result1 = pattern.ColourAt(ChevalTuple.Point(0, 0, 0));
-            var result2 = pattern.ColourAt(ChevalTuple.Point(0.9, 0, 0));
-            var result3 = pattern.ColourAt(ChevalTuple.Point(1, 0, 0));
-            var result4 = pattern.ColourAt(ChevalTuple.Point(-0.1, 0, 0));
-            var result5 = pattern.ColourAt(ChevalTuple.Point(-1, 0, 0));
-            var result6 = pattern.ColourAt(ChevalTuple.Point(-1.1, 0, 0));
+            var result1 = pattern.ColourAt(Point(0, 0, 0));
+            var result2 = pattern.ColourAt(Point(0.9, 0, 0));
+            var result3 = pattern.ColourAt(Point(1, 0, 0));
+            var result4 = pattern.ColourAt(Point(-0.1, 0, 0));
+            var result5 = pattern.ColourAt(Point(-1, 0, 0));
+            var result6 = pattern.ColourAt(Point(-1.1, 0, 0));
             //Assert
             result1.Should().BeEquivalentTo(White);
             result2.Should().BeEquivalentTo(White);
@@ -120,7 +120,7 @@ namespace ChevalTests.PatternTests
             shape.Transform = Transform.Scaling(2, 2, 2);
             var pattern = new Stripe(White, Black);
             //Act
-            ChevalColour col = pattern.ColourAtObject(shape, ChevalTuple.Point(1.5, 0, 0));
+            ChevalColour col = pattern.ColourAtObject(shape, Point(1.5, 0, 0));
             //Assert
             col.Should().BeEquivalentTo(White);
         }
@@ -140,7 +140,7 @@ namespace ChevalTests.PatternTests
             var pattern = new Stripe(White, Black);
             pattern.Transform = Transform.Scaling(2, 2, 2);
             //Act
-            ChevalColour col = pattern.ColourAtObject(shape, ChevalTuple.Point(1.5, 0, 0));
+            ChevalColour col = pattern.ColourAtObject(shape, Point(1.5, 0, 0));
             //Assert
             col.Should().BeEquivalentTo(White);
         }
@@ -162,7 +162,7 @@ namespace ChevalTests.PatternTests
             var pattern = new Stripe(White, Black);
             pattern.Transform = Transform.Translation(0.5, 0, 0);
             //Act
-            ChevalColour col = pattern.ColourAtObject(shape, ChevalTuple.Point(2.5, 0, 0));
+            ChevalColour col = pattern.ColourAtObject(shape, Point(2.5, 0, 0));
             //Assert
             col.Should().BeEquivalentTo(White);
         }
@@ -180,15 +180,15 @@ namespace ChevalTests.PatternTests
             //Assign
             var pattern = new Gradient(White,Black);
             //Act
-            var result1 = pattern.ColourAt(ChevalTuple.Point(0, 0, 0));
+            var result1 = pattern.ColourAt(Point(0, 0, 0));
             var expected1 = White;
-            var result2 = pattern.ColourAt(ChevalTuple.Point(0.25, 0, 0));
+            var result2 = pattern.ColourAt(Point(0.25, 0, 0));
             var expected2 = new ChevalColour(0.75,0.75,0.75);
-            var result3 = pattern.ColourAt(ChevalTuple.Point(0.5, 0, 0));
+            var result3 = pattern.ColourAt(Point(0.5, 0, 0));
             var expected3 = new ChevalColour(0.5, 0.5, 0.5);
-            var result4 = pattern.ColourAt(ChevalTuple.Point(0.75, 0, 0));
+            var result4 = pattern.ColourAt(Point(0.75, 0, 0));
             var expected4 = new ChevalColour(0.25, 0.25, 0.25);
-            var result5 = pattern.ColourAt(ChevalTuple.Point(1, 0, 0));
+            var result5 = pattern.ColourAt(Point(1, 0, 0));
             var expected5 = White;
             //Assert
             result1.Should().BeEquivalentTo(expected1);
@@ -196,8 +196,26 @@ namespace ChevalTests.PatternTests
             result3.Should().BeEquivalentTo(expected3);
             result4.Should().BeEquivalentTo(expected4);
             result5.Should().BeEquivalentTo(expected5);
-
-
+        }
+        /*
+         * Scenario: A ring should extend in both x and z
+           Given pattern ← ring_pattern(white, black)
+           Then pattern_at(pattern, point(0, 0, 0)) = white
+           And pattern_at(pattern, point(1, 0, 0)) = black
+           And pattern_at(pattern, point(0, 0, 1)) = black
+           # 0.708 = just slightly more than √2/2
+           And pattern_at(pattern, point(0.708, 0, 0.708)) = black
+         */
+        [Test]
+        public void Ring_should_extend_in_x_z()
+        {
+            //Assign
+            var pattern = new Ring(White, Black);
+            //Assert
+            pattern.ColourAt(Point(0,0,0)).Should().BeEquivalentTo(White);
+            pattern.ColourAt(Point(1, 0, 0)).Should().BeEquivalentTo(Black);
+            pattern.ColourAt(Point(0, 0, 1)).Should().BeEquivalentTo(Black);
+            pattern.ColourAt(Point(0.708, 0, 0.708)).Should().BeEquivalentTo(Black);
         }
     }
 }

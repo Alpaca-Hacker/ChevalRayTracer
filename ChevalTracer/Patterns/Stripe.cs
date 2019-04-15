@@ -29,12 +29,6 @@ namespace Cheval.Patterns
             return Colours[choice];
         }
 
-        //public ChevalColour ColourAtObject(Shape shape, ChevalTuple point)
-        //{
-        //    var objectPoint = shape.InverseTransform * point;
-        //    var patternPoint = InverseTransform * objectPoint;
-        //    return ColourAt(patternPoint);
-        //}
     }
 
 }
