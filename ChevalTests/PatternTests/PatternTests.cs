@@ -5,10 +5,12 @@ using Cheval.Helper;
 using Cheval.Models;
 using Cheval.Models.Shapes;
 using Cheval.Patterns;
+using Cheval.Templates;
 using FluentAssertions;
 using NUnit.Framework;
 using static Cheval.DataStructure.ChevalTuple;
 using static Cheval.Models.ChevalColour;
+using static Cheval.Templates.ColourTemplate;
 
 namespace ChevalTests.PatternTests
 {
@@ -24,10 +26,10 @@ namespace ChevalTests.PatternTests
         public void Stripe_pattern_test()
         {
             //Assign
-            var pattern = new Stripe(Black, White);
+            var pattern = new Stripe(Black, ColourTemplate.White);
             //Assert
             pattern.Colours[0].Should().BeEquivalentTo(Black);
-            pattern.Colours[1].Should().BeEquivalentTo(White);
+            pattern.Colours[1].Should().BeEquivalentTo(ColourTemplate.White);
         }
         /*
          * Scenario: A stripe pattern is constant in y

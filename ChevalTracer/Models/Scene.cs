@@ -5,6 +5,7 @@ using Cheval.Helper;
 using Cheval.Models.Shapes;
 using static Cheval.DataStructure.ChevalTuple;
 using static Cheval.Models.Light;
+using static Cheval.Templates.ColourTemplate;
 
 namespace Cheval.Models
 {
@@ -91,7 +92,7 @@ namespace Cheval.Models
 
             if (remaining < 1 || Math.Abs(comps.Shape.Material.Reflective) < Cheval.Epsilon)
             {
-                return ChevalColour.Black;
+                return Black;
             }
 
             remaining--;

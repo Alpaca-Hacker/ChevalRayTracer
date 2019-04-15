@@ -6,6 +6,7 @@ using Cheval.Models.Shapes;
 using FluentAssertions;
 using NUnit.Framework;
 using static Cheval.DataStructure.ChevalTuple;
+using static Cheval.Templates.ColourTemplate;
 
 namespace ChevalTests.ModelTests
 {
@@ -220,7 +221,7 @@ namespace ChevalTests.ModelTests
             var comps = new Computations(inter, ray);
             ChevalColour colour = scene.ReflectedColour(comps,1);
             //Assert
-            colour.Should().BeEquivalentTo(ChevalColour.Black);
+            colour.Should().BeEquivalentTo(Black);
         }
 
         /*
@@ -312,7 +313,7 @@ namespace ChevalTests.ModelTests
         public void Reflected_colour_does_not_go_infinitely()
         {
             var scene = new Scene();
-            scene.Lights.Add(Light.PointLight(Point(0,0,0), ChevalColour.White));
+            scene.Lights.Add(Light.PointLight(Point(0,0,0), White));
             var shape1 = new Plane
             {
                 Material = { Reflective = 1 },

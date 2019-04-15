@@ -11,6 +11,7 @@ using NUnit.Framework;
 using static Cheval.DataStructure.ChevalTuple;
 using static Cheval.Models.ChevalColour;
 using static Cheval.Models.Light;
+using static Cheval.Templates.ColourTemplate;
 
 namespace ChevalTests.ModelTests
 {

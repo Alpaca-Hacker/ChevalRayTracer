@@ -15,6 +15,8 @@ namespace Cheval.Models
         public ChevalColour Colour { get; set; }
         public Pattern Pattern { get; set; }
         public double Reflective { get; set; } 
+        public double RefractiveIndex { get; set; }
+        public double Transparency { get; set; }
 
         public Material()
         {
@@ -24,7 +26,11 @@ namespace Cheval.Models
             Specular = 0.9;
             Shininess = 200;
             Reflective = 0;
+            Transparency = 0.0;
+            RefractiveIndex = 1.0;
         }
+
+
 
         public Material(ChevalColour colour, double ambient, double diffuse, double specular, double shininess)
         {

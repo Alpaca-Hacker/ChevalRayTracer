@@ -4,10 +4,12 @@ using Cheval.Helper;
 using Cheval.Models;
 using Cheval.Models.Shapes;
 using Cheval.Patterns;
+using Cheval.Templates;
 using static System.Math;
 using static Cheval.DataStructure.ChevalTuple;
 using static Cheval.Helper.Transform;
 using static Cheval.Models.ChevalColour;
+using static Cheval.Templates.ColourTemplate;
 
 namespace Cheval
 {
@@ -23,7 +25,7 @@ namespace Cheval
                 {
                     Colour = new ChevalColour(1, 0.9, 0.9),
                     Specular = 0,
-                    Pattern = new Checker(ColourRed, White),
+                    Pattern = new Checker(Red, White),
                     Reflective = 0.3
                 }
             };
@@ -53,7 +55,7 @@ namespace Cheval
                 {
                     Colour = new ChevalColour(1, 0.9, 0.9),
                     Specular = 0,
-                    Pattern = new Checker(ColourRed, White)
+                    Pattern = new Checker(Red, White)
                     {
                         Transform = Translation(0, 0, 5) *
                                 RotationY(Math.PI / 4) *
@@ -72,7 +74,7 @@ namespace Cheval
                 {
                     Colour = new ChevalColour(1, 0.9, 0.9),
                     Specular = 0,
-                    Pattern = new Checker(ColourGreen, White)
+                    Pattern = new Checker(Green, White)
                     {
                         Transform = Translation(0, 0, 15) *
                                     RotationY(Math.PI / 4) *
