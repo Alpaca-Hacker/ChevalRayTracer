@@ -14,6 +14,7 @@ namespace Cheval.Models
         public double Shininess { get; set; }
         public ChevalColour Colour { get; set; }
         public Pattern Pattern { get; set; }
+        public double Reflective { get; set; } 
 
         public Material()
         {
@@ -22,6 +23,7 @@ namespace Cheval.Models
             Diffuse = 0.9;
             Specular = 0.9;
             Shininess = 200;
+            Reflective = 0;
         }
 
         public Material(ChevalColour colour, double ambient, double diffuse, double specular, double shininess)

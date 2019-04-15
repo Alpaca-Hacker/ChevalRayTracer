@@ -216,6 +216,75 @@ namespace ChevalTests.PatternTests
             pattern.ColourAt(Point(1, 0, 0)).Should().BeEquivalentTo(Black);
             pattern.ColourAt(Point(0, 0, 1)).Should().BeEquivalentTo(Black);
             pattern.ColourAt(Point(0.708, 0, 0.708)).Should().BeEquivalentTo(Black);
+            pattern.ColourAt(Point(2, 0, 0)).Should().BeEquivalentTo(White);
+        }
+
+        [Test]
+        public void Ring_should_extend_in_x_z_3_colours()
+        {
+            //Assign
+            var pattern = new Ring(White, Black);
+            var red = new ChevalColour(1, 0, 0);
+            pattern.Colours.Add(red);
+            //Assert
+            pattern.ColourAt(Point(0, 0, 0)).Should().BeEquivalentTo(White);
+            pattern.ColourAt(Point(1, 0, 0)).Should().BeEquivalentTo(Black);
+            pattern.ColourAt(Point(2, 0, 0)).Should().BeEquivalentTo(red);
+            pattern.ColourAt(Point(3, 0, 0)).Should().BeEquivalentTo(White);
+            pattern.ColourAt(Point(4, 0, 0)).Should().BeEquivalentTo(Black);
+        }
+
+        /*
+         * Scenario: Checkers should repeat in x
+           Given pattern ← checkers_pattern(white, black)
+           Then pattern_at(pattern, point(0, 0, 0)) = white
+           And pattern_at(pattern, point(0.99, 0, 0)) = white
+           And pattern_at(pattern, point(1.01, 0, 0)) = black
+           */
+        [Test]
+        public void Checker_should_repeat_in_x()
+        {
+            //Assign
+            var pattern = new Checker(White, Black);
+            //Assert
+            pattern.ColourAt(Point(0, 0, 0)).Should().BeEquivalentTo(White);
+            pattern.ColourAt(Point(0.99, 0, 0)).Should().BeEquivalentTo(White);
+            pattern.ColourAt(Point(1.01, 0, 0)).Should().BeEquivalentTo(Black);
+        }
+        /*
+
+           Scenario: Checkers should repeat in y
+           Given pattern ← checkers_pattern(white, black)
+           Then pattern_at(pattern, point(0, 0, 0)) = white
+           And pattern_at(pattern, point(0, 0.99, 0)) = white
+           And pattern_at(pattern, point(0, 1.01, 0)) = black
+           */
+        [Test]
+        public void Checker_should_repeat_in_y()
+        {
+            //Assign
+            var pattern = new Checker(White, Black);
+            //Assert
+            pattern.ColourAt(Point(0, 0, 0)).Should().BeEquivalentTo(White);
+            pattern.ColourAt(Point(0, 0.99, 0)).Should().BeEquivalentTo(White);
+            pattern.ColourAt(Point(0,1.01, 0)).Should().BeEquivalentTo(Black);
+        }
+        /*
+           Scenario: Checkers should repeat in z
+           Given pattern ← checkers_pattern(white, black)
+           Then pattern_at(pattern, point(0, 0, 0)) = white
+           And pattern_at(pattern, point(0, 0, 0.99)) = white
+           And pattern_at(pattern, point(0, 0, 1.01)) = black
+         */
+        [Test]
+        public void Checker_should_repeat_in_Z()
+        {
+            //Assign
+            var pattern = new Checker(White, Black);
+            //Assert
+            pattern.ColourAt(Point(0, 0, 0)).Should().BeEquivalentTo(White);
+            pattern.ColourAt(Point(0, 0, 0.99)).Should().BeEquivalentTo(White);
+            pattern.ColourAt(Point(0, 0, 1.01)).Should().BeEquivalentTo(Black);
         }
     }
 }

@@ -7,13 +7,9 @@ namespace Cheval.Patterns
 {
     public class Gradient :Pattern
     {
-        public Gradient(ChevalColour first, ChevalColour second)
+        public Gradient(ChevalColour first, ChevalColour second): base(first, second)
         {
-            Colours = new List<ChevalColour>
-            {
-                first,
-                second
-            };
+
         }
         public Gradient(List<ChevalColour> colours) : base(colours)
         {

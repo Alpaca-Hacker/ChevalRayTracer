@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Numerics;
 using Cheval.Models;
 using Cheval.Models.Shapes;
 
@@ -13,6 +14,7 @@ namespace Cheval.DataStructure
         public ChevalTuple NormalV { get; set; }
         public ChevalTuple OverPoint { get; set; }
         public bool Inside { get; set; }
+        public ChevalTuple ReflectV { get; set; }
 
         public Computations(Intersection intersection, Ray ray)
         {
@@ -27,6 +29,7 @@ namespace Cheval.DataStructure
             }
 
             OverPoint = Point + NormalV * Cheval.Epsilon;
+            ReflectV = ChevalTuple.Reflect(ray.Direction, NormalV);
         }
 
     }

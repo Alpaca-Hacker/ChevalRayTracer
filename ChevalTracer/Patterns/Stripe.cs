@@ -10,13 +10,9 @@ namespace Cheval.Patterns
     {
 
 
-        public Stripe(ChevalColour first, ChevalColour second) 
+        public Stripe(ChevalColour first, ChevalColour second) : base(first, second)
         {
-            Colours = new List<ChevalColour>
-            {
-                first,
-                second
-            };
+
         }
 
         public Stripe(List<ChevalColour> colours) :base (colours)

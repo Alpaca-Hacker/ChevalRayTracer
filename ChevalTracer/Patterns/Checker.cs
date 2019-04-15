@@ -6,19 +6,20 @@ using static System.Math;
 
 namespace Cheval.Patterns
 {
-    public class Ring : Pattern
+    public class Checker: Pattern
     {
-        public Ring(ChevalColour first, ChevalColour second) :base(first, second)
+        public Checker(ChevalColour first, ChevalColour second) : base(first, second)
         {
 
         }
-        public Ring(List<ChevalColour> colours) : base(colours)
+
+        public Checker(List<ChevalColour> colours) : base(colours)
         {
         }
         public override ChevalColour ColourAt(ChevalTuple point)
         {
-            var placement = Sqrt(Pow(point.X, 2) + Pow(point.Z, 2));
-            var choice = (int)Abs(Floor(placement) % Colours.Count);
+            int placement = (int)(Floor(point.X) + Floor(point.Y) + Floor(point.Z));
+            var choice = (int)Abs(placement % Colours.Count);
             return Colours[choice];
         }
     }

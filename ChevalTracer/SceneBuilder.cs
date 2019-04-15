@@ -6,6 +6,7 @@ using Cheval.Patterns;
 using static System.Math;
 using static Cheval.DataStructure.ChevalTuple;
 using static Cheval.Helper.Transform;
+using static Cheval.Models.ChevalColour;
 
 namespace Cheval
 {
@@ -21,7 +22,7 @@ namespace Cheval
                 {
                     Colour = new ChevalColour(1, 0.9, 0.9),
                     Specular = 0,
-                    Pattern = new Gradient(new ChevalColour(0.1, 0.1, 0.5), new ChevalColour(0.5, 1, 0.1))
+                    Pattern = new Checker(ColourRed, White)
 
                 }
             };

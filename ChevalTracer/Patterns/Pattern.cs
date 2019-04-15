@@ -30,6 +30,16 @@ namespace Cheval.Patterns
             Colours = new List<ChevalColour>();
         }
 
+        protected Pattern(ChevalColour first, ChevalColour second)
+        {
+            Transform = Helper.Transform.IdentityMatrix;
+            Colours = new List<ChevalColour>
+            {
+                first,
+                second
+            };
+        }
+
         protected Pattern(List<ChevalColour> colours)
         {
             Colours = colours;
