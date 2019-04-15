@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Cheval.DataStructure;
 using Cheval.Helper;
 using Cheval.Models.Shapes;
@@ -44,8 +45,9 @@ namespace Cheval.Models
             return defaultScene;
         }
 
-        public ChevalColour ShadeHit(Computations comps)
+        public ChevalColour ShadeHit(Computations comps, int remaining)
         {
+
             var lighting = new ChevalColour(0,0,0);
             foreach (var light in Lights)
             {
@@ -53,10 +55,12 @@ namespace Cheval.Models
                 lighting += comps.Shape.Material.Lighting(comps.Shape, light, comps.OverPoint, comps.EyeV, comps.NormalV, inShadow);
              
             }
-            return lighting;
+            //Todo For each light?
+            var reflected = ReflectedColour(comps, remaining);
+            return lighting + reflected;
         }
 
-        public ChevalColour ColourAt(Ray ray)
+        public ChevalColour ColourAt(Ray ray, int remaining)
         {
             var colour = new ChevalColour(0,0,0);
             var inters = new Intersections(ray.Intersect(this));
@@ -64,7 +68,7 @@ namespace Cheval.Models
             if (hit != null)
             {
                 var comps = new Computations(hit,ray);
-                colour = ShadeHit(comps);
+                colour = ShadeHit(comps, remaining);
             }
 
             return colour;
@@ -80,6 +84,21 @@ namespace Cheval.Models
             var inters = new Intersections(ray.Intersect(this));
             var hit = inters.Hit();
             return hit != null && hit.T < distance;
+        }
+
+        public ChevalColour ReflectedColour(Computations comps, int remaining)
+        {
+
+            if (remaining < 1 || Math.Abs(comps.Shape.Material.Reflective) < Cheval.Epsilon)
+            {
+                return ChevalColour.Black;
+            }
+
+            remaining--;
+
+            var reflectRay = new Ray(comps.OverPoint, comps.ReflectV);
+            var colour = ColourAt(reflectRay, remaining);
+            return colour * comps.Shape.Material.Reflective;
         }
     }
 }

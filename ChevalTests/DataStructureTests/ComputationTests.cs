@@ -3,6 +3,7 @@ using Cheval.Models;
 using Cheval.Models.Shapes;
 using FluentAssertions;
 using NUnit.Framework;
+using static System.Math;
 using static Cheval.DataStructure.ChevalTuple;
 
 namespace ChevalTests.DataStructureTests
@@ -88,5 +89,29 @@ namespace ChevalTests.DataStructureTests
             comps.EyeV.Should().BeEquivalentTo(expectedEyeV);
             comps.NormalV.Should().BeEquivalentTo(expectedNormalV);
         }
+        /*
+         * Scenario: Precomputing the reflection vector
+           2 Given shape ← plane()
+           3 And r ← ray(point(0, 1, -1), vector(0, -√2/2, √2/2))
+           4 And i ← intersection(√2, shape)
+           5 When comps ← prepare_computations(i, r)
+           6 Then comps.reflectv = vector(0, √2/2, √2/2)
+         */
+
+        [Test]
+        public void Precomputing_reflection_vector()
+        {
+            //Assign
+            var shape = new Plane();
+            var ray = new Ray(Point(0,1,-1), Vector(0,-Sqrt(2)/2, Sqrt(2) / 2));
+            var inter = new Intersection(Sqrt(2), shape);
+            //Act
+            var comps = new Computations(inter, ray);
+            var expected = Vector(0, Sqrt(2) / 2, Sqrt(2) / 2);
+            //Assert
+            comps.ReflectV.Should().BeEquivalentTo(expected);
+        }
+
+
     }
 }

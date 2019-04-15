@@ -60,7 +60,7 @@ namespace Cheval.Models
                 for (var x = 0; x < HSize; x++)
                 {
                     var ray = RayForPixel(x,y);
-                    image.WritePixel(x, y, scene.ColourAt(ray));
+                    image.WritePixel(x, y, scene.ColourAt(ray, Cheval.MaxNoOfReflections));
                 }
             }
 

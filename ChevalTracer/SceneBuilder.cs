@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Cheval.Helper;
 using Cheval.Models;
 using Cheval.Models.Shapes;
@@ -22,47 +23,77 @@ namespace Cheval
                 {
                     Colour = new ChevalColour(1, 0.9, 0.9),
                     Specular = 0,
-                    Pattern = new Checker(ColourRed, White)
-
+                    Pattern = new Checker(ColourRed, White),
+                    Reflective = 0.3
                 }
             };
 
             scene.Shapes.Add(floor);
-            //scene.Shapes.Add(new Sphere
-            //{
-            //    Transform = Translation(0, 0, 5) *
-            //                RotationY(-Math.PI / 4) *
-            //                RotationX(Math.PI / 2) *
-            //                Scaling(10, 0.01, 10),
-            //    Material = floor.Material
-            //});
 
-            //scene.Shapes.Add(new Sphere
-            //{
-            //    Transform = Translation(0, 0, 5) *
-            //                RotationY(Math.PI / 4) *
-            //                RotationX(Math.PI / 2) *
-            //                Scaling(10, 0.01, 10),
-            //    Material = floor.Material
-            //});
+            scene.Shapes.Add(new Plane
+            {
+                Transform = Translation(0, 0, 5) *
+                            RotationY(-PI / 4) *
+                            RotationX(PI / 2),
+                Material = new Material
+                {
+                    Colour = Black,
+                    Specular = 0,
+                    // Pattern = new Checker(ColourRed, White),
+                    Reflective = 1
+                }
+            });
+
+            scene.Shapes.Add(new Plane()
+            {
+                Transform = Translation(0, 0, 5) *
+                            RotationY(Math.PI / 4) *
+                            RotationX(Math.PI / 2),
+                Material = new Material
+                {
+                    Colour = new ChevalColour(1, 0.9, 0.9),
+                    Specular = 0,
+                    Pattern = new Checker(ColourRed, White)
+                    {
+                        Transform = Translation(0, 0, 5) *
+                                RotationY(Math.PI / 4) *
+                                RotationX(Math.PI / 2) *
+                                Scaling(.25, .25, .25)
+                    }
+                    //Reflective = 1
+                }
+            });
+            scene.Shapes.Add(new Plane()
+            {
+                Transform = Translation(-12, 0, -12) *
+                            RotationY(Math.PI / 4) *
+                            RotationX(Math.PI / 2),
+                Material = new Material
+                {
+                    Colour = new ChevalColour(1, 0.9, 0.9),
+                    Specular = 0,
+                    Pattern = new Checker(ColourGreen, White)
+                    {
+                        Transform = Translation(0, 0, 15) *
+                                    RotationY(Math.PI / 4) *
+                                    RotationX(Math.PI / 2) *
+                                    Scaling(.25, .25, .25)
+                    }
+                    //Reflective = 1
+                }
+            });
 
             scene.Shapes.Add(new Sphere
             {
                 Transform = Translation(-0.5, 1, 0.5),
                 Material = new Material
                 {
-                    Colour = new ChevalColour(0.1, 1, 0.5),
+                    Colour = new ChevalColour(0, 0.0, 0.0),
+                    Ambient = 0.1,
+                    Specular = 0.0,
+                    Shininess = 200,
                     Diffuse = 0.7,
-                    Specular = 0.3,
-                    Pattern = new Stripe(new List<ChevalColour>
-                    {
-                        new ChevalColour(1,0,0),
-                        new ChevalColour(0,1,0),
-                        new ChevalColour(0,0,1)
-                    })
-                    {
-                        Transform = RotationZ(PI/4)*Scaling(.5, .5, .5)
-                    }
+                    Reflective = 0.8
                 }
             });
 
@@ -81,7 +112,7 @@ namespace Cheval
                     new ChevalColour(0,0,1)
                     })
                     {
-                        Transform = RotationX(PI/1.5)*Scaling(.25,.25,.25)
+                        Transform = RotationX(PI / 1.5) * Scaling(.25, .25, .25)
                     }
                 }
             });
@@ -91,10 +122,19 @@ namespace Cheval
                 Transform = Translation(-1.5, 0.33, -0.75) * Scaling(0.33, 0.33, 0.33),
                 Material = new Material
                 {
-                    Colour = new ChevalColour(1, 0.8, 0.1),
+                    Colour = new ChevalColour(0.1, 1, 0.5),
                     Diffuse = 0.7,
                     Specular = 0.3,
-                    Pattern = new Gradient(new ChevalColour(0.1, 0.1, 0.5), new ChevalColour(0.5, 1, 0.1))
+
+                    Pattern = new Stripe(new List<ChevalColour>
+                {
+                    new ChevalColour(1,0,0),
+                    new ChevalColour(0,1,0),
+                    new ChevalColour(0,0,1)
+                })
+                    {
+                        Transform = RotationZ(PI / 4) * Scaling(.5, .5, .5)
+                    }
                 }
             });
 
