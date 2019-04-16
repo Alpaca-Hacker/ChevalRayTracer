@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Cheval.DataStructure;
 using Cheval.Models;
 using Cheval.Models.Shapes;
+using Cheval.Patterns;
 using FluentAssertions;
 using NUnit.Framework;
 using static System.Math;
 using static Cheval.DataStructure.ChevalTuple;
 using static Cheval.Helper.Transform;
+using static Cheval.Templates.ColourTemplate;
 using static Cheval.Templates.MaterialTemplate;
 
 namespace ChevalTests.DataStructureTests
@@ -182,6 +185,118 @@ namespace ChevalTests.DataStructureTests
             //Assert
             comps.N1.Should().Be(n1);
             comps.N2.Should().Be(n2);
+        }
+        /*
+         * Scenario: The refracted color with an opaque surface
+           Given w ← default_world()
+           And shape ← the first object in w
+           And r ← ray(point(0, 0, -5), vector(0, 0, 1))
+           And xs ← intersections(4:shape, 6:shape)
+           When comps ← prepare_computations(xs[0], r, xs)
+           And c ← refracted_color(w, comps, 5)
+           Then c = color(0, 0, 0)
+         */
+        [Test]
+        public void Refracted_colour_with_opaque_surface()
+        {
+            //Assign
+            var scene = Scene.Default();
+            var shape = scene.Shapes[0];
+            var ray = new Ray(Point(0,0,-5), Vector(0,0,1));
+            var xs = new Intersections(new List<Intersection>
+            {
+                new Intersection(4, shape),
+                new Intersection(6, shape)
+            });
+            //Act
+            var comps = new Computations(xs.List[0], ray, xs);
+            ChevalColour colour = scene.RefractedColour(comps, 5);
+            //Assert
+            colour.Should().BeEquivalentTo(Black);
+        }
+        /*
+         * Scenario: The refracted color under total internal reflection
+           Given w ← default_world()
+           And shape ← the first object in w
+           And shape has:
+           | material.transparency | 1.0 |
+           | material.refractive_index | 1.5 |
+           And r ← ray(point(0, 0, √2/2), vector(0, 1, 0))
+           And xs ← intersections(-√2/2:shape, √2/2:shape)
+           # NOTE: this time you're inside the sphere, so you need
+           # to look at the second intersection, xs[1], not xs[0]
+           When comps ← prepare_computations(xs[1], r, xs)
+           And c ← refracted_color(w, comps, 5)
+           Then c = color(0, 0, 0)
+         */
+        [Test]
+        public void Refracted_colour_with_total_internal_reflection()
+        {
+            //Assign
+            var scene = Scene.Default();
+            var shape = scene.Shapes[0];
+            shape.Material.Transparency = 1.0;
+            shape.Material.RefractiveIndex = 1.5;
+            var ray = new Ray(Point(0, 0,PI/2), Vector(0, 1, 0));
+            var xs = new Intersections(new List<Intersection>
+            {
+                new Intersection(-PI/2, shape),
+                new Intersection(PI/2, shape)
+            });
+            //Act
+            var comps = new Computations(xs.List[1], ray, xs);
+            var colour = scene.RefractedColour(comps, 5);
+            //Assert
+            colour.Should().BeEquivalentTo(Black);
+        }
+
+        /*
+         * Scenario: The refracted color with a refracted ray
+           Given w ← default_world()
+           And A ← the first object in w
+           And A has:
+           | material.ambient | 1.0 |
+           | material.pattern | test_pattern() |
+           And B ← the second object in w
+           And B has:
+           | material.transparency | 1.0 |
+           | material.refractive_index | 1.5 |
+           And r ← ray(point(0, 0, 0.1), vector(0, 1, 0))
+           And xs ← intersections(-0.9899:A, -0.4899:B, 0.4899:B, 0.9899:A)
+           When comps ← prepare_computations(xs[2], r, xs)
+           And c ← refracted_color(w, comps, 5)
+           Then c = color(0, 0.99888, 0.04725)
+         */
+
+        [Test]
+        public void Refracted_colour_with_refracted_ray()
+        {
+            //Assign
+            var scene = Scene.Default();
+            var shapeA = scene.Shapes[0];
+            shapeA.Material.Ambient = 1.0;
+            shapeA.Material.Pattern = new TestPattern();
+
+            var shapeB = scene.Shapes[1];
+            shapeB.Material.Transparency = 1.0;
+            shapeB.Material.RefractiveIndex = 1.5;
+
+            var ray = new Ray(Point(0, 0, 0.1), Vector(0, 1, 0));
+            var xs = new Intersections(new List<Intersection>
+            {
+                new Intersection(-0.9899, shapeA),
+                new Intersection(-0.4899, shapeB),
+                new Intersection(0.4899, shapeB),
+                new Intersection(0.9899, shapeA)
+            });
+            //Act
+            var comps = new Computations(xs.List[2], ray, xs);
+            var colour = scene.RefractedColour(comps, 5);
+            var expected = new ChevalColour(0, 0.99887, 0.04722);
+            //Assert
+            Round(colour.Red, 5).Should().Be(expected.Red);
+            Round(colour.Green, 5).Should().Be(expected.Green);
+            Round(colour.Blue, 5).Should().Be(expected.Blue);
         }
     }
 }

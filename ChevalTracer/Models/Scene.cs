@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Cheval.DataStructure;
 using Cheval.Helper;
 using Cheval.Models.Shapes;
+using static System.Math;
 using static Cheval.DataStructure.ChevalTuple;
 using static Cheval.Models.Light;
 using static Cheval.Templates.ColourTemplate;
@@ -58,7 +58,8 @@ namespace Cheval.Models
             }
             //Todo For each light?
             var reflected = ReflectedColour(comps, remaining);
-            return lighting + reflected;
+            var refracted = RefractedColour(comps, remaining);
+            return lighting + reflected + refracted;
         }
 
         public ChevalColour ColourAt(Ray ray, int remaining)
@@ -90,7 +91,7 @@ namespace Cheval.Models
         public ChevalColour ReflectedColour(Computations comps, int remaining)
         {
 
-            if (remaining < 1 || Math.Abs(comps.Shape.Material.Reflective) < Cheval.Epsilon)
+            if (remaining < 1 || Abs(comps.Shape.Material.Reflective) < Cheval.Epsilon)
             {
                 return Black;
             }
@@ -101,5 +102,32 @@ namespace Cheval.Models
             var colour = ColourAt(reflectRay, remaining);
             return colour * comps.Shape.Material.Reflective;
         }
+
+        public ChevalColour RefractedColour(Computations comps, int remaining)
+        {
+            if (remaining < 1 || Abs(comps.Shape.Material.Transparency) < Cheval.Epsilon)
+            {
+                return Black;
+
+            }
+
+            var nRatio = comps.N1 / comps.N2;
+            var cosI = Dot(comps.EyeV, comps.NormalV);
+            var sin2T = Pow(nRatio, 2) * (1 - Pow(cosI, 2));
+
+            if (sin2T > 1)
+            {
+                return Black;
+            }
+
+            var cosT = Sqrt(1.0 - sin2T);
+            var direction = comps.NormalV * (nRatio * cosI - cosT) - comps.EyeV * nRatio;
+            var refractRay = new Ray(comps.UnderPoint, direction);
+            remaining--;
+            var resultColour = ColourAt(refractRay, remaining) * comps.Shape.Material.Transparency;
+
+            return resultColour;
+        }
+
     }
 }
