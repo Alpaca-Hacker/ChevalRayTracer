@@ -10,7 +10,7 @@ namespace Cheval
     {
         public const double Epsilon = 0.00001;
         public const int MaxNoOfReflections = 5;
-        public const int Size = 1;
+        public const int Size = 2;
 
         public static void Run()
         {

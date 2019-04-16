@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using Cheval.Models;
 using Cheval.Models.Shapes;
+using static System.Math;
+using static Cheval.DataStructure.ChevalTuple;
 
 namespace Cheval.DataStructure
 {
@@ -25,7 +28,7 @@ namespace Cheval.DataStructure
             Point = ray.Position(T);
             EyeV = -ray.Direction;
             NormalV = Shape.NormalAt(Point);
-            if (ChevalTuple.Dot(NormalV, EyeV) < 0)
+            if (Dot(NormalV, EyeV) < 0)
             {
                 Inside = true;
                 NormalV = -NormalV;
@@ -33,7 +36,7 @@ namespace Cheval.DataStructure
 
             OverPoint = Point + NormalV * Cheval.Epsilon;
             UnderPoint = Point - NormalV * Cheval.Epsilon;
-            ReflectV = ChevalTuple.Reflect(ray.Direction, NormalV);
+            ReflectV = Reflect(ray.Direction, NormalV);
             var containers = new List<Shape>();
 
             if (xs == null) return;
@@ -62,7 +65,24 @@ namespace Cheval.DataStructure
 
             }
         }
+        public double Schlick()
+        {
+            var cos = Dot(EyeV, NormalV);
+            if (N1 > N2)
+            {
+                var n = N1 / N2;
+                var sin2T = Pow(n, 2) * (1.0 - Pow(cos, 2));
+                if (sin2T > 1.0)
+                {
+                    return 1.0;
+                }
 
-       
+                var cosT = Sqrt(1.0 - sin2T);
+                cos = cosT;
+            }
+
+            var r0 = Pow((N1 - N2) / (N1 + N2), 2);
+            return r0 + Pow((1 - r0) * (1 - cos), 5);
+        }
     }
 }

@@ -298,5 +298,91 @@ namespace ChevalTests.DataStructureTests
             Round(colour.Green, 5).Should().Be(expected.Green);
             Round(colour.Blue, 5).Should().Be(expected.Blue);
         }
+
+        /*
+         * Scenario: The Schlick approximation under total internal reflection
+           Given shape ← glass_sphere()
+           And r ← ray(point(0, 0, √2/2), vector(0, 1, 0))
+           And xs ← intersections(-√2/2:shape, √2/2:shape)
+           When comps ← prepare_computations(xs[1], r, xs)
+           And reflectance ← schlick(comps)
+           Then reflectance = 1.0
+         */
+        [Test]
+        public void Schlick_approx_under_total_internal_reflection()
+        {
+            //Assign
+            var shape = new Sphere();
+            shape.Material = Glass;
+            var ray = new Ray(Point(0,0, Sqrt(2)/2),Vector(0,1,0));
+            var xs = new Intersections(new List<Intersection>
+            {
+                new Intersection(-Sqrt(2)/2, shape),
+                new Intersection(Sqrt(2)/2, shape)
+            });
+            //Act
+            var comps = new Computations(xs.List[1], ray, xs);
+            double reflectance = comps.Schlick();
+            //Assert
+            reflectance.Should().Be(1.0);
+
+        }
+        /*
+         * Scenario: The Schlick approximation with a perpendicular viewing angle
+           Given shape ← glass_sphere()
+           And r ← ray(point(0, 0, 0), vector(0, 1, 0))
+           And xs ← intersections(-1:shape, 1:shape)
+           When comps ← prepare_computations(xs[1], r, xs)
+           And reflectance ← schlick(comps)
+           Then reflectance = 0.04
+         */
+
+        [Test]
+        public void Schlick_approx_with_perpendicular_angle()
+        {
+            //Assign
+            var shape = new Sphere();
+            shape.Material = Glass;
+            var ray = new Ray(Point(0, 0, 0), Vector(0, 1, 0));
+            var xs = new Intersections(new List<Intersection>
+            {
+                new Intersection(-1, shape),
+                new Intersection(1, shape)
+            });
+            //Act
+            var comps = new Computations(xs.List[1], ray, xs);
+            double reflectance = comps.Schlick();
+            //Assert
+            Round(reflectance,5).Should().Be(0.04);
+
+        }
+        /*
+         * Scenario: The Schlick approximation with small angle and n2 > n1
+           Given shape ← glass_sphere()
+           And r ← ray(point(0, 0.99, -2), vector(0, 0, 1))
+           And xs ← intersections(1.8589:shape)
+           When comps ← prepare_computations(xs[0], r, xs)
+           And reflectance ← schlick(comps)
+           Then reflectance = 0.48873
+         */
+        [Test]
+        public void Schlick_approx_with_small_angle()
+        {
+            //Assign
+            var shape = new Sphere();
+            shape.Material = Glass;
+            var ray = new Ray(Point(0, 0.99, -2), Vector(0, 0, 1));
+            var xs = new Intersections(new List<Intersection>
+            {
+                new Intersection(1.8589, shape),
+               // new Intersection(1, shape)
+            });
+            //Act
+            var comps = new Computations(xs.List[0], ray, xs);
+            double reflectance = comps.Schlick();
+            //Assert
+            reflectance.Should().Be(0.48873);
+
+        }
     }
 }

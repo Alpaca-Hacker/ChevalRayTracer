@@ -59,6 +59,14 @@ namespace Cheval.Models
             //Todo For each light?
             var reflected = ReflectedColour(comps, remaining);
             var refracted = RefractedColour(comps, remaining);
+
+            var material = comps.Shape.Material;
+            if (material.Reflective > 0 && material.Transparency > 0)
+            {
+                var reflectance = comps.Schlick();
+                return lighting + reflected * reflectance + refracted * (1 - reflectance);
+            }
+
             return lighting + reflected + refracted;
         }
 
