@@ -19,130 +19,165 @@ namespace Cheval
         {
             var scene = new Scene();
 
-            var floor = new Plane
+            var wallMaterial = new Material
             {
-                Material = new Material
+                Ambient = 0,
+                Diffuse = 0.4,
+                Specular = 0,
+                Reflective = 0.3,
+                Pattern = new Stripe(new ChevalColour(0.45,0.45,0.45), new ChevalColour(0.55, 0.55, 0.55))
                 {
-                    Colour = new ChevalColour(1, 0.9, 0.9),
-                    Specular = 0,
-                    Pattern = new Checker(Red, White),
-                    Reflective = 0.3
+                    Transform = Scaling(0.25,0.25,0.25) * RotationY(1.5708)
                 }
             };
 
-            scene.Shapes.Add(floor);
-
-            scene.Shapes.Add(new Plane
+            var floor = new Plane
             {
-                Transform = Translation(0, 0, 5) *
-                            RotationY(-PI / 4) *
-                            RotationX(PI / 2),
+                Transform = RotationY(0.31415),
                 Material = new Material
                 {
-                    Colour = Black,
                     Specular = 0,
-                    // Pattern = new Checker(ColourRed, White),
-                    Reflective = 1
+                    Pattern = new Checker(new ChevalColour(0.35, 0.35, 0.35), 
+                        new ChevalColour(0.65, 0.65, 0.65)),
+                    Reflective = 0.4
                 }
-            });
+            };
 
-            scene.Shapes.Add(new Plane()
+            var ceiling = new Plane
             {
-                Transform = Translation(0, 0, 5) *
-                            RotationY(Math.PI / 4) *
-                            RotationX(Math.PI / 2),
+                Transform = Translation(0, 5, 0),
                 Material = new Material
                 {
-                    Colour = new ChevalColour(1, 0.9, 0.9),
+                    Colour = new ChevalColour(0.8,0.8,0.8),
                     Specular = 0,
-                    Pattern = new Checker(Red, White)
-                    {
-                        Transform = Translation(0, 0, 5) *
-                                RotationY(Math.PI / 4) *
-                                RotationX(Math.PI / 2) *
-                                Scaling(.25, .25, .25)
-                    }
-                    //Reflective = 1
+                    Ambient = 0.3
                 }
-            });
-            //scene.Shapes.Add(new Plane()
-            //{
-            //    Transform = Translation(-12, 0, -12) *
-            //                RotationY(Math.PI / 4) *
-            //                RotationX(Math.PI / 2),
-            //    Material = new Material
-            //    {
-            //        Colour = new ChevalColour(1, 0.9, 0.9),
-            //        Specular = 0,
-            //        Pattern = new Checker(Green, White)
-            //        {
-            //            Transform = Translation(0, 0, 15) *
-            //                        RotationY(Math.PI / 4) *
-            //                        RotationX(Math.PI / 2) *
-            //                        Scaling(.25, .25, .25)
-            //        }
-            //        //Reflective = 1
-            //    }
-            //});
+            };
+
+            var westWall = new Plane
+            {
+                Transform = Translation(-5, 0, 0) *
+                            RotationZ(1.5708) *
+                            RotationY(1.5708),
+
+                Material = wallMaterial
+            };
+
+            var eastWall = new Plane
+            {
+                Transform = Translation(5, 0, 0) *
+                            RotationZ(1.5708) *
+                            RotationY(1.5708),
+
+                Material = wallMaterial
+            };
+
+            var northWall = new Plane
+            {
+                Transform = Translation(0, 0, 5) *
+                            RotationX(1.5708),
+
+                Material = wallMaterial
+            };
+
+            var southWall = new Plane
+            {
+                Transform = Translation(0, 0, -5) *
+                            RotationX(1.5708),
+
+                Material = wallMaterial
+            };
+
+            //Background
 
             scene.Shapes.Add(new Sphere
             {
-                Transform = Translation(-0.5, 1, 0.5),
+                Transform = Translation(4.6, 0.4, 1) *
+                            Scaling(0.4,0.4,0.4),
+
                 Material = 
                     new Material
                 {
-                    Colour = new ChevalColour(0, 0.0, 0.0),
-                    Ambient = 0.1,
-                    Specular = 0.0,
-                    Shininess = 200,
-                    Diffuse = 0.7,
-                    Reflective = 0.8
+                    Colour = new ChevalColour(0.8, 0.5, 0.3),
+                    Shininess = 50
                 }
             });
 
             scene.Shapes.Add(new Sphere
             {
-                Transform = Translation(1.5, 0.5, -0.5) * Scaling(0.5, 0.5, 0.5),
-                Material = new Material
-                {
-                    Colour = new ChevalColour(0.5, 1, 0.1),
-                    Diffuse = 0.7,
-                    Specular = 0.3,
-                    Pattern = new Ring(new List<ChevalColour>
+                Transform = Translation(4.7, 0.3, 0.4) *
+                            Scaling(0.3, 0.3, 0.3),
+
+                Material =
+                    new Material
                     {
-                    new ChevalColour(1,0,0),
-                    new ChevalColour(0,1,0),
-                    new ChevalColour(0,0,1)
-                    })
-                    {
-                        Transform = RotationX(PI / 1.5) * Scaling(.25, .25, .25)
+                        Colour = new ChevalColour(0.9, 0.4, 0.5),
+                        Shininess = 50
                     }
-                }
             });
 
             scene.Shapes.Add(new Sphere
             {
-                Transform = Translation(-1.5, 0.33, -0.75) * Scaling(0.33, 0.33, 0.33),
-                Material = MaterialTemplate.Glass
-                //    new Material
-                //{
-                //    Colour = new ChevalColour(0.1, 1, 0.5),
-                //    Diffuse = 0.7,
-                //    Specular = 0.3,
+                Transform = Translation(-1, 0.5, 4.5) *
+                            Scaling(0.5, 0.5, 0.5),
 
-                //    Pattern = new Stripe(new List<ChevalColour>
-                //{
-                //    new ChevalColour(1,0,0),
-                //    new ChevalColour(0,1,0),
-                //    new ChevalColour(0,0,1)
-                //})
-                //    {
-                //        Transform = RotationZ(PI / 4) * Scaling(.5, .5, .5)
-                //    }
-                //}
+                Material =
+                    new Material
+                    {
+                        Colour = new ChevalColour(0.4, 0.9, 0.6),
+                        Shininess = 50
+                    }
             });
 
-            var lightPos = Point(-10, 10, -10);
+            scene.Shapes.Add(new Sphere
+            {
+                Transform = Translation(-1.7, 0.3, 4.7) *
+                            Scaling(0.3, 0.3, 0.3),
+
+                Material =
+                    new Material
+                    {
+                        Colour = new ChevalColour(0.4, 0.6, 0.9),
+                        Shininess = 50
+                    }
+            });
+
+            // Foregound
+
+            var redSphere = new Sphere
+            {
+                Transform = Translation(-0.6, 1, 0.6),
+
+                Material =
+                    new Material
+                    {
+                        Colour = new ChevalColour(1, 0.3, 0.2),
+                        Shininess = 5,
+                        Specular = 0.4
+                    }
+            };
+
+            var blueSphere = new Sphere
+            {
+                Transform = Translation(0.6, 0.7, -0.6) *
+                            Scaling(0.7, 0.7, 0.7),
+
+                Material = MaterialTemplate.ColouredGlass
+
+            };
+            blueSphere.Material.Colour = new ChevalColour(0,0,0.2);
+
+            var greenSphere = new Sphere
+            {
+                Transform = Translation(-0.7, 0.5, -0.8) *
+                            Scaling(0.5, 0.5, 0.5),
+
+                Material = MaterialTemplate.ColouredGlass
+
+            };
+            greenSphere.Material.Colour = new ChevalColour(0, 0.2, 0);
+
+            var lightPos = Point(-4.9, 4.9, -1);
             var lightColour = new ChevalColour(1, 1, 1);
 
             var light1 = new Light
@@ -150,13 +185,24 @@ namespace Cheval
                 Position = lightPos,
                 Intensity = lightColour
             };
-            var light2 = new Light
-            {
-                Position = Point(10, 10, -10),
-                Intensity = new ChevalColour(0.5, 0.5, 0.5)
-        };
+        //    var light2 = new Light
+        //    {
+        //        Position = Point(10, 10, -10),
+        //        Intensity = new ChevalColour(0.5, 0.5, 0.5)
+        //};
             scene.Lights.Add(light1);
-            scene.Lights.Add(light2);
+           // scene.Lights.Add(light2);
+
+            scene.Shapes.Add(floor);
+            scene.Shapes.Add(ceiling);
+            scene.Shapes.Add(eastWall);
+            scene.Shapes.Add(westWall);
+            scene.Shapes.Add(northWall);
+            scene.Shapes.Add(southWall);
+
+            scene.Shapes.Add(redSphere);
+            scene.Shapes.Add(greenSphere);
+            scene.Shapes.Add(blueSphere);
 
             return scene;
         }
