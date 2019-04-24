@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using Cheval.Helper;
 using Cheval.Models;
+using Cheval.Samplers;
 using Cheval.Services;
 using static Cheval.DataStructure.ChevalTuple;
 
@@ -30,8 +31,11 @@ namespace Cheval
                 Transform = viewTransform
             };
             stopwatch.Start();
-            var canvas = camera.Render(scene);
-            stopwatch.Stop();
+             var canvas = camera.Render(scene, () => new RandomSuperSampler(scene, camera, 4 ));
+
+           // var canvas = camera.Render(scene);
+ 
+             stopwatch.Stop();
             Console.WriteLine($"Render Time elapsed: {stopwatch.Elapsed}");
 
             canvas.ToPPM(@".\Scene.ppm");
