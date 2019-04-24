@@ -70,20 +70,20 @@ namespace ChevalTests.ModelTests
 Jamis Buck. The Ray Tracer Challenge (Kindle Locations 829-838). The Pragmatic Bookshelf, LLC. 
          */
 
-        [Test]
-        public void PPM_header_is_correct()
-        {
-            //Assign
-            var canvas = new Canvas(5,3);
-            //Act
-            var result = canvas.ToPPM();
-            var resultLines = result.Split('\n');
-            //Assert
-            resultLines[0].Should().Be("P3");
-            resultLines[1].Should().Be("5 3");
-            resultLines[2].Should().Be("255");
+        //[Test]
+        //public void PPM_header_is_correct()
+        //{
+        //    //Assign
+        //    var canvas = new Canvas(5,3);
+        //    //Act
+        //    var result = canvas.ToPPM();
+        //    var resultLines = result.Split('\n');
+        //    //Assert
+        //    resultLines[0].Should().Be("P3");
+        //    resultLines[1].Should().Be("5 3");
+        //    resultLines[2].Should().Be("255");
 
-        }
+        //}
 
         /*
          * Scenario ​: Constructing the PPM pixel data ​   ​
@@ -104,42 +104,42 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 829-838). The Pragmatic B
 
 Jamis Buck. The Ray Tracer Challenge (Kindle Locations 853-871). The Pragmatic Bookshelf, LLC.   
          */
-        [Test]
-        public void Pixel_data_written_correctly()
-        {
-            //Assign
-            var canvas = new Canvas(5, 3);
-            var c1 = new ChevalColour(1.5,0,0);
-            var c2 = new ChevalColour(0,0.5,0);
-            var c3 = new ChevalColour(-0.5, 0, 1);
-            //Act
-            canvas.WritePixel(0, 0, c1);
-            canvas.WritePixel(2, 1, c2);
-            canvas.WritePixel(4, 2, c3);
+        //[Test]
+        //public void Pixel_data_written_correctly()
+        //{
+        //    //Assign
+        //    var canvas = new Canvas(5, 3);
+        //    var c1 = new ChevalColour(1.5,0,0);
+        //    var c2 = new ChevalColour(0,0.5,0);
+        //    var c3 = new ChevalColour(-0.5, 0, 1);
+        //    //Act
+        //    canvas.WritePixel(0, 0, c1);
+        //    canvas.WritePixel(2, 1, c2);
+        //    canvas.WritePixel(4, 2, c3);
 
-            var result = canvas.ToPPM();
-            var resultLines = result.Split('\n');
-            //Assert
-            resultLines[3].Should().Be("255 0 0 0 0 0 0 0 0 0 0 0 0 0 0");
-            resultLines[4].Should().Be("0 0 0 0 0 0 0 128 0 0 0 0 0 0 0");
-            resultLines[5].Should().Be("0 0 0 0 0 0 0 0 0 0 0 0 0 0 255");
+        //    var result = canvas.ToPPM();
+        //    var resultLines = result.Split('\n');
+        //    //Assert
+        //    resultLines[3].Should().Be("255 0 0 0 0 0 0 0 0 0 0 0 0 0 0");
+        //    resultLines[4].Should().Be("0 0 0 0 0 0 0 128 0 0 0 0 0 0 0");
+        //    resultLines[5].Should().Be("0 0 0 0 0 0 0 0 0 0 0 0 0 0 255");
 
-        }
+        //}
         /*
          * Scenario: PPM files are terminated by a newline character
            Given c ← canvas(5, 3)
            When ppm ← canvas_to_ppm(c)
            Then ppm ends with a newline character
          */
-        [Test]
-        public void PPM_files_end_with_newline()
-        {
-            //Assign
-            var canvas = new Canvas(5,3);
-            //Act
-            var result = canvas.ToPPM();
-            //Assert
-            result.EndsWith('\n').Should().BeTrue();
-        }
+        //[Test]
+        //public void PPM_files_end_with_newline()
+        //{
+        //    //Assign
+        //    var canvas = new Canvas(5,3);
+        //    //Act
+        //    var result = canvas.ToPPM();
+        //    //Assert
+        //    result.EndsWith('\n').Should().BeTrue();
+        //}
     }
 }
