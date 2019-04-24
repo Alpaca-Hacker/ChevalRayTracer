@@ -94,7 +94,7 @@ namespace Cheval
 
             //Background
 
-            scene.Shapes.Add(new Sphere
+            scene.Shapes.Add(new Cube
             {
                 Transform = Translation(4.6, 0.4, 1) *
                             Scaling(0.4,0.4,0.4),
@@ -120,7 +120,7 @@ namespace Cheval
                     }
             });
 
-            scene.Shapes.Add(new Sphere
+            scene.Shapes.Add(new Cube
             {
                 Transform = Translation(-1, 0.5, 4.5) *
                             Scaling(0.5, 0.5, 0.5),
