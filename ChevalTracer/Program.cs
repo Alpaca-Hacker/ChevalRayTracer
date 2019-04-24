@@ -14,7 +14,7 @@ namespace Cheval
             stopwatch.Stop();
 
             // Write result.
-            Console.WriteLine($"Time elapsed: {stopwatch.Elapsed}");
+            Console.WriteLine($"Total Time elapsed: {stopwatch.Elapsed}");
         }
     }
 }

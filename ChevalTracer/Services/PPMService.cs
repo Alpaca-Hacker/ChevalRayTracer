@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Cheval.Models;
 
 namespace Cheval.Services
@@ -6,43 +7,39 @@ namespace Cheval.Services
     public static class PPMService
     {
         private const int MaxColour = 255;
-        private const int MaxLength = 66;
-        public static string ToPPM(this Canvas canvas)
+
+        public static void ToPPM(this Canvas canvas, string filename = "scene.ppm")
         {
-            var PPMString = "P3\n";
-            PPMString += $"{canvas.Width} {canvas.Height}\n";
-            PPMString += $"{MaxColour}\n";
-
-            for (var i = 0; i < canvas.Height; i++)
+            using (var s = File.OpenWrite(filename))
+            using (var w = new StreamWriter(s))
             {
-                var rowColours = "";
-                for (var j = 0; j < canvas.Width; j++)
-                {
-                    var colour = canvas.GetPixel(j, i);
-                    rowColours += $"{(int)Math.Ceiling(Math.Clamp(colour.Red * MaxColour,0, MaxColour))} " +
-                                  $"{(int)Math.Ceiling(Math.Clamp(colour.Green * MaxColour,0, MaxColour))} " +
-                                  $"{(int)Math.Ceiling(Math.Clamp(colour.Blue * MaxColour, 0, MaxColour))}";
+                w.WriteLine($"P3");
+                w.WriteLine($"{canvas.Width} {canvas.Height}");
+                w.WriteLine($"255");
 
-                    if (rowColours.Length > MaxLength)
-                    {
-                        PPMString += rowColours + "\n";
-                        rowColours = "";
-                    }
-                    else
-                    {
-                        rowColours += " ";
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(rowColours))
+                for (var j = 0; j < canvas.Height; j++)
                 {
-                    PPMString += rowColours.Trim() + "\n";
+                    for (var i = 0; i < canvas.Width; i++)
+                    {
+                        var rgb = GetColorBytes(canvas.GetPixel(i, j));
+                        w.WriteLine($"{rgb.Item1} {rgb.Item2} {rgb.Item3}");
+                    }
                 }
             }
-
-            PPMString += "\n";
-
-            return PPMString;
         }
+
+        private static int Clamp(int v, int min, int max)
+        {
+            if (v < min) return min;
+            if (v > max) return max;
+            return v;
+        }
+
+        public static Tuple<int, int, int> GetColorBytes(ChevalColour c) =>
+            Tuple.Create(
+                Clamp((int)(c.Red * MaxColour), 0, MaxColour),
+                Clamp((int)(c.Green * MaxColour), 0, MaxColour),
+                Clamp((int)(c.Blue * MaxColour), 0, MaxColour));
     }
+
 }

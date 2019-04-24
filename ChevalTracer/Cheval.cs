@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Cheval.Helper;
 using Cheval.Models;
 using Cheval.Services;
@@ -14,6 +15,9 @@ namespace Cheval
 
         public static void Run()
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             var cameraOrigin = Point(-2.6,1.5,-3.9);
             var cameraDirection = Point(-0.6, 1, -0.8);
             var up = Vector(0, 1, 0);
@@ -25,8 +29,12 @@ namespace Cheval
             {
                 Transform = viewTransform
             };
+            stopwatch.Start();
             var canvas = camera.Render(scene);
-            System.IO.File.WriteAllText(@".\Scene.ppm", canvas.ToPPM());
+            stopwatch.Stop();
+            Console.WriteLine($"Render Time elapsed: {stopwatch.Elapsed}");
+
+            canvas.ToPPM(@".\Scene.ppm");
         }
 
     }

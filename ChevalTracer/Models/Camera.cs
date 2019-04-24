@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Cheval.DataStructure;
 
 namespace Cheval.Models
@@ -55,14 +56,15 @@ namespace Cheval.Models
         public Canvas Render(Scene scene)
         {
             var image = new Canvas(HSize, VSize);
-            for (var y = 0; y < VSize ; y++)
+            Parallel.For(0, VSize, (y) =>
             {
+
                 for (var x = 0; x < HSize; x++)
                 {
-                    var ray = RayForPixel(x,y);
+                    var ray = RayForPixel(x, y);
                     image.WritePixel(x, y, scene.ColourAt(ray, Cheval.MaxNoOfReflections));
                 }
-            }
+            });
 
             return image;
         }

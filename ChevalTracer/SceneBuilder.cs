@@ -37,8 +37,12 @@ namespace Cheval
                 Material = new Material
                 {
                     Specular = 0,
-                    Pattern = new Checker(new ChevalColour(0.35, 0.35, 0.35), 
-                        new ChevalColour(0.65, 0.65, 0.65)),
+                    Pattern = new Checker(new List<ChevalColour>{
+                        new ChevalColour(0.35, 0.35, 0.35), 
+                        new ChevalColour(0.65, 0.65, 0.65),
+                        new ChevalColour(0.95, 0.95, 0.95)
+
+                    }),
                     Reflective = 0.4
                 }
             };
@@ -142,7 +146,7 @@ namespace Cheval
                     }
             });
 
-            // Foregound
+            // Foreground
 
             var redSphere = new Sphere
             {
