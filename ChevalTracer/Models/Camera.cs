@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Cheval.DataStructure;
+using Cheval.Samplers;
 
 namespace Cheval.Models
 {
@@ -22,13 +23,15 @@ namespace Cheval.Models
             }
         }
 
+        public Matrix InverseTransform => _inverseTransform;
+
         public double PixelSize => (HalfWidth * 2) / HSize;
 
         private double HalfView => Math.Tan(FOV / 2);
         private double Aspect => (double)HSize / (double)VSize;
 
-        private double HalfWidth => Aspect >= 1 ? HalfView : HalfView * Aspect;
-        private double HalfHeight => Aspect >= 1 ? HalfView / Aspect : HalfView;
+        public double HalfWidth => Aspect >= 1 ? HalfView : HalfView * Aspect;
+        public double HalfHeight => Aspect >= 1 ? HalfView / Aspect : HalfView;
 
         public Camera(int hSize, int vSize, double fov)
         {
@@ -40,8 +43,8 @@ namespace Cheval.Models
 
         public Ray RayForPixel(int px, int py)
         {
-            var xOffset = (double)(px + 0.5) * PixelSize;
-            var yOffset = (double)(py + 0.5) * PixelSize;
+            var xOffset = (px + 0.5) * PixelSize;
+            var yOffset = (py + 0.5) * PixelSize;
 
             var worldX = HalfWidth - xOffset;
             var worldY = HalfHeight - yOffset;
@@ -53,20 +56,22 @@ namespace Cheval.Models
             return new Ray(origin, direction);
         }
 
-        public Canvas Render(Scene scene)
+        public Canvas Render(Scene s) => Render(s, () => new DefaultSampler(s, this));
+        public Canvas Render(Scene scene, Func<ISampler> samplerFactory)
         {
             var image = new Canvas(HSize, VSize);
             Parallel.For(0, VSize, (y) =>
             {
-
+                var sampler = samplerFactory();
                 for (var x = 0; x < HSize; x++)
                 {
-                    var ray = RayForPixel(x, y);
-                    image.WritePixel(x, y, scene.ColourAt(ray, Cheval.MaxNoOfReflections));
+                   // var ray = RayForPixel(x, y);
+                    image.WritePixel(x, y, sampler.Sample(x,y));
                 }
             });
 
             return image;
+           
         }
     }
 }
