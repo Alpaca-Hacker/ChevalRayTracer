@@ -1,23 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Cheval.DataStructure;
 using Cheval.Helper;
 using Cheval.Models;
 using Cheval.Models.Shapes;
 using Cheval.Patterns;
 using Cheval.Templates;
-using static System.Math;
-using static Cheval.DataStructure.ChevalTuple;
-using static Cheval.Helper.Transform;
-using static Cheval.Models.ChevalColour;
-using static Cheval.Templates.ColourTemplate;
 
-namespace Cheval
+namespace Cheval.Scenes
 {
-    public class SceneBuilder
+    public class DefaultSceneBuilder :ISceneBuilder
     {
-        public static Scene Build()
+        public World Build(float size = 1)
         {
+            var world = new World();
+            
             var scene = new Scene();
+
+
+            var cameraOrigin = ChevalTuple.Point(-2.6, 1.5, -3.9);
+            var cameraDirection = ChevalTuple.Point(-0.6, 1, -0.8);
+            var up = ChevalTuple.Vector(0, 1, 0);
+            var fov = 1.152;
+            var viewTransform = Transform.ViewTransform(cameraOrigin, cameraDirection, up);
+
+            world.Camera = new Camera((int)(400 * size), (int)(200 * size), fov)
+            {
+                Transform = viewTransform
+            };
+
 
             var wallMaterial = new Material
             {
@@ -27,13 +37,13 @@ namespace Cheval
                 Reflective = 0.3,
                 Pattern = new Stripe(new ChevalColour(0.45,0.45,0.45), new ChevalColour(0.55, 0.55, 0.55))
                 {
-                    Transform = Scaling(0.25,0.25,0.25) * RotationY(1.5708)
+                    Transform = Transform.Scaling(0.25,0.25,0.25) * Transform.RotationY(1.5708)
                 }
             };
 
             var floor = new Plane
             {
-                Transform = RotationY(0.31415),
+                Transform = Transform.RotationY(0.31415),
                 Material = new Material
                 {
                     Specular = 0,
@@ -49,7 +59,7 @@ namespace Cheval
 
             var ceiling = new Plane
             {
-                Transform = Translation(0, 5, 0),
+                Transform = Transform.Translation(0, 5, 0),
                 Material = new Material
                 {
                     Colour = new ChevalColour(0.8,0.8,0.8),
@@ -60,34 +70,34 @@ namespace Cheval
 
             var westWall = new Plane
             {
-                Transform = Translation(-5, 0, 0) *
-                            RotationZ(1.5708) *
-                            RotationY(1.5708),
+                Transform = Transform.Translation(-5, 0, 0) *
+                            Transform.RotationZ(1.5708) *
+                            Transform.RotationY(1.5708),
 
                 Material = wallMaterial
             };
 
             var eastWall = new Plane
             {
-                Transform = Translation(5, 0, 0) *
-                            RotationZ(1.5708) *
-                            RotationY(1.5708),
+                Transform = Transform.Translation(5, 0, 0) *
+                            Transform.RotationZ(1.5708) *
+                            Transform.RotationY(1.5708),
 
                 Material = wallMaterial
             };
 
             var northWall = new Plane
             {
-                Transform = Translation(0, 0, 5) *
-                            RotationX(1.5708),
+                Transform = Transform.Translation(0, 0, 5) *
+                            Transform.RotationX(1.5708),
 
                 Material = wallMaterial
             };
 
             var southWall = new Plane
             {
-                Transform = Translation(0, 0, -5) *
-                            RotationX(1.5708),
+                Transform = Transform.Translation(0, 0, -5) *
+                            Transform.RotationX(1.5708),
 
                 Material = wallMaterial
             };
@@ -96,8 +106,8 @@ namespace Cheval
 
             scene.Shapes.Add(new Cube
             {
-                Transform = Translation(4.6, 0.4, 1) *
-                            Scaling(0.4,0.4,0.4),
+                Transform = Transform.Translation(4.6, 0.4, 1) *
+                            Transform.Scaling(0.4,0.4,0.4),
 
                 Material = 
                     new Material
@@ -109,8 +119,8 @@ namespace Cheval
 
             scene.Shapes.Add(new Sphere
             {
-                Transform = Translation(4.7, 0.3, 0.4) *
-                            Scaling(0.3, 0.3, 0.3),
+                Transform = Transform.Translation(4.7, 0.3, 0.4) *
+                            Transform.Scaling(0.3, 0.3, 0.3),
 
                 Material =
                     new Material
@@ -122,8 +132,8 @@ namespace Cheval
 
             scene.Shapes.Add(new Cube
             {
-                Transform = Translation(-1, 0.5, 4.5) *
-                            Scaling(0.5, 0.5, 0.5),
+                Transform = Transform.Translation(-1, 0.5, 4.5) *
+                            Transform.Scaling(0.5, 0.5, 0.5),
 
                 Material =
                     new Material
@@ -135,8 +145,8 @@ namespace Cheval
 
             scene.Shapes.Add(new Sphere
             {
-                Transform = Translation(-1.7, 0.3, 4.7) *
-                            Scaling(0.3, 0.3, 0.3),
+                Transform = Transform.Translation(-1.7, 0.3, 4.7) *
+                            Transform.Scaling(0.3, 0.3, 0.3),
 
                 Material =
                     new Material
@@ -150,7 +160,7 @@ namespace Cheval
 
             var redSphere = new Sphere
             {
-                Transform = Translation(-0.6, 1, 0.6),
+                Transform = Transform.Translation(-0.6, 1, 0.6),
 
                 Material =
                     new Material
@@ -163,8 +173,8 @@ namespace Cheval
 
             var blueSphere = new Sphere
             {
-                Transform = Translation(0.6, 0.7, -0.6) *
-                            Scaling(0.7, 0.7, 0.7),
+                Transform = Transform.Translation(0.6, 0.7, -0.6) *
+                            Transform.Scaling(0.7, 0.7, 0.7),
 
                 Material = MaterialTemplate.ColouredGlass
 
@@ -173,15 +183,15 @@ namespace Cheval
 
             var greenSphere = new Sphere
             {
-                Transform = Translation(-0.7, 0.5, -0.8) *
-                            Scaling(0.5, 0.5, 0.5),
+                Transform = Transform.Translation(-0.7, 0.5, -0.8) *
+                            Transform.Scaling(0.5, 0.5, 0.5),
 
                 Material = MaterialTemplate.ColouredGlass
 
             };
             greenSphere.Material.Colour = new ChevalColour(0, 0.2, 0);
 
-            var lightPos = Point(-4.9, 4.9, -1);
+            var lightPos = ChevalTuple.Point(-4.9, 4.9, -1);
             var lightColour = new ChevalColour(1, 1, 1);
 
             var light1 = new Light
@@ -208,7 +218,9 @@ namespace Cheval
             scene.Shapes.Add(greenSphere);
             scene.Shapes.Add(blueSphere);
 
-            return scene;
+            world.Scene = scene;
+
+            return world;
         }
     }
 }
