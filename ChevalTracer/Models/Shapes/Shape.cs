@@ -22,6 +22,7 @@ namespace Cheval.Models.Shapes
         public Matrix InverseTransform => _inverseTransform;
 
         public Material Material { get; set; } = new Material();
+        public bool NoShadow { get; set; }
 
         protected Shape()
         {

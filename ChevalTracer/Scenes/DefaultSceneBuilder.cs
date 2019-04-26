@@ -171,15 +171,18 @@ namespace Cheval.Scenes
                     }
             };
 
-            var blueSphere = new Sphere
+            var blueSphere = new Cylinder
             {
-                Transform = Transform.Translation(0.6, 0.7, -0.6) *
+                Transform = Transform.Translation(0.6, 0.0, -0.6) *
                             Transform.Scaling(0.7, 0.7, 0.7),
 
-                Material = MaterialTemplate.ColouredGlass
-
+                Material = MaterialTemplate.ColouredGlass,
+                Maximum = 2,
+                Minimum = 0
+               
             };
             blueSphere.Material.Colour = new ChevalColour(0,0,0.2);
+
 
             var greenSphere = new Sphere
             {
@@ -190,6 +193,7 @@ namespace Cheval.Scenes
 
             };
             greenSphere.Material.Colour = new ChevalColour(0, 0.2, 0);
+
 
             var lightPos = ChevalTuple.Point(-4.9, 4.9, -1);
             var lightColour = new ChevalColour(1, 1, 1);
@@ -216,7 +220,7 @@ namespace Cheval.Scenes
 
             scene.Shapes.Add(redSphere);
             scene.Shapes.Add(greenSphere);
-            scene.Shapes.Add(blueSphere);
+           scene.Shapes.Add(blueSphere);
 
             world.Scene = scene;
 

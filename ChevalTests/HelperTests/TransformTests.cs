@@ -29,6 +29,7 @@ namespace ChevalTests.HelperTests
             result.Should().BeEquivalentTo(expected);
         }
 
+
         /*
         Scenario: Multiplying by the inverse of a translation matrix
         Given transform ← translation(5, -3, 2)

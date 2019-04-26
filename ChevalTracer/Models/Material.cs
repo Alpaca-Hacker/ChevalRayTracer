@@ -18,6 +18,7 @@ namespace Cheval.Models
         public double RefractiveIndex { get; set; }
         public double Transparency { get; set; }
 
+
         public Material()
         {
             Colour = new ChevalColour(1,1,1);
@@ -74,6 +75,7 @@ namespace Cheval.Models
             {
                 returnValue += diffuse + specular;
             }
+
 
             return returnValue;
         }

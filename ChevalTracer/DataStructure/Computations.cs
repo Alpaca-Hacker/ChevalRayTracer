@@ -67,6 +67,7 @@ namespace Cheval.DataStructure
         }
         public double Schlick()
         {
+            //OMG This looks confusing! 
             var cos = Dot(EyeV, NormalV);
             if (N1 > N2)
             {

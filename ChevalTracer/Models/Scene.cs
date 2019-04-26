@@ -93,7 +93,7 @@ namespace Cheval.Models
             var ray = new Ray(point, direction);
             var inters = new Intersections(ray.Intersect(this));
             var hit = inters.Hit();
-            return hit != null && hit.T < distance;
+            return hit != null && hit.T < distance && !hit.Object.NoShadow;
         }
 
         public ChevalColour ReflectedColour(Computations comps, int remaining)

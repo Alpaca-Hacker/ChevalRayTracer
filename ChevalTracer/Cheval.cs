@@ -13,15 +13,15 @@ namespace Cheval
     {
         public const double Epsilon = 0.00001;
         public const int MaxNoOfReflections = 5;
-        public const float Size = 0.5f;
+        public const float Size = 2f;
 
         public static void Run()
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            //var builder = new DefaultSceneBuilder();
-            var builder = new BookSceneBuilder();
+            var builder = new DefaultSceneBuilder();
+            //var builder = new BookSceneBuilder();
 
             var world = builder.Build(Size);
 
@@ -34,7 +34,7 @@ namespace Cheval
             stopwatch.Stop();
             Console.WriteLine($"Render Time elapsed: {stopwatch.Elapsed}");
 
-            canvas.ToPPM(@".\BookScene.ppm");
+            canvas.ToPPM(@".\DefaultScene.ppm");
         }
 
     }

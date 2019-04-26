@@ -103,5 +103,78 @@ namespace ChevalTests.ShapeTests
             //Assert
             xs.Count.Should().Be(count);
         }
+
+        /*
+         * Scenario Outline: Intersecting the caps of a closed cylinder
+           Given cyl ← cylinder()
+           And cyl.minimum ← 1
+           And cyl.maximum ← 2
+           And cyl.closed ← true
+           And direction ← normalize(<direction>)
+           And r ← ray(<point>, direction)
+           When xs ← local_intersect(cyl, r)
+           Then xs.count = <count>
+           Examples:
+           | | point | direction | count |
+           | 1 | point(0, 3, 0) | vector(0, -1, 0) | 2 |
+           | 2 | point(0, 3, -2) | vector(0, -1, 2) | 2 |
+           | 3 | point(0, 4, -2) | vector(0, -1, 1) | 2 | # corner case
+           | 4 | point(0, 0, -2) | vector(0, 1, 2) | 2 |
+           | 5 | point(0, -1, -2) | vector(0, 1, 1) | 2 | # corner case
+         */
+        [TestCase(new double[] { 0, 3, 0 }, new double[] { 0, -1, 0 }, 2)]
+        [TestCase(new double[] { 0, 3, -2 }, new double[] { 0, -1, 2 }, 2)]
+        [TestCase(new double[] { 0, 4, -2 }, new double[] { 0, -1, 1 }, 2)]
+        [TestCase(new double[] { 0, 0, -2 }, new double[] { 0, 1, 2 }, 2)]
+        [TestCase(new double[] { 0, -1, -2 }, new double[] { 0, 1, 1 }, 2)]
+        public void Capped_cylinder_tests(double[] point, double[] dir, int count)
+        {
+            var cyl = new Cylinder();
+            cyl.Minimum = 1;
+            cyl.Maximum = 2;
+            cyl.Closed = true;
+            var direct = Normalize(Vector(dir[0], dir[1], dir[2]));
+            var ray = new Ray(Point(point[0], point[1], point[2]), direct);
+            //Act
+            var xs = cyl.Intersect(ray);
+            //Assert
+            xs.Count.Should().Be(count);
+        }
+        /*
+         * Scenario Outline: The normal vector on a cylinder's end caps
+           Given cyl ← cylinder()
+           And cyl.minimum ← 1
+           And cyl.maximum ← 2
+           And cyl.closed ← true
+           When n ← local_normal_at(cyl, <point>)
+           Then n = <normal>
+           Examples:
+           |      point       |     normal       |
+           | point(0, 1, 0)   | vector(0, -1, 0) |
+           | point(0.5, 1, 0) | vector(0, -1, 0) |
+           | point(0, 1, 0.5) | vector(0, -1, 0) |
+           | point(0, 2, 0)   | vector(0, 1, 0)  |
+           | point(0.5, 2, 0) | vector(0, 1, 0)  |
+           | point(0, 2, 0.5) | vector(0, 1, 0)  |
+         */
+        [TestCase(new double[] { 0, 1, 0 },   new double[] { 0, -1, 0 })]
+        [TestCase(new double[] { 0.5, 1, 0 },  new double[] { 0, -1, 0 })]
+        [TestCase(new double[] { 0, 1, 0.5 },  new double[] { 0, -1, 0 })]
+        [TestCase(new double[] { 0, 2, 0 },  new double[] { 0, 1, 0 })]
+        [TestCase(new double[] { 0.5, 2, 0 }, new double[] { 0, 1, 0 })]
+        [TestCase(new double[] { 0, 2, 0.5 }, new double[] { 0, 1, 0 })]
+        public void Capped_cylinder_normal_tests(double[] point, double[] norm)
+        {
+            var cyl = new Cylinder();
+            cyl.Minimum = 1;
+            cyl.Maximum = 2;
+            cyl.Closed = true;
+            //Act
+            var expected = Vector(norm[0], norm[1], norm[2]);
+            var result = cyl.NormalAt(Point(point[0], point[1], point[2]));
+            
+            //Assert
+            result.Should().BeEquivalentTo(expected);
+        }
     }
 }
