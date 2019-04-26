@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using Cheval.DataStructure;
+﻿using System;
+using System.Collections.Generic;
 using Cheval.Helper;
 using Cheval.Models;
 using Cheval.Models.Shapes;
 using Cheval.Patterns;
 using Cheval.Templates;
+using static Cheval.DataStructure.ChevalTuple;
 
 namespace Cheval.Scenes
 {
@@ -17,9 +18,9 @@ namespace Cheval.Scenes
             var scene = new Scene();
 
 
-            var cameraOrigin = ChevalTuple.Point(-2.6, 1.5, -3.9);
-            var cameraDirection = ChevalTuple.Point(-0.6, 1, -0.8);
-            var up = ChevalTuple.Vector(0, 1, 0);
+            var cameraOrigin = Point(-2.6, 1.5, -3.9);
+            var cameraDirection = Point(-0.6, 1, -0.8);
+            var up = Vector(0, 1, 0);
             var fov = 1.152;
             var viewTransform = Transform.ViewTransform(cameraOrigin, cameraDirection, up);
 
@@ -143,17 +144,20 @@ namespace Cheval.Scenes
                     }
             });
 
-            scene.Shapes.Add(new Sphere
+            scene.Shapes.Add(new Cone
             {
-                Transform = Transform.Translation(-1.7, 0.3, 4.7) *
-                            Transform.Scaling(0.3, 0.3, 0.3),
+                Transform = Transform.Translation(-1.7, 0.5, 2.7) *
+                            Transform.RotationZ(Math.PI),
 
                 Material =
                     new Material
                     {
                         Colour = new ChevalColour(0.4, 0.6, 0.9),
                         Shininess = 50
-                    }
+                    },
+                Maximum = 0.5,
+                Minimum = 0
+                
             });
 
             // Foreground
@@ -195,7 +199,7 @@ namespace Cheval.Scenes
             greenSphere.Material.Colour = new ChevalColour(0, 0.2, 0);
 
 
-            var lightPos = ChevalTuple.Point(-4.9, 4.9, -1);
+            var lightPos = Point(-4.9, 4.9, -1);
             var lightColour = new ChevalColour(1, 1, 1);
 
             var light1 = new Light
@@ -203,13 +207,13 @@ namespace Cheval.Scenes
                 Position = lightPos,
                 Intensity = lightColour
             };
-        //    var light2 = new Light
-        //    {
-        //        Position = Point(10, 10, -10),
-        //        Intensity = new ChevalColour(0.5, 0.5, 0.5)
-        //};
+            var light2 = new Light
+            {
+                Position = Point(4.9, 4.9, -1),
+                Intensity = new ChevalColour(0.25, 0.25, 0.25)
+        };
             scene.Lights.Add(light1);
-           // scene.Lights.Add(light2);
+            scene.Lights.Add(light2);
 
             scene.Shapes.Add(floor);
             scene.Shapes.Add(ceiling);
