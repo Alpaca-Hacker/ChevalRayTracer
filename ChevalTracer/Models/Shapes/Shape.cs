@@ -23,11 +23,12 @@ namespace Cheval.Models.Shapes
 
         public Material Material { get; set; } = new Material();
         public bool NoShadow { get; set; }
-
+        public Shape Parent { get; set; }
         protected Shape()
         {
             Transform = Helper.Transform.IdentityMatrix;
             Id = Guid.NewGuid();
+            
         }
 
         protected abstract List<Intersection> LocalIntersect(Ray localRay);
