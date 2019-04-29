@@ -1,4 +1,6 @@
-﻿using Cheval.Helper;
+﻿using System;
+using System.Runtime.InteropServices.ComTypes;
+using Cheval.Helper;
 using Cheval.Models;
 using Cheval.Models.Shapes;
 using FluentAssertions;
@@ -49,6 +51,7 @@ namespace ChevalTests.ShapeTests
             group.Should().Contain(s);
             s.Parent.Should().BeEquivalentTo(group);
         }
+
         /*
          * Scenario: Intersecting a ray with an empty group
            Given g ← group()
@@ -67,6 +70,7 @@ namespace ChevalTests.ShapeTests
             //Assert
             xs.Should().BeEmpty();
         }
+
         /*
 
          * Scenario: Intersecting a ray with a nonempty group
@@ -116,6 +120,7 @@ namespace ChevalTests.ShapeTests
             xs[2].Object.Should().BeEquivalentTo(sphere1);
             xs[3].Object.Should().BeEquivalentTo(sphere1);
         }
+
         /*
          * Scenario: Intersecting a transformed group
            Given g ← group()
@@ -146,6 +151,7 @@ namespace ChevalTests.ShapeTests
             //Assert
             xs.Should().HaveCount(2);
         }
+
         /*
          * Scenario: Converting a point from world to object space
            Given g1 ← group()
@@ -159,6 +165,120 @@ namespace ChevalTests.ShapeTests
            When p ← world_to_object(s, point(-2, 0, -10))
            Then p = point(0, 0, -1)
          */
+        [Test]
+        public void Converting_point_from_world_to_object_space()
+        {
+            //Assign
+            var group1 = new Group
+            {
+                Transform = Transform.RotationY(Math.PI / 2)
+            };
+            var group2 = new Group
+            {
+                Transform = Transform.Scaling(2, 2, 2)
+            };
+            group1.Add(group2);
+            var sphere = new Sphere
+            {
+                Transform = Transform.Translation(5, 0, 0)
+            };
+            group2.Add(sphere);
+            //Act
+            var result = sphere.WorldToObject(Point(-2, 0, -10));
+            var expected = Point(0, 0, -1);
+            //Assert
+            result.Should().BeEquivalentTo(expected);
+        }
 
+        /*
+         * Scenario: Converting a normal from object to world space
+          Given g1 ← group()
+          And set_transform(g1, rotation_y(π/2))
+          And g2 ← group()
+          And set_transform(g2, scaling(1, 2, 3))
+          And add_child(g1, g2)
+          And s ← sphere()
+          And set_transform(s, translation(5, 0, 0))
+          And add_child(g2, s)
+          When n ← normal_to_world(s, vector(√3/3, √3/3, √3/3))
+          Then n = vector(0.2857, 0.4286, -0.8571)
+         */
+        [Test]
+        public void Convert_Normal_From_Object_Space_To_World_Space()
+        {
+            //Assign
+            var g1 = new Group
+            {
+                Transform = Transform.RotationY(Math.PI / 2),
+            };
+
+            var g2 = new Group
+            {
+                Transform = Transform.Scaling(1, 2, 3),
+            };
+
+            g1.Add(g2);
+
+            var s = new Sphere
+            {
+                Transform = Transform.Translation(5, 0, 0),
+            };
+
+            g2.Add(s);
+
+            var v = Vector(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3);
+            //Act
+            var result = s.NormalToWorld(v);
+            var expected = Vector(0.2857, 0.4286, -0.8571);
+            //Assert
+            Math.Round(result.X, 4).Should().Be(expected.X);
+            Math.Round(result.Y, 4).Should().Be(expected.Y);
+            Math.Round(result.Z, 4).Should().Be(expected.Z);
+        }
+        /*
+         * Scenario: Finding the normal on a child object
+           Given g1 ← group()
+           And set_transform(g1, rotation_y(π/2))
+           And g2 ← group()
+           And set_transform(g2, scaling(1, 2, 3))
+           And add_child(g1, g2)
+           And s ← sphere()
+           And set_transform(s, translation(5, 0, 0))
+           And add_child(g2, s)
+           When n ← normal_at(s, point(1.7321, 1.1547, -5.5774))
+           Then n = vector(0.2857, 0.4286, -0.8571)
+         */
+        [Test]
+        public void Find_Normal_On_Child()
+        {
+            //Assign
+            var g1 = new Group()
+            {
+                Transform = Transform.RotationY(Math.PI / 2),
+            };
+
+            var g2 = new Group()
+            {
+                Transform = Transform.Scaling(1, 2, 3),
+            };
+
+            g1.Add(g2);
+
+            var s = new Sphere()
+            {
+                Transform = Transform.Translation(5, 0, 0),
+            };
+
+            g2.Add(s);
+
+            var p = Point(1.7321, 1.1547, -5.5774);
+            //Act
+            var result = s.NormalAt(p);
+            var expected = Vector(0.2857, 0.4285, -0.8572);
+            //Assert
+            Math.Round(result.X, 4).Should().Be(expected.X);
+            Math.Round(result.Y, 4).Should().Be(expected.Y);
+            Math.Round(result.Z, 4).Should().Be(expected.Z);
+        }
     }
 }

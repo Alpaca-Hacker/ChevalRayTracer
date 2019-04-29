@@ -48,7 +48,7 @@ namespace Cheval.Patterns
 
         public ChevalColour ColourAtObject(Shape shape, ChevalTuple point)
         {
-            var objectPoint = shape.InverseTransform * point;
+            var objectPoint = shape.WorldToObject(point);
             var patternPoint = InverseTransform * objectPoint;
             return ColourAt(patternPoint);
         }

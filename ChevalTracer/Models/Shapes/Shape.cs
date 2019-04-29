@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cheval.DataStructure;
+using static Cheval.DataStructure.ChevalTuple;
 
 namespace Cheval.Models.Shapes
 {
@@ -36,18 +37,41 @@ namespace Cheval.Models.Shapes
 
         public ChevalTuple NormalAt(ChevalTuple point)
         {
-            var localPoint = _inverseTransform * point;
-
+            var localPoint = WorldToObject(point);
             var localNormal = LocalNormalAt(localPoint);
-            var worldNormal = Matrix.Transpose(_inverseTransform) * localNormal;
 
-            return ChevalTuple.Normalize(worldNormal);
+            var worldNormal = NormalToWorld(localNormal);
+
+            return worldNormal;
         }
 
         public List<Intersection> Intersect(Ray ray)
         {
             var localRay = ray.Transform(_inverseTransform);
             return LocalIntersect(localRay);
+        }
+
+        public ChevalTuple WorldToObject(ChevalTuple point)
+        {
+            if (Parent != null)
+            {
+                point = Parent.WorldToObject(point);
+            }
+
+            return _inverseTransform * point;
+        }
+
+        public ChevalTuple NormalToWorld(ChevalTuple normal)
+        {
+            normal = Matrix.Transpose(_inverseTransform) * normal;
+            normal.W = 0;
+            normal = Normalize(normal);
+            if (Parent != null)
+            {
+                normal = Parent.NormalToWorld(normal);
+            }
+
+            return normal;
         }
     }
 
