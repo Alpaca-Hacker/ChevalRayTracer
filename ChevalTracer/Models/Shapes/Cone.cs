@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cheval.DataStructure;
+using static Cheval.DataStructure.ChevalTuple;
 
 namespace Cheval.Models.Shapes
 {
@@ -111,12 +112,12 @@ namespace Cheval.Models.Shapes
             var dist = point.X * point.X + point.Z * point.Z;
             if (dist < 1 && point.Y >= Maximum - Cheval.Epsilon)
             {
-                return ChevalTuple.Vector(0, 1, 0);
+                return Vector(0, 1, 0);
             }
 
             if (dist < 1 && point.Y <= Minimum + Cheval.Epsilon)
             {
-                return ChevalTuple.Vector(0, -1, 0);
+                return Vector(0, -1, 0);
             }
 
             var y = Math.Sqrt(dist);
@@ -125,8 +126,18 @@ namespace Cheval.Models.Shapes
                 y = -y;
             }
 
-            return ChevalTuple.Vector(point.X, y, point.Z);
+            return Vector(point.X, y, point.Z);
         }
 
+        public override BoundingBox Bounds()
+        {
+            var r = Math.Max(
+                Math.Abs(Minimum),
+                Math.Abs(Maximum));
+
+            var min = Point(-r, Minimum, -r);
+            var max = Point(r, Maximum, r);
+            return new BoundingBox(min, max);
+        }
     }
 }

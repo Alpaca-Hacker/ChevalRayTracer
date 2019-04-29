@@ -25,11 +25,12 @@ namespace Cheval.Models.Shapes
         public Material Material { get; set; } = new Material();
         public bool NoShadow { get; set; }
         public Shape Parent { get; set; }
+        public BoundingBox BoundingBox { get; }
         protected Shape()
         {
             Transform = Helper.Transform.IdentityMatrix;
             Id = Guid.NewGuid();
-            
+            BoundingBox = Bounds();
         }
 
         protected abstract List<Intersection> LocalIntersect(Ray localRay);
@@ -73,6 +74,10 @@ namespace Cheval.Models.Shapes
 
             return normal;
         }
+
+        public abstract BoundingBox Bounds();
+
+        public virtual BoundingBox ParentSpaceBounds() => Bounds() * Transform;
     }
 
 }

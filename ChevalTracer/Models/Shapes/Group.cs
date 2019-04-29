@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using Cheval.DataStructure;
 
 namespace Cheval.Models.Shapes
@@ -9,7 +8,7 @@ namespace Cheval.Models.Shapes
     public class Group : Shape, IList<Shape>
 
     {
-        private List<Shape> _children = new List<Shape>();
+        private readonly List<Shape> _children = new List<Shape>();
 
         public Shape this[int index]
         {
@@ -20,6 +19,13 @@ namespace Cheval.Models.Shapes
         protected override List<Intersection> LocalIntersect(Ray localRay)
         {
             var xs = new List<Intersection>();
+
+            var bounds = BoundingBox;
+            if (!bounds.Intersect(localRay))
+            {
+                return xs;
+            }
+    
             foreach (var shape in _children)
             {
                 xs.AddRange(shape.Intersect(localRay));
@@ -31,6 +37,17 @@ namespace Cheval.Models.Shapes
         protected override ChevalTuple LocalNormalAt(ChevalTuple localPoint)
         {
             throw new System.NotImplementedException();
+        }
+
+        public override BoundingBox Bounds()
+        {
+            var box = BoundingBox.Empty;
+            foreach (var child in _children)
+            {
+                box += child.ParentSpaceBounds();
+            }
+
+            return box;
         }
 
         public int IndexOf(Shape item) => _children.IndexOf(item);
@@ -60,7 +77,7 @@ namespace Cheval.Models.Shapes
             {
                 child.Parent = null;
             }
-            _children= new List<Shape>();
+            _children.Clear();
         }
 
         public bool Contains(Shape item) => _children.Contains(item);

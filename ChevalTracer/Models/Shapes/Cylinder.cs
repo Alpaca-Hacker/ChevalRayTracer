@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.WebSockets;
+﻿using System.Collections.Generic;
 using Cheval.DataStructure;
 using static System.Math;
+using static Cheval.DataStructure.ChevalTuple;
 
 namespace Cheval.Models.Shapes
 {
@@ -95,14 +94,21 @@ namespace Cheval.Models.Shapes
             var dist = Pow(localPoint.X, 2) + Pow(localPoint.Z, 2);
             if (dist < 1 && localPoint.Y >= Maximum - Cheval.Epsilon)
             {
-                return ChevalTuple.Vector(0,1,0);
+                return Vector(0,1,0);
             }
             if (dist < 1 && localPoint.Y <= Minimum + Cheval.Epsilon)
             {
-                return ChevalTuple.Vector(0, -1, 0);
+                return Vector(0, -1, 0);
             }
 
-            return ChevalTuple.Vector(localPoint.X, 0, localPoint.Z);
+            return Vector(localPoint.X, 0, localPoint.Z);
+        }
+
+        public override BoundingBox Bounds()
+        {
+            var min = Point(-1, Minimum, -1);
+            var max = Point(1, Maximum, 1);
+            return new BoundingBox(min, max);
         }
     }
 }

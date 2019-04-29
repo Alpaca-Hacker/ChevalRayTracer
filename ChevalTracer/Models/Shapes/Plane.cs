@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cheval.DataStructure;
+using static Cheval.DataStructure.ChevalTuple;
 
 namespace Cheval.Models.Shapes
 {
@@ -21,7 +22,14 @@ namespace Cheval.Models.Shapes
 
         protected override ChevalTuple LocalNormalAt(ChevalTuple localPoint)
         {
-            return ChevalTuple.Vector(0,1,0);
+            return Vector(0,1,0);
+        }
+
+        public override BoundingBox Bounds()
+        {
+            var min = Point(double.NegativeInfinity, 0, double.NegativeInfinity);
+            var max = Point(double.PositiveInfinity, 0, double.PositiveInfinity);
+            return new BoundingBox(min, max);
         }
     }
 }

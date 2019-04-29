@@ -37,5 +37,11 @@ namespace Cheval.Models.Shapes
                 new Intersection(t2,this)
             };
         }
+        public override BoundingBox Bounds()
+        {
+            var min = Point(-1, -1, -1);
+            var max = Point(1, 1, 1);
+            return new BoundingBox(min, max);
+        }
     }
 }

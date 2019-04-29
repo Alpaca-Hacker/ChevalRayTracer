@@ -73,5 +73,11 @@ namespace Cheval.Models.Shapes
              return Vector(0,0, localPoint.Z);
         }
 
+        public override BoundingBox Bounds()
+        {
+            var min = Point(-1, -1, -1);
+            var max = Point(1, 1, 1);
+            return new BoundingBox(min, max);
+        }
     }
 }

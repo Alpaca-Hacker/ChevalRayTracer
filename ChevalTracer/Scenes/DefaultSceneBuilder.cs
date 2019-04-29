@@ -17,7 +17,6 @@ namespace Cheval.Scenes
             
             var scene = new Scene();
 
-
             var cameraOrigin = Point(-2.6, 1.5, -3.9);
             var cameraDirection = Point(-0.6, 1, -0.8);
             var up = Vector(0, 1, 0);
@@ -104,8 +103,9 @@ namespace Cheval.Scenes
             };
 
             //Background
+            var background1 = new Group();
 
-            scene.Shapes.Add(new Cube
+            background1.Add(new Cube
             {
                 Transform = Transform.Translation(4.6, 0.4, 1) *
                             Transform.Scaling(0.4,0.4,0.4),
@@ -118,7 +118,7 @@ namespace Cheval.Scenes
                 }
             });
 
-            scene.Shapes.Add(new Sphere
+            background1.Add(new Sphere
             {
                 Transform = Transform.Translation(4.7, 0.3, 0.4) *
                             Transform.Scaling(0.3, 0.3, 0.3),
@@ -131,7 +131,8 @@ namespace Cheval.Scenes
                     }
             });
 
-            scene.Shapes.Add(new Cube
+            var background2= new Group();
+            background2.Add(new Cube
             {
                 Transform = Transform.Translation(-1, 0.5, 4.5) *
                             Transform.Scaling(0.5, 0.5, 0.5),
@@ -144,7 +145,7 @@ namespace Cheval.Scenes
                     }
             });
 
-            scene.Shapes.Add(new Cone
+            background2.Add(new Cone
             {
                 Transform = Transform.Translation(-1.7, 0.5, 2.7) *
                             Transform.RotationZ(Math.PI),
@@ -215,16 +216,27 @@ namespace Cheval.Scenes
             scene.Lights.Add(light1);
             scene.Lights.Add(light2);
 
-            scene.Shapes.Add(floor);
-            scene.Shapes.Add(ceiling);
-            scene.Shapes.Add(eastWall);
-            scene.Shapes.Add(westWall);
-            scene.Shapes.Add(northWall);
-            scene.Shapes.Add(southWall);
+            var room = new List<Shape>
+            {
+                floor,
+                ceiling,
+                eastWall,
+                westWall,
+                northWall,
+                southWall
+            };
 
-            scene.Shapes.Add(redSphere);
-            scene.Shapes.Add(greenSphere);
-           scene.Shapes.Add(blueSphere);
+            var foreground = new Group
+            {
+                redSphere,
+                greenSphere,
+                blueSphere
+            };
+
+            scene.Shapes.AddRange(room);
+            scene.Shapes.Add(foreground);
+            scene.Shapes.Add(background1);
+            scene.Shapes.Add(background2);
 
             world.Scene = scene;
 

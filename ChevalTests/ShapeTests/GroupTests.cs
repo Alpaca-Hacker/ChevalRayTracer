@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices.ComTypes;
 using Cheval.Helper;
 using Cheval.Models;
 using Cheval.Models.Shapes;
@@ -279,6 +278,38 @@ namespace ChevalTests.ShapeTests
             Math.Round(result.X, 4).Should().Be(expected.X);
             Math.Round(result.Y, 4).Should().Be(expected.Y);
             Math.Round(result.Z, 4).Should().Be(expected.Z);
+        }
+        // Tests taken from Pixie.net (https://github.com/basp/pixie.net)
+
+        [Test]
+        public void Group_Has_BoundingBox_That_Contains_Its_Children()
+        {
+            //Assign
+            var sphere = new Sphere()
+            {
+                Transform =
+                    Transform.Translation(2, 5, -3) *
+                    Transform.Scaling(2, 2, 2),
+            };
+
+            var cyl = new Cylinder()
+            {
+                Minimum = -2,
+                Maximum = 2,
+                Transform =
+                    Transform.Translation(-4, -1, 4) *
+                    Transform.Scaling(0.5, 1, 0.5),
+            };
+
+            var group = new Group {sphere, cyl};
+            //Act
+            var box = group.Bounds();
+            var minExpected = Point(-4.5, -3, -5);
+            var maxExpected = Point(4, 7, 4.5);
+            //Assert
+            box.Min.Should().BeEquivalentTo(minExpected);
+            box.Max.Should().BeEquivalentTo(maxExpected);
+            
         }
     }
 }
