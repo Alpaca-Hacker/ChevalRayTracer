@@ -29,8 +29,8 @@ namespace Cheval.Models.Shapes
                 return new List<Intersection>();
             }
 
-            var t1 = (-b - Math.Sqrt(discriminant)) / (2 * a);
-            var t2 = (-b + Math.Sqrt(discriminant)) / (2 * a);
+            var t1 = (-b - MathF.Sqrt(discriminant)) / (2 * a);
+            var t2 = (-b + MathF.Sqrt(discriminant)) / (2 * a);
             return new List<Intersection>
             {
                 new Intersection(t1, this),

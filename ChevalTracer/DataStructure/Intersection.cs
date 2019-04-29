@@ -6,10 +6,10 @@ namespace Cheval.DataStructure
 {
     public class Intersection
     {
-        public double T { get; set; }
+        public float T { get; set; }
         public Shape Object { get; set; }
 
-        public Intersection(double t, Shape o)
+        public Intersection(float t, Shape o)
         {
             T = t;
             Object = o;

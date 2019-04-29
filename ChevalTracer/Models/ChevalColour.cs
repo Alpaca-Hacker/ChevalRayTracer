@@ -4,11 +4,11 @@ namespace Cheval.Models
 {
     public class ChevalColour 
     {
-        public double Red { get; set; }
-        public double Green { get; set; }
-        public double Blue { get; set; }
+        public float Red { get; set; }
+        public float Green { get; set; }
+        public float Blue { get; set; }
 
-        public ChevalColour(double red, double green, double blue)
+        public ChevalColour(float red, float green, float blue)
         {
             Red = red;
             Green = green;
@@ -23,9 +23,9 @@ namespace Cheval.Models
 
             }
 
-            var isEqual = Math.Abs(a.Red - b.Red) < Cheval.Epsilon
-                           && Math.Abs(a.Green - b.Green) < Cheval.Epsilon
-                           && Math.Abs(a.Blue - b.Blue) < Cheval.Epsilon;
+            var isEqual = MathF.Abs(a.Red - b.Red) < Cheval.Epsilon
+                           && MathF.Abs(a.Green - b.Green) < Cheval.Epsilon
+                           && MathF.Abs(a.Blue - b.Blue) < Cheval.Epsilon;
 
             return isEqual;
         }
@@ -88,7 +88,7 @@ namespace Cheval.Models
             return new ChevalColour(newRed, newGreen, newBlue);
         }
 
-        public static ChevalColour operator *(ChevalColour a, double b)
+        public static ChevalColour operator *(ChevalColour a, float b)
         {
             var newRed = a.Red * b;
             var newGreen = a.Green * b;

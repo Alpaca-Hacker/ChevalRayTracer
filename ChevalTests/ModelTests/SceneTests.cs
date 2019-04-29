@@ -51,14 +51,14 @@ namespace ChevalTests.ModelTests
             {
                 Material =
                 {
-                    Colour = new ChevalColour(0.8, 1.0, 0.6),
-                    Diffuse = 0.7,
-                    Specular = 0.2
+                    Colour = new ChevalColour(0.8f, 1.0f, 0.6f),
+                    Diffuse = 0.7f,
+                    Specular = 0.2f
                 }
             };
             var sphere2 = new Sphere
             {
-                Transform = Transform.Scaling(0.5, 0.5, 0.5)
+                Transform = Transform.Scaling(0.5f, 0.5f, 0.5f)
             };
             //Act
             var result = Scene.Default();
@@ -91,8 +91,8 @@ namespace ChevalTests.ModelTests
             //Assert
             xs.Should().HaveCount(4);
             xs[0].T.Should().Be(4);
-            xs[1].T.Should().Be(4.5);
-            xs[2].T.Should().Be(5.5);
+            xs[1].T.Should().Be(4.5f);
+            xs[2].T.Should().Be(5.5f);
             xs[3].T.Should().Be(6);
         }
 
@@ -192,7 +192,7 @@ namespace ChevalTests.ModelTests
             //Act
             var comps = new Computations(inter, ray);
             var result = scene.ShadeHit(comps,1);
-            var expected = new ChevalColour(0.1, 0.1, 0.1);
+            var expected = new ChevalColour(0.1f, 0.1f, 0.1f);
             //Assert
             result.Should().BeEquivalentTo(expected);
 
@@ -243,20 +243,20 @@ namespace ChevalTests.ModelTests
             var scene = Scene.Default();
             var shape = new Plane
             {
-                Material = {Reflective = 0.5},
+                Material = {Reflective = 0.5f},
                 Transform = Transform.Translation(0, -1, 0)
             };
             scene.Shapes.Add(shape);
-            var ray = new Ray(Point(0, 0, -3), Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
-            var inter = new Intersection(Math.Sqrt(2), shape);
+            var ray = new Ray(Point(0, 0, -3), Vector(0, -MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2));
+            var inter = new Intersection(MathF.Sqrt(2), shape);
             //Act
             var comps = new Computations(inter, ray);
             var colour = scene.ReflectedColour(comps,1);
-            var expected = new ChevalColour(0.19033, 0.23792, 0.14275);
+            var expected = new ChevalColour(0.19033f, 0.23792f, 0.14275f);
             //Assert
-            Math.Round(colour.Red, 5).Should().Be(expected.Red);
-            Math.Round(colour.Green, 5).Should().Be(expected.Green);
-            Math.Round(colour.Blue, 5).Should().Be(expected.Blue);
+            MathF.Round(colour.Red, 5).Should().Be(expected.Red);
+            MathF.Round(colour.Green, 5).Should().Be(expected.Green);
+            MathF.Round(colour.Blue, 5).Should().Be(expected.Blue);
         }
 
         /*
@@ -278,20 +278,20 @@ namespace ChevalTests.ModelTests
             var scene = Scene.Default();
             var shape = new Plane
             {
-                Material = {Reflective = 0.5},
+                Material = {Reflective = 0.5f},
                 Transform = Transform.Translation(0, -1, 0)
             };
             scene.Shapes.Add(shape);
-            var ray = new Ray(Point(0, 0, -3), Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
-            var inter = new Intersection(Math.Sqrt(2), shape);
+            var ray = new Ray(Point(0, 0, -3), Vector(0, -MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2));
+            var inter = new Intersection(MathF.Sqrt(2), shape);
             //Act
             var comps = new Computations(inter, ray);
             var colour = scene.ShadeHit(comps,1);
-            var expected = new ChevalColour(0.87676, 0.92434, 0.82917);
+            var expected = new ChevalColour(0.87676f, 0.92434f, 0.82917f);
             //Assert
-            Math.Round(colour.Red, 5).Should().Be(expected.Red);
-            Math.Round(colour.Green, 5).Should().Be(expected.Green);
-            Math.Round(colour.Blue, 5).Should().Be(expected.Blue);
+            MathF.Round(colour.Red, 5).Should().Be(expected.Red);
+            MathF.Round(colour.Green, 5).Should().Be(expected.Green);
+            MathF.Round(colour.Blue, 5).Should().Be(expected.Blue);
         }
         /*
 

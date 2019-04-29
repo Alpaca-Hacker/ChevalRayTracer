@@ -2,7 +2,7 @@
 using System.Text;
 using Cheval.DataStructure;
 using Cheval.Models;
-using static System.Math;
+using static System.MathF;
 
 namespace Cheval.Patterns
 {

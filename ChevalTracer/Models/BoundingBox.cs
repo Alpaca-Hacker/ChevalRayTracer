@@ -10,24 +10,24 @@ namespace Cheval.Models
         public static BoundingBox Infinity =>
             new BoundingBox(
                 Point(
-                    double.NegativeInfinity,
-                    double.NegativeInfinity,
-                    double.NegativeInfinity),
+                    float.NegativeInfinity,
+                    float.NegativeInfinity,
+                    float.NegativeInfinity),
                 Point(
-                    double.PositiveInfinity,
-                    double.PositiveInfinity,
-                    double.PositiveInfinity));
+                    float.PositiveInfinity,
+                    float.PositiveInfinity,
+                    float.PositiveInfinity));
 
         public static BoundingBox Empty =>
             new BoundingBox(
                 Point(
-                    double.PositiveInfinity,
-                    double.PositiveInfinity,
-                    double.PositiveInfinity),
+                    float.PositiveInfinity,
+                    float.PositiveInfinity,
+                    float.PositiveInfinity),
                 Point(
-                    double.NegativeInfinity,
-                    double.NegativeInfinity,
-                    double.NegativeInfinity));
+                    float.NegativeInfinity,
+                    float.NegativeInfinity,
+                    float.NegativeInfinity));
 
 
         public readonly ChevalTuple Min;
@@ -57,14 +57,14 @@ namespace Cheval.Models
         public static BoundingBox Add(BoundingBox box, ChevalTuple point)
         {
             var min = Point(
-                Math.Min(box.Min.X, point.X),
-                Math.Min(box.Min.Y, point.Y),
-                Math.Min(box.Min.Z, point.Z));
+                MathF.Min(box.Min.X, point.X),
+                MathF.Min(box.Min.Y, point.Y),
+                MathF.Min(box.Min.Z, point.Z));
 
             var max = Point(
-                Math.Max(box.Max.X, point.X),
-                Math.Max(box.Max.Y, point.Y),
-                Math.Max(box.Max.Z, point.Z));
+                MathF.Max(box.Max.X, point.X),
+                MathF.Max(box.Max.Y, point.Y),
+                MathF.Max(box.Max.Z, point.Z));
 
             return new BoundingBox(min, max);
         }
@@ -121,20 +121,20 @@ namespace Cheval.Models
             Contains(b.Min) &&
             Contains(b.Max);
 
-        private static void CheckAxis(double origin, double direction, double tmin, double tmax, out double min, out double max)
+        private static void CheckAxis(float origin, float direction, float tmin, float tmax, out float min, out float max)
         {
             var tminNum = (tmin - origin);
             var tmaxNum = (tmax - origin);
 
-            if (Math.Abs(direction) >= Cheval.Epsilon)
+            if (MathF.Abs(direction) >= Cheval.Epsilon)
             {
                 min = tminNum / direction;
                 max = tmaxNum / direction;
             }
             else
             {
-                min = tminNum * double.PositiveInfinity;
-                max = tmaxNum * double.PositiveInfinity;
+                min = tminNum * float.PositiveInfinity;
+                max = tmaxNum * float.PositiveInfinity;
             }
 
             if (min > max)
@@ -151,8 +151,8 @@ namespace Cheval.Models
             CheckAxis(ray.Origin.Y, ray.Direction.Y, Min.Y, Max.Y, out var ytmin, out var ytmax);
             CheckAxis(ray.Origin.Z, ray.Direction.Z, Min.Z, Max.Z, out var ztmin, out var ztmax);
 
-            var tmin = Math.Max(xtmin, Math.Max(ytmin, ztmin));
-            var tmax = Math.Min(xtmax, Math.Min(ytmax, ztmax));
+            var tmin = MathF.Max(xtmin, MathF.Max(ytmin, ztmin));
+            var tmax = MathF.Min(xtmax, MathF.Min(ytmax, ztmax));
 
             if (tmin > tmax)
             {
@@ -168,7 +168,7 @@ namespace Cheval.Models
             var dy = Max.Y - Min.Y;
             var dz = Max.Z - Min.Z;
 
-            var greatest = Math.Max(dx, Math.Max(dy, dz));
+            var greatest = MathF.Max(dx, MathF.Max(dy, dz));
 
             var x0 = Min.X;
             var y0 = Min.Y;
@@ -178,19 +178,19 @@ namespace Cheval.Models
             var y1 = Max.Y;
             var z1 = Max.Z;
 
-            if (Math.Abs(greatest - dx) < Cheval.Epsilon)
+            if (MathF.Abs(greatest - dx) < Cheval.Epsilon)
             {
-                x1 = x0 + dx / 2.0;
+                x1 = x0 + dx / 2;
                 x0 = x1;
             }
-            else if (Math.Abs(greatest - dy) < Cheval.Epsilon)
+            else if (MathF.Abs(greatest - dy) < Cheval.Epsilon)
             {
-                y1 = y0 + dy / 2.0;
+                y1 = y0 + dy / 2;
                 y0 = y1;
             }
             else
             {
-                z1 = z0 + dz / 2.0;
+                z1 = z0 + dz / 2;
                 z0 = z1;
             }
 

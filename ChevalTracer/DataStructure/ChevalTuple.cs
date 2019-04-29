@@ -5,15 +5,15 @@ namespace Cheval.DataStructure
     public class ChevalTuple
     {
 
-        public double X { get; set; }
-        public double Y { get; set; }
-        public double Z { get; set; }
-        public double W { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Z { get; set; }
+        public float W { get; set; }
 
-        public bool IsPoint => Math.Abs(W - 1.0) < Cheval.Epsilon;
-        public bool IsVector => Math.Abs(W) < Cheval.Epsilon;
+        public bool IsPoint => MathF.Abs(W - 1.0f) < Cheval.Epsilon;
+        public bool IsVector => MathF.Abs(W) < Cheval.Epsilon;
 
-        public ChevalTuple(double x, double y, double z, double w)
+        public ChevalTuple(float x, float y, float z, float w)
         {
             X = x;
             Y = y;
@@ -21,19 +21,19 @@ namespace Cheval.DataStructure
             W = w;
         }
 
-        public static ChevalTuple Point(double x, double y, double z)
+        public static ChevalTuple Point(float x, float y, float z)
         {
-            return new ChevalTuple(x, y, z, 1.0);
+            return new ChevalTuple(x, y, z, 1);
         }
 
-        public static ChevalTuple Vector(double x, double y, double z)
+        public static ChevalTuple Vector(float x, float y, float z)
         {
-            return new ChevalTuple(x, y, z, 0.0);
+            return new ChevalTuple(x, y, z, 0);
         }
 
-        public static double Magnitude(ChevalTuple vector)
+        public static float Magnitude(ChevalTuple vector)
         {
-            return Math.Sqrt(vector.X * vector.X
+            return MathF.Sqrt(vector.X * vector.X
                              + vector.Y * vector.Y
                              + vector.Z * vector.Z);
         }
@@ -48,7 +48,7 @@ namespace Cheval.DataStructure
             return Vector(newX, newY, newZ);
         }
 
-        public static double Dot(ChevalTuple a, ChevalTuple b)
+        public static float Dot(ChevalTuple a, ChevalTuple b)
         {
             var result = (a.X * b.X) + (a.Y * b.Y) + (a.Z * b.Z);
 
@@ -76,9 +76,9 @@ namespace Cheval.DataStructure
 
             }
 
-            var isEqual = (Math.Abs(a.X - b.X) < Cheval.Epsilon
-                           && Math.Abs(a.Y - b.Y) < Cheval.Epsilon
-                           && Math.Abs(a.Z - b.Z) < Cheval.Epsilon
+            var isEqual = (MathF.Abs(a.X - b.X) < Cheval.Epsilon
+                           && MathF.Abs(a.Y - b.Y) < Cheval.Epsilon
+                           && MathF.Abs(a.Z - b.Z) < Cheval.Epsilon
                            && a.W.Equals(b.W));
 
             return isEqual;
@@ -147,7 +147,7 @@ namespace Cheval.DataStructure
             return new ChevalTuple(newX, newY, newZ, newW);
         }
 
-        public static ChevalTuple operator *(ChevalTuple t, double x)
+        public static ChevalTuple operator *(ChevalTuple t, float x)
         {
             var newX = t.X * x;
             var newY = t.Y * x;
@@ -157,7 +157,7 @@ namespace Cheval.DataStructure
             return new ChevalTuple(newX, newY, newZ, newW);
         }
 
-        public static ChevalTuple operator *(double x, ChevalTuple t)
+        public static ChevalTuple operator *(float x, ChevalTuple t)
         {
             var newX = t.X * x;
             var newY = t.Y * x;
@@ -177,7 +177,7 @@ namespace Cheval.DataStructure
             return new ChevalTuple(newX, newY, newZ, newW);
         }
 
-        public static ChevalTuple operator /(ChevalTuple t, double x)
+        public static ChevalTuple operator /(ChevalTuple t, float x)
         {
             var newX = t.X / x;
             var newY = t.Y / x;

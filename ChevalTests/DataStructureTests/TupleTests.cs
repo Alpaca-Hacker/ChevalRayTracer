@@ -24,13 +24,13 @@ namespace ChevalTests.DataStructureTests
         public void A_tuple_with_w_equal_1_is_a_point()
         {
             //Assign
-            var a = new ChevalTuple(4.3, -4.2, 3.1, 1.0);
+            var a = new ChevalTuple(4.3f, -4.2f, 3.1f, 1.0f);
 
             //Assert
-            a.X.Should().Be(4.3);
-            a.Y.Should().Be(-4.2);
-            a.Z.Should().Be(3.1);
-            a.W.Should().Be(1.0);
+            a.X.Should().Be(4.3f);
+            a.Y.Should().Be(-4.2f);
+            a.Z.Should().Be(3.1f);
+            a.W.Should().Be(1.0f);
 
             a.IsPoint.Should().BeTrue();
             a.IsVector.Should().BeFalse();
@@ -53,13 +53,13 @@ namespace ChevalTests.DataStructureTests
         public void A_tuple_with_w_equal_0_is_a_vector()
         {
             //Assign
-            var a = new ChevalTuple(4.3, -4.2, 3.1, 0.0);
+            var a = new ChevalTuple(4.3f, -4.2f, 3.1f, 0.0f);
 
             //Assert
-            a.X.Should().Be(4.3);
-            a.Y.Should().Be(-4.2);
-            a.Z.Should().Be(3.1);
-            a.W.Should().Be(0.0);
+            a.X.Should().Be(4.3f);
+            a.Y.Should().Be(-4.2f);
+            a.Z.Should().Be(3.1f);
+            a.W.Should().Be(0.0f);
 
             a.IsPoint.Should().BeFalse();
             a.IsVector.Should().BeTrue();
@@ -80,7 +80,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
             var p = ChevalTuple.Point(4, -4, 3);
             //Assert
             p.Should().BeAssignableTo<ChevalTuple>();
-            p.W.Should().Be(1.0);
+            p.W.Should().Be(1);
             p.IsPoint.Should().BeTrue();
         }
 
@@ -97,7 +97,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
             var v = ChevalTuple.Vector(4, -4, 3);
             //Assert
             v.Should().BeAssignableTo<ChevalTuple>();
-            v.W.Should().Be(0.0);
+            v.W.Should().Be(0.0f);
             v.IsVector.Should().BeTrue();
         }
 
@@ -105,8 +105,8 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
         public void Equality_is_correct()
         {
             //Assign
-            var t1 = new ChevalTuple(4, -4, 3, 1.0);
-            var t2 = new ChevalTuple(4, -4, 3, 1.0);
+            var t1 = new ChevalTuple(4, -4, 3, 1.0f);
+            var t2 = new ChevalTuple(4, -4, 3, 1.0f);
             var t3 = new ChevalTuple(4, 4, 3, 0);
 
             var p1 = ChevalTuple.Point(4, -4, 3);
@@ -287,9 +287,9 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
             //Assign
             var t1 = new ChevalTuple(1, -2, 3, -4);
             //Act
-            var expected = new ChevalTuple(3.5, -7, 10.5, -14);
-            var result1 = 3.5 * t1;
-            var result2 = t1 * 3.5;
+            var expected = new ChevalTuple(3.5f, -7, 10.5f, -14);
+            var result1 = 3.5f * t1;
+            var result2 = t1 * 3.5f;
             //Assert
             result1.Should().BeEquivalentTo(expected);
             result2.Should().BeEquivalentTo(expected);
@@ -307,9 +307,9 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
             //Assign
             var t1 = new ChevalTuple(1, -2, 3, -4);
             //Act
-            var expected = new ChevalTuple(0.5, -1, 1.5, -2);
-            var result1 = 0.5 * t1;
-            var result2 = t1 * 0.5;
+            var expected = new ChevalTuple(0.5f, -1, 1.5f, -2);
+            var result1 = 0.5f * t1;
+            var result2 = t1 * 0.5f;
             //Assert
             result1.Should().BeEquivalentTo(expected);
             result2.Should().BeEquivalentTo(expected);
@@ -326,7 +326,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
             //Assign
             var t1 = new ChevalTuple(1, -2, 3, -4);
             //Act
-            var expected = new ChevalTuple(0.5, -1, 1.5, -2);
+            var expected = new ChevalTuple(0.5f, -1, 1.5f, -2);
             var result = t1 / 2;
             //Assert
             result.Should().BeEquivalentTo(expected);
@@ -362,7 +362,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 345-354). The Pragmatic B
         {
             //Assign
             var v = ChevalTuple.Vector(0, -1, 0);
-            var n = ChevalTuple.Vector(Math.Sqrt(2)/2, Math.Sqrt(2)/2, 0);
+            var n = ChevalTuple.Vector(MathF.Sqrt(2)/2, MathF.Sqrt(2)/2, 0);
             //Act
             ChevalTuple result = ChevalTuple.Reflect(v, n);
             var expected = ChevalTuple.Vector(1, 0, 0);

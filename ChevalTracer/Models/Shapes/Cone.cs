@@ -7,13 +7,13 @@ namespace Cheval.Models.Shapes
 {
     public class Cone: Shape
     {
-        public double Minimum { get; set; } = double.NegativeInfinity;
+        public float Minimum { get; set; } = float.NegativeInfinity;
 
-        public double Maximum { get; set; } = double.PositiveInfinity;
+        public float Maximum { get; set; } = float.PositiveInfinity;
 
         public bool IsClosed { get; set; } = false;
 
-        private bool CheckCap(Ray ray, double t, double r)
+        private bool CheckCap(Ray ray, float t, float r)
         {
             var x = ray.Origin.X + t * ray.Direction.X;
             var z = ray.Origin.Z + t * ray.Direction.Z;
@@ -27,7 +27,7 @@ namespace Cheval.Models.Shapes
                 return;
             }
 
-            if (Math.Abs(ray.Direction.Y) < Cheval.Epsilon)
+            if (MathF.Abs(ray.Direction.Y) < Cheval.Epsilon)
             {
                 return;
             }
@@ -56,9 +56,9 @@ namespace Cheval.Models.Shapes
             var b = (2 * o.X * d.X) - (2 * o.Y * d.Y) + (2 * o.Z * d.Z);
             var c = (o.X * o.X) - (o.Y * o.Y) + (o.Z * o.Z);
 
-            if (Math.Abs(a) < Cheval.Epsilon)
+            if (MathF.Abs(a) < Cheval.Epsilon)
             {
-                if (Math.Abs(b) < Cheval.Epsilon)
+                if (MathF.Abs(b) < Cheval.Epsilon)
                 {
                     return new Intersections().List;
                 }
@@ -79,8 +79,8 @@ namespace Cheval.Models.Shapes
                 return new Intersections().List;
             }
 
-            var t0 = (-b - Math.Sqrt(disc)) / (2 * a);
-            var t1 = (-b + Math.Sqrt(disc)) / (2 * a);
+            var t0 = (-b - MathF.Sqrt(disc)) / (2 * a);
+            var t1 = (-b + MathF.Sqrt(disc)) / (2 * a);
 
             if (t0 > t1)
             {
@@ -120,7 +120,7 @@ namespace Cheval.Models.Shapes
                 return Vector(0, -1, 0);
             }
 
-            var y = Math.Sqrt(dist);
+            var y = MathF.Sqrt(dist);
             if (point.Y > 0)
             {
                 y = -y;
@@ -131,9 +131,9 @@ namespace Cheval.Models.Shapes
 
         public override BoundingBox Bounds()
         {
-            var r = Math.Max(
-                Math.Abs(Minimum),
-                Math.Abs(Maximum));
+            var r = MathF.Max(
+                MathF.Abs(Minimum),
+                MathF.Abs(Maximum));
 
             var min = Point(-r, Minimum, -r);
             var max = Point(r, Maximum, r);

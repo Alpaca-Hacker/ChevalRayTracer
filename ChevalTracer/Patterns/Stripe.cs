@@ -21,7 +21,7 @@ namespace Cheval.Patterns
 
         public override ChevalColour ColourAt(ChevalTuple point)
         {
-            var choice = (int)Math.Abs(Math.Floor(point.X) % Colours.Count);
+            var choice = (int)MathF.Abs(MathF.Floor(point.X) % Colours.Count);
             return Colours[choice];
         }
 

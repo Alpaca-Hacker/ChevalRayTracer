@@ -15,7 +15,7 @@ namespace Cheval.Models
             Direction = direction;
         }
 
-        public ChevalTuple Position(double t)
+        public ChevalTuple Position(float t)
         {
             var position = (Origin + Direction * t);
             return position;

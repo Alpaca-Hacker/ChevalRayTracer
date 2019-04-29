@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
 using Cheval.DataStructure;
-using static System.Math;
+using static System.MathF;
 using static Cheval.DataStructure.ChevalTuple;
 
 namespace Cheval.Models.Shapes
 {
     public class Cylinder : Shape
     {
-        public double Minimum { get; set; }
-        public double Maximum { get; set; }
+        public float Minimum { get; set; }
+        public float Maximum { get; set; }
         public bool Closed { get; set; }
 
         public Cylinder()
         {
-            Minimum = double.NegativeInfinity;
-            Maximum = double.PositiveInfinity;
+            Minimum = float.NegativeInfinity;
+            Maximum = float.PositiveInfinity;
         }
         protected override List<Intersection> LocalIntersect(Ray localRay)
         {
@@ -29,7 +29,7 @@ namespace Cheval.Models.Shapes
                 var c = Pow(localRay.Origin.X, 2) + Pow(localRay.Origin.Z, 2) - 1;
                 var disc = Pow(b, 2) - (4 * a * c);
                 // # ray does not intersect the cylinder
-                if (disc < 0)
+                if (disc < 0f)
                 {
                     return result;
                 }
@@ -61,12 +61,14 @@ namespace Cheval.Models.Shapes
             return result;
         }
 
-        private bool CheckCap(Ray ray, double t)
+        private bool CheckCap(Ray ray, float t)
         {
             var x = ray.Origin.X + t * ray.Direction.X;
             var z = ray.Origin.Z + t * ray.Direction.Z;
 
-            return Pow(x, 2) + Pow(z, 2) <= 1;
+            var result = x * x + z * z;
+
+            return (result - 1f) <= Cheval.Epsilon;
         }
 
         private void IntersectCaps(Ray ray, List<Intersection> xs)
@@ -77,6 +79,7 @@ namespace Cheval.Models.Shapes
             }
 
             var t = (Minimum - ray.Origin.Y) / ray.Direction.Y;
+
             if (CheckCap(ray, t))
             {
                 xs.Add(new Intersection(t, this));
@@ -91,7 +94,7 @@ namespace Cheval.Models.Shapes
 
         protected override ChevalTuple LocalNormalAt(ChevalTuple localPoint)
         {
-            var dist = Pow(localPoint.X, 2) + Pow(localPoint.Z, 2);
+            var dist = localPoint.X * localPoint.X + localPoint.Z* localPoint.Z;
             if (dist < 1 && localPoint.Y >= Maximum - Cheval.Epsilon)
             {
                 return Vector(0,1,0);

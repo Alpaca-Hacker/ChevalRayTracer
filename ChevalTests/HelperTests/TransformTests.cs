@@ -161,9 +161,9 @@ namespace ChevalTests.HelperTests
             //Assign
             var p = Point(0, 1, 0);
             //Act
-            var hq = RotationX(Math.PI / 4);
-            var fq = RotationX(Math.PI / 2);
-            var expected1 = Point(0, Math.Sqrt(2) / 2, Math.Sqrt(2) / 2);
+            var hq = RotationX(MathF.PI / 4);
+            var fq = RotationX(MathF.PI / 2);
+            var expected1 = Point(0, MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2);
             var expected2 = Point(0, 0, 1);
             var result1 = hq * p;
             var result2 = fq * p;
@@ -184,9 +184,9 @@ namespace ChevalTests.HelperTests
             //Assign
             var p = Point(0, 1, 0);
             //Act
-            var hq = RotationX(Math.PI / 4);
+            var hq = RotationX(MathF.PI / 4);
             var inv = Matrix.Inverse(hq);
-            var expected = Point(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2);
+            var expected = Point(0, MathF.Sqrt(2) / 2, -MathF.Sqrt(2) / 2);
 
             var result = inv * p;
             //Assert
@@ -207,9 +207,9 @@ namespace ChevalTests.HelperTests
             //Assign
             var p = Point(0, 0, 1);
             //Act
-            var hq = RotationY(Math.PI / 4);
-            var fq = RotationY(Math.PI / 2);
-            var expected1 = Point(Math.Sqrt(2) / 2, 0, Math.Sqrt(2) / 2);
+            var hq = RotationY(MathF.PI / 4);
+            var fq = RotationY(MathF.PI / 2);
+            var expected1 = Point(MathF.Sqrt(2) / 2, 0, MathF.Sqrt(2) / 2);
             var expected2 = Point(1, 0, 0);
             var result1 = hq * p;
             var result2 = fq * p;
@@ -232,9 +232,9 @@ namespace ChevalTests.HelperTests
             //Assign
             var p = Point(0, 1, 0);
             //Act
-            var hq = RotationZ(Math.PI / 4);
-            var fq = RotationZ(Math.PI / 2);
-            var expected1 = Point(-Math.Sqrt(2) / 2, Math.Sqrt(2) / 2, 0);
+            var hq = RotationZ(MathF.PI / 4);
+            var fq = RotationZ(MathF.PI / 2);
+            var expected1 = Point(-MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2, 0);
             var expected2 = Point(-1, 0, 0);
             var result1 = hq * p;
             var result2 = fq * p;
@@ -443,10 +443,10 @@ namespace ChevalTests.HelperTests
             var result = ViewTransform(from, to, up);
             var expected = new Matrix(new[,]
             {
-                { -0.50709, 0.50709, 0.67612, -2.36643},
-                { 0.76772 , 0.60609, 0.12122, -2.82843},
-                { -0.35857, 0.59761, -0.71714, 0.00000 },
-                { 0.00000 , 0.00000, 0.00000, 1.00000 }
+                { -0.50709f,  0.50709f, 0.67612f,-2.36643f},
+                {  0.76772f , 0.60609f, 0.12122f,-2.82843f},
+                { -0.35857f,  0.59761f,-0.71714f, 0.00000f },
+                {  0.00000f , 0.00000f, 0.00000f, 1.00000f }
             });
             //Assert
             result.Should().BeEquivalentTo(expected);

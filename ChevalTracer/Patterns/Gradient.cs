@@ -19,7 +19,7 @@ namespace Cheval.Patterns
         public override ChevalColour ColourAt(ChevalTuple point)
         {
             var distance = Colours[1] - Colours[0];
-            var fraction = point.X - Math.Floor(point.X);
+            var fraction = point.X - MathF.Floor(point.X);
             return Colours[0] + distance * fraction;
         }
     }

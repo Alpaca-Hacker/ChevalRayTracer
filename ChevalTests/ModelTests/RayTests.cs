@@ -50,8 +50,8 @@ namespace ChevalTests.ModelTests
             var expected1 = Point(3, 3, 4);
             var resultM1 = ray.Position(-1);
             var expectedM1 = Point(1, 3, 4);
-            var result25 = ray.Position(2.5);
-            var expected25 = Point(4.5, 3, 4);
+            var result25 = ray.Position(2.5f);
+            var expected25 = Point(4.5f, 3, 4);
             //Assert
             result0.Should().BeEquivalentTo(expected0);
             result1.Should().BeEquivalentTo(expected1);
@@ -77,8 +77,8 @@ namespace ChevalTests.ModelTests
             var xs = s.Intersect(ray);
             //Assert
             xs.Should().HaveCount(2);
-            xs[0].T.Should().Be(4.0);
-            xs[1].T.Should().Be(6.0);
+            xs[0].T.Should().Be(4.0f);
+            xs[1].T.Should().Be(6.0f);
         }
         /*
          * Scenario: A ray intersects a sphere at a tangent
@@ -99,8 +99,8 @@ namespace ChevalTests.ModelTests
             var xs = s.Intersect(ray);
             //Assert
             xs.Should().HaveCount(2);
-            xs[0].T.Should().Be(5.0);
-            xs[1].T.Should().Be(5.0);
+            xs[0].T.Should().Be(5.0f);
+            xs[1].T.Should().Be(5.0f);
         }
         /*
          * Scenario: A ray misses a sphere
@@ -139,8 +139,8 @@ namespace ChevalTests.ModelTests
             var xs = s.Intersect(ray);
             //Assert
             xs.Should().HaveCount(2);
-            xs[0].T.Should().Be(-1.0);
-            xs[1].T.Should().Be(1.0);
+            xs[0].T.Should().Be(-1.0f);
+            xs[1].T.Should().Be(1.0f);
         }
         /*
          * Scenario: A sphere is behind a ray
@@ -161,8 +161,8 @@ namespace ChevalTests.ModelTests
             var xs = s.Intersect(ray);
             //Assert
             xs.Should().HaveCount(2);
-            xs[0].T.Should().Be(-6.0);
-            xs[1].T.Should().Be(-4.0);
+            xs[0].T.Should().Be(-6.0f);
+            xs[1].T.Should().Be(-4.0f);
         }
         /*
          * Scenario: Intersect sets the object on the intersection

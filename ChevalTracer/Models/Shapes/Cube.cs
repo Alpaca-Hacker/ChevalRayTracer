@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cheval.DataStructure;
-using static System.Double;
-using static System.Math;
+using static System.MathF;
 using static Cheval.DataStructure.ChevalTuple;
 
 namespace Cheval.Models.Shapes
@@ -29,17 +28,17 @@ namespace Cheval.Models.Shapes
             return result;
         }
 
-        private double Minimum(double v1, double v2, double v3)
+        private float Minimum(float v1, float v2, float v3)
         {
             return Min(Min(v1, v2), v3);
         }
 
-        private double Maximum(double v1, double v2, double v3)
+        private float Maximum(float v1, float v2, float v3)
         {
             return Max(Max(v1, v2), v3);
         }
 
-        private Tuple<double, double> CheckAxis(double origin, double direction)
+        private Tuple<float, float> CheckAxis(float origin, float direction)
         {
             var tMinNumerator = (-1 - origin);
             var tMaxNumerator = (1 - origin);
@@ -54,7 +53,7 @@ namespace Cheval.Models.Shapes
                 tMax = temp;
             }
 
-            return new Tuple<double, double>(tMin, tMax);
+            return new Tuple<float, float>(tMin, tMax);
         }
 
         protected override ChevalTuple LocalNormalAt(ChevalTuple localPoint)

@@ -92,11 +92,11 @@ namespace ChevalTests.PatternTests
             var pattern = new Stripe(White, Black);
             //Act
             var result1 = pattern.ColourAt(Point(0, 0, 0));
-            var result2 = pattern.ColourAt(Point(0.9, 0, 0));
+            var result2 = pattern.ColourAt(Point(0.9f, 0, 0));
             var result3 = pattern.ColourAt(Point(1, 0, 0));
-            var result4 = pattern.ColourAt(Point(-0.1, 0, 0));
+            var result4 = pattern.ColourAt(Point(-0.1f, 0, 0));
             var result5 = pattern.ColourAt(Point(-1, 0, 0));
-            var result6 = pattern.ColourAt(Point(-1.1, 0, 0));
+            var result6 = pattern.ColourAt(Point(-1.1f, 0, 0));
             //Assert
             result1.Should().BeEquivalentTo(White);
             result2.Should().BeEquivalentTo(White);
@@ -122,7 +122,7 @@ namespace ChevalTests.PatternTests
             shape.Transform = Transform.Scaling(2, 2, 2);
             var pattern = new Stripe(White, Black);
             //Act
-            ChevalColour col = pattern.ColourAtObject(shape, Point(1.5, 0, 0));
+            ChevalColour col = pattern.ColourAtObject(shape, Point(1.5f, 0, 0));
             //Assert
             col.Should().BeEquivalentTo(White);
         }
@@ -142,7 +142,7 @@ namespace ChevalTests.PatternTests
             var pattern = new Stripe(White, Black);
             pattern.Transform = Transform.Scaling(2, 2, 2);
             //Act
-            ChevalColour col = pattern.ColourAtObject(shape, Point(1.5, 0, 0));
+            ChevalColour col = pattern.ColourAtObject(shape, Point(1.5f, 0, 0));
             //Assert
             col.Should().BeEquivalentTo(White);
         }
@@ -162,9 +162,9 @@ namespace ChevalTests.PatternTests
             var shape = new Sphere();
             shape.Transform = Transform.Scaling(2, 2, 2);
             var pattern = new Stripe(White, Black);
-            pattern.Transform = Transform.Translation(0.5, 0, 0);
+            pattern.Transform = Transform.Translation(0.5f, 0, 0);
             //Act
-            ChevalColour col = pattern.ColourAtObject(shape, Point(2.5, 0, 0));
+            ChevalColour col = pattern.ColourAtObject(shape, Point(2.5f, 0, 0));
             //Assert
             col.Should().BeEquivalentTo(White);
         }
@@ -184,12 +184,12 @@ namespace ChevalTests.PatternTests
             //Act
             var result1 = pattern.ColourAt(Point(0, 0, 0));
             var expected1 = White;
-            var result2 = pattern.ColourAt(Point(0.25, 0, 0));
-            var expected2 = new ChevalColour(0.75,0.75,0.75);
-            var result3 = pattern.ColourAt(Point(0.5, 0, 0));
-            var expected3 = new ChevalColour(0.5, 0.5, 0.5);
-            var result4 = pattern.ColourAt(Point(0.75, 0, 0));
-            var expected4 = new ChevalColour(0.25, 0.25, 0.25);
+            var result2 = pattern.ColourAt(Point(0.25f, 0, 0));
+            var expected2 = new ChevalColour(0.75f,0.75f,0.75f);
+            var result3 = pattern.ColourAt(Point(0.5f, 0, 0));
+            var expected3 = new ChevalColour(0.5f, 0.5f, 0.5f);
+            var result4 = pattern.ColourAt(Point(0.75f, 0, 0));
+            var expected4 = new ChevalColour(0.25f, 0.25f, 0.25f);
             var result5 = pattern.ColourAt(Point(1, 0, 0));
             var expected5 = White;
             //Assert
@@ -217,7 +217,7 @@ namespace ChevalTests.PatternTests
             pattern.ColourAt(Point(0,0,0)).Should().BeEquivalentTo(White);
             pattern.ColourAt(Point(1, 0, 0)).Should().BeEquivalentTo(Black);
             pattern.ColourAt(Point(0, 0, 1)).Should().BeEquivalentTo(Black);
-            pattern.ColourAt(Point(0.708, 0, 0.708)).Should().BeEquivalentTo(Black);
+            pattern.ColourAt(Point(0.708f, 0, 0.708f)).Should().BeEquivalentTo(Black);
             pattern.ColourAt(Point(2, 0, 0)).Should().BeEquivalentTo(White);
         }
 
@@ -250,8 +250,8 @@ namespace ChevalTests.PatternTests
             var pattern = new Checker(White, Black);
             //Assert
             pattern.ColourAt(Point(0, 0, 0)).Should().BeEquivalentTo(White);
-            pattern.ColourAt(Point(0.99, 0, 0)).Should().BeEquivalentTo(White);
-            pattern.ColourAt(Point(1.01, 0, 0)).Should().BeEquivalentTo(Black);
+            pattern.ColourAt(Point(0.99f, 0, 0)).Should().BeEquivalentTo(White);
+            pattern.ColourAt(Point(1.01f, 0, 0)).Should().BeEquivalentTo(Black);
         }
         /*
 
@@ -268,8 +268,8 @@ namespace ChevalTests.PatternTests
             var pattern = new Checker(White, Black);
             //Assert
             pattern.ColourAt(Point(0, 0, 0)).Should().BeEquivalentTo(White);
-            pattern.ColourAt(Point(0, 0.99, 0)).Should().BeEquivalentTo(White);
-            pattern.ColourAt(Point(0,1.01, 0)).Should().BeEquivalentTo(Black);
+            pattern.ColourAt(Point(0, 0.99f, 0)).Should().BeEquivalentTo(White);
+            pattern.ColourAt(Point(0,1.01f, 0)).Should().BeEquivalentTo(Black);
         }
         /*
            Scenario: Checkers should repeat in z
@@ -285,8 +285,8 @@ namespace ChevalTests.PatternTests
             var pattern = new Checker(White, Black);
             //Assert
             pattern.ColourAt(Point(0, 0, 0)).Should().BeEquivalentTo(White);
-            pattern.ColourAt(Point(0, 0, 0.99)).Should().BeEquivalentTo(White);
-            pattern.ColourAt(Point(0, 0, 1.01)).Should().BeEquivalentTo(Black);
+            pattern.ColourAt(Point(0, 0, 0.99f)).Should().BeEquivalentTo(White);
+            pattern.ColourAt(Point(0, 0, 1.01f)).Should().BeEquivalentTo(Black);
         }
     }
 }

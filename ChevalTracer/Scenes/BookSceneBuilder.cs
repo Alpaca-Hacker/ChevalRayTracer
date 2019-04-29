@@ -21,10 +21,10 @@ namespace Cheval.Scenes
             var scene = new Scene();
 
 
-            var cameraOrigin = Point(9.5, 2, 2.5);
-            var cameraDirection = Point(3, 0.5, 0.65);
+            var cameraOrigin = Point(9.5f, 2, 2.5f);
+            var cameraDirection = Point(3, 0.5f, 0.65f);
             var up = Vector(0, 1, 0);
-            var fov = 0.436332; //25 * Math.PI / 180; //Radians?
+            var fov = 0.436332f; //25 * MathF.PI / 180; //Radians?
             var viewTransform = ViewTransform(cameraOrigin, cameraDirection, up);
 
             world.Camera = new Camera((int)(400 * size), (int)(200 * size), fov)
@@ -34,7 +34,7 @@ namespace Cheval.Scenes
 
             var floor = new Plane
             {
-                Transform = Transform.RotationY(0.31415), 
+                Transform = Transform.RotationY(0.31415f), 
                 Material = new Material
                 {
                     Specular = 0,
@@ -44,7 +44,7 @@ namespace Cheval.Scenes
                     //    new ChevalColour(0.95, 0.95, 0.95)
 
                     //}),
-                    Colour = new ChevalColour(0.5,0.5,0.5),
+                    Colour = new ChevalColour(0.5f,0.5f,0.5f),
                     Reflective = 0,
                     Ambient = 0,
                     Diffuse = 0
@@ -86,7 +86,7 @@ namespace Cheval.Scenes
                     Diffuse = 0,
                     Shininess = 0,
                     Specular =  0,
-                    Ambient = .5
+                    Ambient = 0.5f
                 }
 
             });
@@ -97,7 +97,7 @@ namespace Cheval.Scenes
                 Material = new Material
                 {
                     Colour = new ChevalColour(0.7f, 0.6f, 0.5f),
-                    Reflective = 0.8
+                    Reflective = 0.8f
                 }
 
             });

@@ -25,13 +25,13 @@ namespace ChevalTests.ModelTests
             //Assign
             var hsize = 160;
             var vsize = 120;
-            var fov = Math.PI / 2;
+            var fov = MathF.PI / 2;
             //Act
             var cam = new Camera(hsize, vsize, fov);
             //Assert
             cam.HSize.Should().Be(160);
             cam.VSize.Should().Be(120);
-            cam.FOV.Should().Be(Math.PI / 2);
+            cam.FOV.Should().Be(MathF.PI / 2);
         }
         /*
          * Scenario: The pixel size for a horizontal canvas
@@ -42,9 +42,9 @@ namespace ChevalTests.ModelTests
         public void Pixel_size_for_horizontal_canvas()
         {
             //Assign
-            var cam = new Camera(200,125, Math.PI / 2);
+            var cam = new Camera(200,125, MathF.PI / 2);
             //Assert
-            Math.Round(cam.PixelSize,5).Should().Be(0.01);
+            MathF.Round(cam.PixelSize,5).Should().Be(0.01f);
         }
         /*
            Scenario: The pixel size for a vertical canvas
@@ -55,9 +55,9 @@ namespace ChevalTests.ModelTests
         public void Pixel_size_for_vertical_canvas()
         {
             //Assign
-            var cam = new Camera(125, 200, Math.PI / 2);
+            var cam = new Camera(125, 200, MathF.PI / 2);
             //Assert
-            Math.Round(cam.PixelSize, 5).Should().Be(0.01);
+            MathF.Round(cam.PixelSize, 5).Should().Be(0.01f);
         }
 
         /*
@@ -71,7 +71,7 @@ namespace ChevalTests.ModelTests
         public void Constructing_ray_through_centre_of_canvas()
         {
             //Assign
-            var cam = new Camera(201,101,Math.PI /2);
+            var cam = new Camera(201,101,MathF.PI /2);
             //Act
             var result = cam.RayForPixel(100, 50);
             //Assert
@@ -89,12 +89,12 @@ namespace ChevalTests.ModelTests
         public void Constructing_ray_through_corner_of_canvas()
         {
             //Assign
-            var cam = new Camera(201, 101, Math.PI / 2);
+            var cam = new Camera(201, 101, MathF.PI / 2);
             //Act
             var result = cam.RayForPixel(0, 0);
             //Assert
             result.Origin.Should().BeEquivalentTo(Point(0, 0, 0));
-            result.Direction.Should().BeEquivalentTo(Vector(0.66519, 0.33259, -0.66851));
+            result.Direction.Should().BeEquivalentTo(Vector(0.66519f, 0.33259f, -0.66851f));
         }
         /*
            Scenario: Constructing a ray when the camera is transformed
@@ -108,13 +108,13 @@ namespace ChevalTests.ModelTests
         public void Constructing_ray_when_camera_is_transformed()
         {
             //Assign
-            var cam = new Camera(201, 101, Math.PI / 2);
-            cam.Transform = RotationY(Math.PI / 4) * Translation(0, -2, 5);
+            var cam = new Camera(201, 101, MathF.PI / 2);
+            cam.Transform = RotationY(MathF.PI / 4) * Translation(0, -2, 5);
             //Act
             var result = cam.RayForPixel(100, 50);
             //Assert
             result.Origin.Should().BeEquivalentTo(Point(0, 2, -5));
-            result.Direction.Should().BeEquivalentTo(Vector(Math.Sqrt(2)/2, 0, -Math.Sqrt(2) / 2));
+            result.Direction.Should().BeEquivalentTo(Vector(MathF.Sqrt(2)/2, 0, -MathF.Sqrt(2) / 2));
         }
         /*
          * Scenario: Rendering a world with a camera
@@ -132,7 +132,7 @@ namespace ChevalTests.ModelTests
         {
             //Assign
             var scene = Scene.Default();
-            var cam = new Camera(11,11,Math.PI/2);
+            var cam = new Camera(11,11,MathF.PI/2);
             var from = Point(0, 0, -5);
             var to = Point(0, 0, 0);
             var up = Vector(0, 1, 0);
@@ -140,7 +140,7 @@ namespace ChevalTests.ModelTests
             //Act
             Canvas image = cam.Render(scene);
             var result = image.GetPixel(5, 5);
-            var expected = new ChevalColour(0.38066, 0.47583, 0.2855);
+            var expected = new ChevalColour(0.38066f, 0.47583f, 0.2855f);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }

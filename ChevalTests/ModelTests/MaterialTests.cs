@@ -33,10 +33,10 @@ namespace ChevalTests.ModelTests
             var m = new Material();
             //Assert
             m.Colour.Should().Be(new ChevalColour(1, 1, 1));
-            m.Ambient.Should().Be(0.1);
-            m.Diffuse.Should().Be(0.9);
-            m.Specular.Should().Be(0.9);
-            m.Shininess.Should().Be(200.0);
+            m.Ambient.Should().Be(0.1f);
+            m.Diffuse.Should().Be(0.9f);
+            m.Specular.Should().Be(0.9f);
+            m.Shininess.Should().Be(200.0f);
         }
         /*For the next few tests
          Background:
@@ -60,7 +60,7 @@ namespace ChevalTests.ModelTests
             var light = PointLight(Point(0, 0, -10), new ChevalColour(1, 1, 1));
             //Act
             var result = m.Lighting(new Sphere(), light, position, eyeV, normalV);
-            var expected = new ChevalColour(1.9,1.9,1.9);
+            var expected = new ChevalColour(1.9f,1.9f,1.9f);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -78,12 +78,12 @@ namespace ChevalTests.ModelTests
             //Assign
             var m = new Material();
             var position = Point(0, 0, 0);
-            var eyeV = Vector(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2);
+            var eyeV = Vector(0, MathF.Sqrt(2) / 2, -MathF.Sqrt(2) / 2);
             var normalV = Vector(0, 0, -1);
             var light = PointLight(Point(0, 0, -10), new ChevalColour(1, 1, 1));
             //Act
             var result = m.Lighting(new Sphere(), light, position, eyeV, normalV);
-            var expected = new ChevalColour(1.0, 1.0, 1.0);
+            var expected = new ChevalColour(1.0f, 1.0f, 1.0f);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -106,7 +106,7 @@ namespace ChevalTests.ModelTests
             var light = PointLight(Point(0, 10, -10), new ChevalColour(1, 1, 1));
             //Act
             var result = m.Lighting(new Sphere(), light, position, eyeV, normalV);
-            var expected = new ChevalColour(0.7364, 0.7364, 0.7364);
+            var expected = new ChevalColour(0.7364f, 0.7364f, 0.7364f);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -124,12 +124,12 @@ namespace ChevalTests.ModelTests
             //Assign
             var m = new Material();
             var position = Point(0, 0, 0);
-            var eyeV = Vector(0, -Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2);
+            var eyeV = Vector(0, -MathF.Sqrt(2) / 2, -MathF.Sqrt(2) / 2);
             var normalV = Vector(0, 0, -1);
             var light = PointLight(Point(0, 10, -10), new ChevalColour(1, 1, 1));
             //Act
             var result = m.Lighting(new Sphere(), light, position, eyeV, normalV);
-            var expected = new ChevalColour(1.6364, 1.6364, 1.6364);
+            var expected = new ChevalColour(1.63638532f, 1.63638532f, 1.63638532f);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -152,7 +152,7 @@ namespace ChevalTests.ModelTests
             var light = PointLight(Point(0, 0, 10), new ChevalColour(1, 1, 1));
             //Act
             var result = m.Lighting(new Sphere(), light, position, eyeV, normalV);
-            var expected = new ChevalColour(0.1, 0.1, 0.1);
+            var expected = new ChevalColour(0.1f, 0.1f, 0.1f);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -177,7 +177,7 @@ namespace ChevalTests.ModelTests
             var inShadow = true;
             //Act
             var result = m.Lighting(new Sphere(), light, position, eyeV, normalV, inShadow);
-            var expected = new ChevalColour(0.1, 0.1, 0.1);
+            var expected = new ChevalColour(0.1f, 0.1f, 0.1f);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -211,8 +211,8 @@ namespace ChevalTests.ModelTests
             var normalV = Vector(0, 0, -1);
             var light = PointLight(Point(0, 0, -10), White);
             //Act
-            var result1 = mat.Lighting(new Sphere(), light, Point(0.9, 0, 0), eyeV, normalV, false);
-            var result2 = mat.Lighting(new Sphere(), light, Point(1.1, 0, 0), eyeV, normalV, false);
+            var result1 = mat.Lighting(new Sphere(), light, Point(0.9f, 0, 0), eyeV, normalV, false);
+            var result2 = mat.Lighting(new Sphere(), light, Point(1.1f, 0, 0), eyeV, normalV, false);
             //Assert
             result1.Should().BeEquivalentTo(White);
             result2.Should().BeEquivalentTo(Black);

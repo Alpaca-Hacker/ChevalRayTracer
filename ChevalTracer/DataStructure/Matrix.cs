@@ -4,21 +4,21 @@ namespace Cheval.DataStructure
 {
     public class Matrix : IEquatable<Matrix>
     {
-        private readonly double[,] _data;
+        private readonly float[,] _data;
         public int Size => _data.GetUpperBound(0) + 1;
-        public bool IsInvertible => Math.Abs(Determinant(this)) > Cheval.Epsilon;
+        public bool IsInvertible => MathF.Abs(Determinant(this)) > Cheval.Epsilon;
 
-        public Matrix(double[,] data)
+        public Matrix(float[,] data)
         {
             _data = data;
         }
 
         public Matrix(int size)
         {
-            _data = new double[size, size];
+            _data = new float[size, size];
         }
 
-        public ref double this[int row, int column] => ref _data[row, column];
+        public ref float this[int row, int column] => ref _data[row, column];
 
 
         public static Matrix operator *(Matrix a, Matrix b)
@@ -33,7 +33,7 @@ namespace Cheval.DataStructure
             {
                 for (var j = 0; j < c.Size; j++)
                 {
-                    double s = 0.0;
+                    float s = 0;
                     for (var k = 0; k < c.Size; k++)
                     {
                         s += a[i, k] * b[k, j];
@@ -113,7 +113,7 @@ namespace Cheval.DataStructure
             {
                 for (var j = 0; j < left.Size; j++)
                 {
-                    if (Math.Abs(left[i, j] - right[i, j]) > Cheval.Epsilon)
+                    if (MathF.Abs(left[i, j] - right[i, j]) > Cheval.Epsilon)
                     {
                         return false;
                     }
@@ -189,9 +189,9 @@ namespace Cheval.DataStructure
             return newMatrix;
         }
 
-        public static double Determinant(Matrix matrix)
+        public static float Determinant(Matrix matrix)
         {
-            double result = 0;
+            float result = 0;
             if (matrix.Size == 2)
             {
                  result = matrix[0, 0] * matrix[1, 1] - matrix[1, 0] * matrix[0, 1];
@@ -207,7 +207,7 @@ namespace Cheval.DataStructure
             return result;
         }
 
-        public static double Minor(Matrix matrix, int row, int column)
+        public static float Minor(Matrix matrix, int row, int column)
         {
             var sub = Submatrix(matrix, row, column);
             var det = Determinant(sub);
@@ -215,7 +215,7 @@ namespace Cheval.DataStructure
             return det;
         }
 
-        public static double Cofactor(Matrix matrix, int row, int column)
+        public static float Cofactor(Matrix matrix, int row, int column)
         {
             var minor = Minor(matrix, row, column);
             if ((row + column) % 2 != 0)

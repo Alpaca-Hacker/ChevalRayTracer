@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Cheval.Models;
 using Cheval.Models.Shapes;
-using static System.Math;
+using static System.MathF;
 using static Cheval.DataStructure.ChevalTuple;
 
 namespace Cheval.DataStructure
 {
     public class Computations
     {
-        public double T { get; set; }
+        public float T { get; set; }
         public Shape Shape { get; set; }
         public ChevalTuple Point { get; set; }
         public ChevalTuple EyeV { get; set; }
@@ -18,8 +19,8 @@ namespace Cheval.DataStructure
         public ChevalTuple UnderPoint { get; set; }
         public bool Inside { get; set; }
         public ChevalTuple ReflectV { get; set; }
-        public double N1 { get; set; }
-        public double N2 { get; set; }
+        public float N1 { get; set; }
+        public float N2 { get; set; }
 
         public Computations(Intersection intersection, Ray ray, Intersections xs = null)
         {
@@ -44,7 +45,7 @@ namespace Cheval.DataStructure
             {
                 if (inter == intersection)
                 {
-                    N1 = containers.Count == 0 ? 1.0 :  
+                    N1 = containers.Count == 0 ? 1 :  
                         containers[containers.Count - 1].Material.RefractiveIndex;
                 }
 
@@ -58,27 +59,27 @@ namespace Cheval.DataStructure
                 }
 
                 if (inter != intersection) continue;
-                N2 = containers.Count == 0 ? 1.0 : 
+                N2 = containers.Count == 0 ? 1 : 
                     containers[containers.Count - 1].Material.RefractiveIndex;
 
                 break;
 
             }
         }
-        public double Schlick()
+        public float Schlick()
         {
             //OMG This looks confusing! 
             var cos = Dot(EyeV, NormalV);
             if (N1 > N2)
             {
                 var n = N1 / N2;
-                var sin2T = Pow(n, 2) * (1.0 - Pow(cos, 2));
+                var sin2T = Pow(n, 2) * (1 - Pow(cos, 2));
                 if (sin2T > 1.0)
                 {
-                    return 1.0;
+                    return 1;
                 }
 
-                var cosT = Sqrt(1.0 - sin2T);
+                var cosT = Sqrt(1f - sin2T);
                 cos = cosT;
             }
 

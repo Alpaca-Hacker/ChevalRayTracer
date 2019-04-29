@@ -110,8 +110,8 @@ namespace ChevalTests.ShapeTests
             //Assign
             var s = new Sphere();
             //Act
-            var expected = ChevalTuple.Vector(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3);
-            var n = s.NormalAt(ChevalTuple.Point(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3));
+            var expected = ChevalTuple.Vector(MathF.Sqrt(3) / 3, MathF.Sqrt(3) / 3, MathF.Sqrt(3) / 3);
+            var n = s.NormalAt(ChevalTuple.Point(MathF.Sqrt(3) / 3, MathF.Sqrt(3) / 3, MathF.Sqrt(3) / 3));
             //Assert
             n.Should().BeEquivalentTo(expected);
         }
@@ -128,7 +128,7 @@ namespace ChevalTests.ShapeTests
             //Assign
             var s = new Sphere();
             //Act
-            var n = s.NormalAt(ChevalTuple.Point(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3));
+            var n = s.NormalAt(ChevalTuple.Point(MathF.Sqrt(3) / 3, MathF.Sqrt(3) / 3, MathF.Sqrt(3) / 3));
             var result = ChevalTuple.Normalize(n);
             //Assert
             result.Should().BeEquivalentTo(n);
@@ -148,8 +148,8 @@ namespace ChevalTests.ShapeTests
             var s = new Sphere();
             s.Transform = Transform.Translation(0, 1, 0);
             //Act
-            var result = s.NormalAt(ChevalTuple.Point(0, 1.70711, -0.70711));
-            var expected = ChevalTuple.Vector(0, 0.70711, -0.70711);
+            var result = s.NormalAt(ChevalTuple.Point(0, 1.70711f, -0.70711f));
+            var expected = ChevalTuple.Vector(0, 0.70711f, -0.70711f);
             //Assert
             result.Should().BeEquivalentTo(expected);
         }
@@ -167,10 +167,10 @@ namespace ChevalTests.ShapeTests
         {
             //Assign
             var s = new Sphere();
-            s.Transform = Transform.Scaling(1, 0.5, 1) * Transform.RotationZ(Math.PI / 5);
+            s.Transform = Transform.Scaling(1, 0.5f, 1) * Transform.RotationZ(MathF.PI / 5);
             //Act
-            var result = s.NormalAt(ChevalTuple.Point(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2));
-            var expected = ChevalTuple.Vector(0, 0.9701425, -0.2425356);
+            var result = s.NormalAt(ChevalTuple.Point(0, MathF.Sqrt(2) / 2, -MathF.Sqrt(2) / 2));
+            var expected = ChevalTuple.Vector(0, 0.9701425f, -0.2425356f);
 
             //Assert
             result.Should().BeEquivalentTo(expected);

@@ -22,9 +22,9 @@ namespace ChevalTests.DataStructureTests
             //Assign
             var s = new Sphere();
             //Act
-            var i = new Intersection(3.5, s);
+            var i = new Intersection(3.5f, s);
             //Assert
-            i.T.Should().Be(3.5);
+            i.T.Should().Be(3.5f);
             i.Object.Should().BeEquivalentTo(s);
         }
         /*

@@ -26,8 +26,8 @@ namespace Cheval.Samplers
             var halfWidth = _camera.HalfWidth;
             var halfHeight = _camera.HalfHeight;
 
-            var xOffset = (px + 0.5) * pixelSize;
-            var yOffset = (py + 0.5) * pixelSize;
+            var xOffset = (px + 0.5f) * pixelSize;
+            var yOffset = (py + 0.5f) * pixelSize;
 
             var worldX = halfWidth - xOffset;
             var worldY = halfHeight - yOffset;

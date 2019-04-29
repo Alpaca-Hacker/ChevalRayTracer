@@ -33,14 +33,14 @@ namespace ChevalTests.ShapeTests
            | -z | point(0.5, 0, -5)| vector(0, 0, 1)  | 4 | 6 |
            | in | point(0, 0.5, 0) | vector(0, 0, 1)  | -1| 1 |
          */
-        [TestCase(new double[] { 5, 0.5, 0 }, new double[] { -1, 0, 0 }, 4, 6)]
-        [TestCase(new double[] { -5, 0.5, 0 }, new double[] { 1, 0, 0 }, 4, 6)]
-        [TestCase(new double[] { 0.5, 5, 0 }, new double[] { 0, -1, 0 }, 4, 6)]
-        [TestCase(new double[] { 0.5, -5, 0 }, new double[] { 0, 1, 0 }, 4, 6)]
-        [TestCase(new double[] { 0.5, 0, 5 }, new double[] { 0, 0, -1 }, 4, 6)]
-        [TestCase(new double[] { 0.5, 0, -5 }, new double[] { 0, 0, 1 }, 4, 6)]
-        [TestCase(new double[] { 0, 0.5, 0 }, new double[] { 0, 0, 1 }, -1, 1)]
-        public void Cube_ray_tests(double[] point, double[] dir, double t1, double t2) {
+        [TestCase(new float[] { 5, 0.5f, 0 }, new float[] { -1, 0, 0 }, 4, 6)]
+        [TestCase(new float[] { -5, 0.5f, 0 }, new float[] { 1, 0, 0 }, 4, 6)]
+        [TestCase(new float[] { 0.5f, 5, 0 }, new float[] { 0, -1, 0 }, 4, 6)]
+        [TestCase(new float[] { 0.5f, -5, 0 }, new float[] { 0, 1, 0 }, 4, 6)]
+        [TestCase(new float[] { 0.5f, 0, 5 }, new float[] { 0, 0, -1 }, 4, 6)]
+        [TestCase(new float[] { 0.5f, 0, -5 }, new float[] { 0, 0, 1 }, 4, 6)]
+        [TestCase(new float[] { 0, 0.5f, 0 }, new float[] { 0, 0, 1 }, -1, 1)]
+        public void Cube_ray_tests(float[] point, float[] dir, float t1, float t2) {
             //Assign
             var cube = new Cube();
             var ray = new Ray(Point(point[0], point[1], point[2]),
@@ -66,14 +66,14 @@ namespace ChevalTests.ShapeTests
         // | point(2, 0, 2)  | vector(0, 0, -1)               |
         // | point(2, 0, 2)  | vector(0, -1, 0)               |
         // | point(2, 2, 0)  | vector(-1, 0, 0)               |
-        [TestCase(new double[] { -2, 0, 0 }, new double[] { 0.2673, 0.5345, 0.8018 })]
-        [TestCase(new double[] { 0, -2, 0 }, new double[] { 0.8018, 0.2673, 0.5345 })]
-        [TestCase(new double[] { 0, 0, -2 }, new double[] { 0.5345, 0.8018, 0.2673 })]
-        [TestCase(new double[] { 2, 0, 2 }, new double[] { 0, 0, -1 })]
-        [TestCase(new double[] { 2, 0, 2 }, new double[] { 0, -1, 0 })]
-        [TestCase(new double[] { 2, 2, 0 }, new double[] { -1, 0, 0 })]
+        [TestCase(new float[] { -2, 0, 0 }, new float[] { 0.2673f, 0.5345f, 0.8018f })]
+        [TestCase(new float[] { 0, -2, 0 }, new float[] { 0.8018f, 0.2673f, 0.5345f })]
+        [TestCase(new float[] { 0, 0, -2 }, new float[] { 0.5345f, 0.8018f, 0.2673f })]
+        [TestCase(new float[] { 2, 0, 2 }, new float[] { 0, 0, -1 })]
+        [TestCase(new float[] { 2, 0, 2 }, new float[] { 0, -1, 0 })]
+        [TestCase(new float[] { 2, 2, 0 }, new float[] { -1, 0, 0 })]
 
-        public void Cube_ray_missing_tests(double[] point, double[] dir)
+        public void Cube_ray_missing_tests(float[] point, float[] dir)
         {
             //Assign
             var cube = new Cube();
@@ -102,15 +102,15 @@ namespace ChevalTests.ShapeTests
         // | point(1, 1, 1) | vector(1, 0, 0) |
         // | point(-1, -1, -1) | vector(-1, 0, 0) |
 
-        [TestCase(new double[] {1, 0.5, -0.8}, new double[] {1, 0, 0})]
-        [TestCase(new double[] {-1, -0.2, 0.9}, new double[] {-1, 0, 0})]
-        [TestCase(new double[] {-0.4, 1, -0.1}, new double[] {0, 1, 0})]
-        [TestCase(new double[] {0.3, -1, -0.7}, new double[] {0, -1, 0})]
-        [TestCase(new double[] {-0.6, 0.3, 1}, new double[] {0, 0, 1})]
-        [TestCase(new double[] {0.4, 0.4, -1}, new double[] {0, 0, -1})]
-        [TestCase(new double[] {1, 1, 1}, new double[] {1, 0, 0})]
-        [TestCase(new double[] {-1, -1, -1}, new double[] {-1, 0, 0})]
-        public void Cube_normal_tests(double[] point, double[] vector)
+        [TestCase(new float[] {1, 0.5f, -0.8f}, new float[] {1, 0, 0})]
+        [TestCase(new float[] {-1, -0.2f, 0.9f}, new float[] {-1, 0, 0})]
+        [TestCase(new float[] {-0.4f, 1, -0.1f}, new float[] {0, 1, 0})]
+        [TestCase(new float[] {0.3f, -1, -0.7f}, new float[] {0, -1, 0})]
+        [TestCase(new float[] {-0.6f, 0.3f, 1}, new float[] {0, 0, 1})]
+        [TestCase(new float[] {0.4f, 0.4f, -1}, new float[] {0, 0, -1})]
+        [TestCase(new float[] {1, 1, 1}, new float[] {1, 0, 0})]
+        [TestCase(new float[] {-1, -1, -1}, new float[] {-1, 0, 0})]
+        public void Cube_normal_tests(float[] point, float[] vector)
         {
             //Assign
             var cube = new Cube();

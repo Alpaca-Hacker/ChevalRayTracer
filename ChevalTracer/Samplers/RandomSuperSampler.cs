@@ -13,14 +13,14 @@ namespace Cheval.Samplers
         private readonly Scene _scene;
         private readonly Camera _camera;
         private readonly int _N;
-        private readonly double _oneOverN;
+        private readonly float _oneOverN;
 
         public RandomSuperSampler(Scene scene, Camera camera, int n = 4)
         {
             _scene = scene;
             _camera = camera;
             _N = n;
-            _oneOverN = 1.0 / n;
+            _oneOverN = 1.0f / n;
         }
 
         public IEnumerable<Ray> Supersample(int px, int py)
@@ -34,14 +34,14 @@ namespace Cheval.Samplers
 
             for (var i = 0; i < _N; i++)
             {
-                var xOffset = (px + 0.5);
-                var yOffset = (py + 0.5);
+                var xOffset = (px + 0.5f);
+                var yOffset = (py + 0.5f);
 
-                var rx = Rng.NextDouble();
-                var ry = Rng.NextDouble();
+                var rx = (float)Rng.NextDouble();
+                var ry = (float)Rng.NextDouble();
 
-                xOffset += (0.5 - rx);
-                yOffset += (0.5 - ry);
+                xOffset += (0.5f - rx);
+                yOffset += (0.5f - ry);
 
                 xOffset *= pixelSize;
                 yOffset *= pixelSize;

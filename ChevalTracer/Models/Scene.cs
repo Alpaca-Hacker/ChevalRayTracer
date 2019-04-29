@@ -2,7 +2,7 @@
 using Cheval.DataStructure;
 using Cheval.Helper;
 using Cheval.Models.Shapes;
-using static System.Math;
+using static System.MathF;
 using static Cheval.DataStructure.ChevalTuple;
 using static Cheval.Models.Light;
 using static Cheval.Templates.ColourTemplate;
@@ -27,14 +27,14 @@ namespace Cheval.Models
             {
                 Material =
                 {
-                    Colour = new ChevalColour(0.8, 1.0, 0.6),
-                    Diffuse = 0.7,
-                    Specular = 0.2
+                    Colour = new ChevalColour(0.8f, 1.0f, 0.6f),
+                    Diffuse = 0.7f,
+                    Specular = 0.2f
                 }
             };
             var sphere2 = new Sphere
             {
-                Transform = Transform.Scaling(0.5, 0.5, 0.5)
+                Transform = Transform.Scaling(0.5f, 0.5f, 0.5f)
             };
             var shapeList = new List<Shape> {sphere1, sphere2};
             var lights = new List<Light> {light};
@@ -128,7 +128,7 @@ namespace Cheval.Models
                 return Black;
             }
 
-            var cosT = Sqrt(1.0 - sin2T);
+            var cosT = Sqrt(1.0f - sin2T);
             var direction = comps.NormalV * (nRatio * cosI - cosT) - comps.EyeV * nRatio;
             var refractRay = new Ray(comps.UnderPoint, direction);
             remaining--;

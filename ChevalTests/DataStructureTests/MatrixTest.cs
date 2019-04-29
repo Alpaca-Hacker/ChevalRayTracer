@@ -26,20 +26,20 @@ namespace ChevalTests.DataStructureTests
         public void Four_by_Four_matrix_is_correct()
         {
             //Assign
-            var matrix = new Matrix(new double[,]{
+            var matrix = new Matrix(new float[,]{
                  {1,2,3,4}
-                ,{5.5,6.5,7.5,8.5}
+                ,{5.5f,6.5f,7.5f,8.5f}
                 ,{9,10,11,12}
-                ,{13.5,14.5,15.5,16.5}
+                ,{13.5f,14.5f,15.5f,16.5f}
             });
             //Assert
             matrix[0, 0].Should().Be(1);
             matrix[0, 3].Should().Be(4);
-            matrix[1, 0].Should().Be(5.5);
-            matrix[1, 2].Should().Be(7.5);
+            matrix[1, 0].Should().Be(5.5f);
+            matrix[1, 2].Should().Be(7.5f);
             matrix[2, 2].Should().Be(11);
-            matrix[3, 0].Should().Be(13.5);
-            matrix[3, 2].Should().Be(15.5);
+            matrix[3, 0].Should().Be(13.5f);
+            matrix[3, 2].Should().Be(15.5f);
             matrix.Size.Should().Be(4);
         }
 
@@ -49,10 +49,10 @@ namespace ChevalTests.DataStructureTests
             //Assign
             var matrix = new Matrix(4);
             //Act
-            matrix[1, 2] = 4.5D;
+            matrix[1, 2] = 4.5f;
             //Assert
             matrix[0, 0].Should().Be(0);
-            matrix[1, 2].Should().Be(4.5);
+            matrix[1, 2].Should().Be(4.5f);
             matrix.Size.Should().Be(4);
         }
 
@@ -60,12 +60,12 @@ namespace ChevalTests.DataStructureTests
         public void Matrix_does_not_blow_up_without_data()
         {
             //Assign
-            var matrix = new Matrix(new double [4, 4]);
+            var matrix = new Matrix(new float [4, 4]);
             //Act
-            matrix[1, 2] = 4.5D;
+            matrix[1, 2] = 4.5f;
             //Assert
             matrix[0, 0].Should().Be(0);
-            matrix[1, 2].Should().Be(4.5);
+            matrix[1, 2].Should().Be(4.5f);
         }
 
         /*
@@ -82,7 +82,7 @@ namespace ChevalTests.DataStructureTests
         public void Two_by_two_matrix_test()
         {
             //Assign
-            var matrix = new Matrix(new double[,]
+            var matrix = new Matrix(new float[,]
             {
                 {-3, 5},
                 {1, -2}
@@ -108,7 +108,7 @@ namespace ChevalTests.DataStructureTests
         public void Three_by_three_matrix_test()
         {
             //Assign
-            var matrix = new Matrix(new double[,]
+            var matrix = new Matrix(new float[,]
             {
                 {-3, 5, 0},
                 {1, -2, -7},
@@ -138,13 +138,13 @@ namespace ChevalTests.DataStructureTests
         public void Matrix_equality_with_identical_matrices()
         {
             //Assign
-            var mat1 = new Matrix(new double[,]{
+            var mat1 = new Matrix(new float[,]{
                  {1 ,2 ,3 ,4 }
                 ,{5 ,6 ,7 ,8 }
                 ,{9 ,10,11,12}
                 ,{13,14,15,16}
             });
-            var mat2 = new Matrix(new double[,]{
+            var mat2 = new Matrix(new float[,]{
                  {1 ,2 ,3 ,4 }
                 ,{5 ,6 ,7 ,8 }
                 ,{9 ,10,11,12}
@@ -174,13 +174,13 @@ namespace ChevalTests.DataStructureTests
         public void Matrix_equality_with_differnt_matrices()
         {
             //Assign
-            var mat1 = new Matrix(new double[,]{
+            var mat1 = new Matrix(new float[,]{
                 {1 ,2 ,3 ,4 }
                 ,{5 ,6 ,7 ,8 }
                 ,{9 ,10,11,12}
                 ,{13,14,15,16}
             });
-            var mat2 = new Matrix(new double[,]{
+            var mat2 = new Matrix(new float[,]{
                 {1 ,2 ,3 ,4 }
                 ,{13,14,15,16}
                 ,{5 ,6 ,7 ,8 }
@@ -215,14 +215,14 @@ namespace ChevalTests.DataStructureTests
         public void Matrix_multiplication_test()
         {
             //Assign
-            var mat1 = new Matrix(new double[,]
+            var mat1 = new Matrix(new float[,]
             {
                 {1, 2, 3, 4},
                 {5, 6, 7, 8},
                 {9, 8, 7, 6},
                 {5, 4, 3, 2}
             });
-            var mat2 = new Matrix(new double[,]
+            var mat2 = new Matrix(new float[,]
             {
                 {-2, 1, 2, 3},
                 {3, 2, 1, -1},
@@ -230,7 +230,7 @@ namespace ChevalTests.DataStructureTests
                 {1, 2, 7, 8}
             });
             //Act
-            var expected = new Matrix(new double[,]
+            var expected = new Matrix(new float[,]
             {
                 {20, 22, 50, 48},
                 {44, 54, 114, 108},
@@ -256,7 +256,7 @@ namespace ChevalTests.DataStructureTests
         public void Multiply_matrix_by_tuple()
         {
             //Assign
-            var mat = new Matrix(new double[,]
+            var mat = new Matrix(new float[,]
             {
                 {1, 2, 3, 4},
                 {2, 4, 4, 2},
@@ -287,7 +287,7 @@ namespace ChevalTests.DataStructureTests
         public void Multiplying_a_matrix_by_identity_matrix_test()
         {
             //Assign
-            var mat = new Matrix(new double[,]
+            var mat = new Matrix(new float[,]
             {
                 {0, 2, 3, 4},
                 {1, 2, 4, 8},
@@ -332,14 +332,14 @@ namespace ChevalTests.DataStructureTests
         public void Submatrix_of_three_by_three_test()
         {
             //Assign
-            var matrix = new Matrix(new double[,]
+            var matrix = new Matrix(new float[,]
             {
                 {1, 5, 0},
                 {-3, 2, 7},
                 {0, 6, -3}
             });
             //Act
-            var expected = new Matrix(new double[,]
+            var expected = new Matrix(new float[,]
             {
                 {-3, 2},
                 {0, 6}
@@ -364,7 +364,7 @@ namespace ChevalTests.DataStructureTests
         public void Submatrix_of_four_by_four_tes()
         {
             //Assign
-            var matrix = new Matrix(new double[,]
+            var matrix = new Matrix(new float[,]
             {
                 {-6, 1, 1, 6},
                 {-8, 5, 8, 6},
@@ -372,7 +372,7 @@ namespace ChevalTests.DataStructureTests
                 {-7, 1, -1, 1}
             });
             //Act
-            var expected = new Matrix(new double[,]
+            var expected = new Matrix(new float[,]
             {
                 {-6, 1, 6},
                 {-8, 8, 6},
@@ -404,7 +404,7 @@ namespace ChevalTests.DataStructureTests
         public void Transposing_a_matrix_test()
         {
             //Assign
-            var mat = new Matrix(new double[,]
+            var mat = new Matrix(new float[,]
             {
                 {0, 9, 3, 0},
                 {9, 8, 0, 8},
@@ -412,7 +412,7 @@ namespace ChevalTests.DataStructureTests
                 {0, 0, 5, 8}
             });
             //Act
-            var expected = new Matrix(new double[,]
+            var expected = new Matrix(new float[,]
             {
                 {0, 9, 1, 0},
                 {9, 8, 8, 0},
@@ -453,7 +453,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
         public void Determinant_of_two_by_two_matrix_test()
         {
             //Assign
-            var matrix = new Matrix(new double[,]
+            var matrix = new Matrix(new float[,]
             {
                 {1 ,5},
                 {-3,2}
@@ -477,7 +477,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
         public void Minor_calculation_of_3_by_3_matrix_test()
         {
             //Assign
-            var matrix= new Matrix(new double[,]
+            var matrix= new Matrix(new float[,]
             {
                 {3, 5, 0},
                 {2,-1,-7},
@@ -506,7 +506,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
         public void Calculating_cofactor_of_three_by_three_matrix()
         {
             //Assign
-            var matrix = new Matrix(new double[,]
+            var matrix = new Matrix(new float[,]
             {
                 {3, 5, 0},
                 {2,-1,-7},
@@ -538,7 +538,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
         public void Determinant_of_three_by_three_matrix_test()
         {
             //Assign
-            var matrix = new Matrix(new double[,]
+            var matrix = new Matrix(new float[,]
             {
                 {1, 2, 6},
                 {-5,8,-4},
@@ -573,7 +573,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
         public void Determinant_of_four_by_four_matrix_test()
         {
             //Assign
-            var matrix = new Matrix(new double[,]
+            var matrix = new Matrix(new float[,]
             {
                 {-2,-8, 3, 5},
                 {-3, 1, 7, 3},
@@ -608,7 +608,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
         public void Invertible_matrix_is_invertible()
         {
             //Assign
-            var matrix = new Matrix(new double[,]
+            var matrix = new Matrix(new float[,]
             {
                 {6, 4, 4, 4},
                 {5, 5, 7, 6},
@@ -636,7 +636,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
         public void NonInvertible_matrix_is_not_invertible()
         {
             //Assign
-            var matrix = new Matrix(new double[,]
+            var matrix = new Matrix(new float[,]
             {
                 {-4, 2, -2, -3},
                 {9, 6, 2, 6},
@@ -673,7 +673,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
         public void Inverse_of_matrix_test()
         {
             //Assign
-            var matrix = new Matrix(new double[,]
+            var matrix = new Matrix(new float[,]
             {
                 { -5, 2 , 6 , -8},
                 { 1 , -5, 1 , 8 },
@@ -681,12 +681,12 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
                 { 1 , -3, 7 , 4 }
             });
             //Act
-            var expected = new Matrix(new double[,]
+            var expected = new Matrix(new float[,]
             {
-                {  0.21805 , 0.45113 , 0.24060 ,-0.04511},
-                { -0.80827 ,-1.45677 ,-0.44361 ,0.52068},
-                { -0.07895 ,-0.22368 ,-0.05263 ,0.19737},
-                { -0.52256 ,-0.81391 ,-0.30075 ,0.30639} 
+                {  0.21805f , 0.45113f , 0.24060f ,-0.04511f},
+                { -0.80827f ,-1.45677f ,-0.44361f ,0.52068f},
+                { -0.07895f ,-0.22368f ,-0.05263f ,0.19737f},
+                { -0.52256f ,-0.81391f ,-0.30075f ,0.30639f} 
             });
             var result = Matrix.Inverse(matrix);
             //Assert
@@ -709,7 +709,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
         public void Inverse_of_another_matrix_test()
         {
             //Assign
-            var matrix = new Matrix(new double[,]
+            var matrix = new Matrix(new float[,]
             {
                 { 8 ,-5, 9, 2},
                 { 7 , 5, 6, 1},
@@ -717,12 +717,12 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
                 { -3, 0,-9,-4}
             });
             //Act
-            var expected = new Matrix(new double[,]
+            var expected = new Matrix(new float[,]
             {
-                {-0.15385, -0.15385,-0.28205,-0.53846},
-                {-0.07692, 0.12308 ,0.02564 ,0.03077 },
-                {0.35897 , 0.35897 ,0.43590 ,0.92308 },
-                {-0.69231, -0.69231,-0.76923,-1.92308}
+                {-0.15385f, -0.15385f,-0.28205f,-0.53846f},
+                {-0.07692f,  0.12308f ,0.02564f ,0.03077f },
+                {0.35897f,   0.35897f ,0.43590f ,0.92308f },
+                {-0.69231f, -0.69231f,-0.76923f,-1.92308f}
             });
             var result = Matrix.Inverse(matrix);
             //Assert
@@ -745,7 +745,7 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
         public void Inverse_of_third_matrix_test()
         {
             //Assign
-            var matrix = new Matrix(new double[,]
+            var matrix = new Matrix(new float[,]
             {
                 {9 ,3 , 0, 9},
                 {-5,-2,-6,-3},
@@ -753,12 +753,12 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
                 {-7,6 , 6, 2}
             });
             //Act
-            var expected = new Matrix(new double[,]
+            var expected = new Matrix(new float[,]
             {
-                {-0.04074, -0.07778, 0.14444,-0.22222},
-                {-0.07778, 0.03333 , 0.36667,-0.33333},
-                {-0.02901, -0.14630,-0.10926, 0.12963},
-                {0.17778 , 0.06667 ,-0.26667, 0.33333}
+                {-0.04074f, -0.07778f, 0.14444f,-0.22222f},
+                {-0.07778f,  0.03333f ,0.36667f,-0.33333f},
+                {-0.02901f, -0.14630f,-0.10926f, 0.12963f},
+                { 0.17778f , 0.06667f,-0.26667f, 0.33333f}
             });
             var result = Matrix.Inverse(matrix);
             //Assert
@@ -783,14 +783,14 @@ Jamis Buck. The Ray Tracer Challenge (Kindle Locations 1205-1208). The Pragmatic
         public void Multiplying_product_by_its_inverse_test()
         {
             //Assign
-            var matrixA = new Matrix(new double[,]
+            var matrixA = new Matrix(new float[,]
             {
                 {3 , -9, 7 , 3},
                 {3 , -8, 2 ,-9},
                 {-4, 4 , 4 , 1},
                 {-6, 5 ,-1 , 1}
             });
-            var matrixB = new Matrix(new double[,]
+            var matrixB = new Matrix(new float[,]
             {
                 {8, 2,2,2},
                 {3,-1,7,0},

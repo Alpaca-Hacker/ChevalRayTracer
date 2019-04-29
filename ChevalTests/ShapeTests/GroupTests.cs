@@ -170,7 +170,7 @@ namespace ChevalTests.ShapeTests
             //Assign
             var group1 = new Group
             {
-                Transform = Transform.RotationY(Math.PI / 2)
+                Transform = Transform.RotationY(MathF.PI / 2)
             };
             var group2 = new Group
             {
@@ -208,7 +208,7 @@ namespace ChevalTests.ShapeTests
             //Assign
             var g1 = new Group
             {
-                Transform = Transform.RotationY(Math.PI / 2),
+                Transform = Transform.RotationY(MathF.PI / 2),
             };
 
             var g2 = new Group
@@ -225,14 +225,14 @@ namespace ChevalTests.ShapeTests
 
             g2.Add(s);
 
-            var v = Vector(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3);
+            var v = Vector(MathF.Sqrt(3) / 3, MathF.Sqrt(3) / 3, MathF.Sqrt(3) / 3);
             //Act
             var result = s.NormalToWorld(v);
-            var expected = Vector(0.2857, 0.4286, -0.8571);
+            var expected = Vector(0.2857f, 0.4286f, -0.8571f);
             //Assert
-            Math.Round(result.X, 4).Should().Be(expected.X);
-            Math.Round(result.Y, 4).Should().Be(expected.Y);
-            Math.Round(result.Z, 4).Should().Be(expected.Z);
+            MathF.Round(result.X, 4).Should().Be(expected.X);
+            MathF.Round(result.Y, 4).Should().Be(expected.Y);
+            MathF.Round(result.Z, 4).Should().Be(expected.Z);
         }
         /*
          * Scenario: Finding the normal on a child object
@@ -253,7 +253,7 @@ namespace ChevalTests.ShapeTests
             //Assign
             var g1 = new Group()
             {
-                Transform = Transform.RotationY(Math.PI / 2),
+                Transform = Transform.RotationY(MathF.PI / 2),
             };
 
             var g2 = new Group()
@@ -270,14 +270,14 @@ namespace ChevalTests.ShapeTests
 
             g2.Add(s);
 
-            var p = Point(1.7321, 1.1547, -5.5774);
+            var p = Point(1.7321f, 1.1547f, -5.5774f);
             //Act
             var result = s.NormalAt(p);
-            var expected = Vector(0.2857, 0.4285, -0.8572);
+            var expected = Vector(0.2857f, 0.4285f, -0.8572f);
             //Assert
-            Math.Round(result.X, 4).Should().Be(expected.X);
-            Math.Round(result.Y, 4).Should().Be(expected.Y);
-            Math.Round(result.Z, 4).Should().Be(expected.Z);
+            MathF.Round(result.X, 4).Should().Be(expected.X);
+            MathF.Round(result.Y, 4).Should().Be(expected.Y);
+            MathF.Round(result.Z, 4).Should().Be(expected.Z);
         }
         // Tests taken from Pixie.net (https://github.com/basp/pixie.net)
 
@@ -298,14 +298,14 @@ namespace ChevalTests.ShapeTests
                 Maximum = 2,
                 Transform =
                     Transform.Translation(-4, -1, 4) *
-                    Transform.Scaling(0.5, 1, 0.5),
+                    Transform.Scaling(0.5f, 1, 0.5f),
             };
 
             var group = new Group {sphere, cyl};
             //Act
             var box = group.Bounds();
-            var minExpected = Point(-4.5, -3, -5);
-            var maxExpected = Point(4, 7, 4.5);
+            var minExpected = Point(-4.5f, -3, -5);
+            var maxExpected = Point(4, 7, 4.5f);
             //Assert
             box.Min.Should().BeEquivalentTo(minExpected);
             box.Max.Should().BeEquivalentTo(maxExpected);

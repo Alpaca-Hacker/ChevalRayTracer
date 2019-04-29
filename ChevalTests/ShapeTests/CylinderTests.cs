@@ -21,10 +21,10 @@ namespace ChevalTests.ShapeTests
         // | point(0, 0, 0)  | vector(0, 1, 0) |
         // | point(0, 0, -5) | vector(1, 1, 1) |
 
-        [TestCase(new double[] {1, 0, 0}, new double[] {0, 1, 0})]
-        [TestCase(new double[] {0, 0, 0}, new double[] {0, 1, 0})]
-        [TestCase(new double[] {0, 0, -5}, new double[] {1, 1, 1})]
-        public void Ray_misses_cylinder(double[] point, double[] vector)
+        [TestCase(new float[] {1, 0, 0}, new float[] {0, 1, 0})]
+        [TestCase(new float[] {0, 0, 0}, new float[] {0, 1, 0})]
+        [TestCase(new float[] {0, 0, -5}, new float[] {1, 1, 1})]
+        public void Ray_misses_cylinder(float[] point, float[] vector)
         {
             //Assign
             var cyl = new Cylinder();
@@ -50,10 +50,10 @@ namespace ChevalTests.ShapeTests
            | point(0, 0, -5)   | vector(0, 0, 1)   | 4       | 6       |
            | point(0.5, 0, -5) | vector(0.1, 1, 1) | 6.80798 | 7.08872 |
            */
-        [TestCase(new double[] {1, 0, -5}, new double[] {0, 0, 1}, 5, 5)]
-        [TestCase(new double[] {0, 0, -5}, new double[] {0, 0, 1}, 4, 6)]
-        [TestCase(new double[] {0.5, 0, -5}, new double[] {0.1, 1, 1}, 6.80798, 7.08872)]
-        public void Ray_hits_cylinder(double[] point, double[] vector, double t0, double t1)
+        [TestCase(new float[] {1, 0, -5}, new float[] {0, 0, 1}, 5, 5)]
+        [TestCase(new float[] {0, 0, -5}, new float[] {0, 0, 1}, 4, 6)]
+        [TestCase(new float[] {0.5f, 0, -5}, new float[] {0.1f, 1, 1}, 6.80801f, 7.0887f)]
+        public void Ray_hits_cylinder(float[] point, float[] vector, float t0, float t1)
         {
             //Assign
             var cyl = new Cylinder();
@@ -62,8 +62,8 @@ namespace ChevalTests.ShapeTests
             //Act
             var xs = cyl.Intersect(ray);
             //Assert
-            Math.Round(xs[0].T, 5).Should().Be(t0);
-            Math.Round(xs[1].T, 5).Should().Be(t1);
+            MathF.Round(xs[0].T, 5).Should().Be(t0);
+            MathF.Round(xs[1].T, 5).Should().Be(t1);
         }
 
         /*
@@ -84,13 +84,13 @@ namespace ChevalTests.ShapeTests
            | 5 | point(0, 1, -5)   | vector(0, 0, 1)    |   0   |
            | 6 | point(0, 1.5, -2) | vector(0, 0, 1)    |   2   |
          */
-        [TestCase(new double[] {0, 1.5, 0}, new double[] {0.1, 1, 0}, 0)]
-        [TestCase(new double[] {0, 3, -5}, new double[] {0, 0, 1}, 0)]
-        [TestCase(new double[] {0, 0, -5}, new double[] {0, 0, 1}, 0)]
-        [TestCase(new double[] {0, 2, -5}, new double[] {0, 0, 1}, 0)]
-        [TestCase(new double[] {0, 1, -5}, new double[] {0, 0, 1}, 0)]
-        [TestCase(new double[] {0, 1.5, -2}, new double[] {0, 0, 1}, 2)]
-        public void Ray_hits_short_cylinder(double[] point, double[] dir, int count)
+        [TestCase(new float[] {0, 1.5f, 0}, new float[] {0.1f, 1, 0}, 0)]
+        [TestCase(new float[] {0, 3, -5}, new float[] {0, 0, 1}, 0)]
+        [TestCase(new float[] {0, 0, -5}, new float[] {0, 0, 1}, 0)]
+        [TestCase(new float[] {0, 2, -5}, new float[] {0, 0, 1}, 0)]
+        [TestCase(new float[] {0, 1, -5}, new float[] {0, 0, 1}, 0)]
+        [TestCase(new float[] {0, 1.5f, -2}, new float[] {0, 0, 1}, 2)]
+        public void Ray_hits_short_cylinder(float[] point, float[] dir, int count)
         {
             //Assign
             var cyl = new Cylinder();
@@ -122,12 +122,12 @@ namespace ChevalTests.ShapeTests
            | 4 | point(0, 0, -2) | vector(0, 1, 2) | 2 |
            | 5 | point(0, -1, -2) | vector(0, 1, 1) | 2 | # corner case
          */
-        [TestCase(new double[] { 0, 3, 0 }, new double[] { 0, -1, 0 }, 2)]
-        [TestCase(new double[] { 0, 3, -2 }, new double[] { 0, -1, 2 }, 2)]
-        [TestCase(new double[] { 0, 4, -2 }, new double[] { 0, -1, 1 }, 2)]
-        [TestCase(new double[] { 0, 0, -2 }, new double[] { 0, 1, 2 }, 2)]
-        [TestCase(new double[] { 0, -1, -2 }, new double[] { 0, 1, 1 }, 2)]
-        public void Capped_cylinder_tests(double[] point, double[] dir, int count)
+        [TestCase(new float[] { 0f, 3f, 0f }, new float[] { 0f, -1f, 0f }, 2)]
+        [TestCase(new float[] { 0, 3, -2 }, new float[] { 0, -1, 2 }, 2)]
+        [TestCase(new float[] { 0, 4, -2 }, new float[] { 0, -1, 1 }, 2)]
+        [TestCase(new float[] { 0, 0, -2 }, new float[] { 0, 1, 2 }, 2)]
+        [TestCase(new float[] { 0, -1, -2 }, new float[] { 0, 1, 1 }, 2)]
+        public void Capped_cylinder_tests(float[] point, float[] dir, int count)
         {
             var cyl = new Cylinder();
             cyl.Minimum = 1;
@@ -157,13 +157,13 @@ namespace ChevalTests.ShapeTests
            | point(0.5, 2, 0) | vector(0, 1, 0)  |
            | point(0, 2, 0.5) | vector(0, 1, 0)  |
          */
-        [TestCase(new double[] { 0, 1, 0 },   new double[] { 0, -1, 0 })]
-        [TestCase(new double[] { 0.5, 1, 0 },  new double[] { 0, -1, 0 })]
-        [TestCase(new double[] { 0, 1, 0.5 },  new double[] { 0, -1, 0 })]
-        [TestCase(new double[] { 0, 2, 0 },  new double[] { 0, 1, 0 })]
-        [TestCase(new double[] { 0.5, 2, 0 }, new double[] { 0, 1, 0 })]
-        [TestCase(new double[] { 0, 2, 0.5 }, new double[] { 0, 1, 0 })]
-        public void Capped_cylinder_normal_tests(double[] point, double[] norm)
+        [TestCase(new float[] { 0, 1, 0 },   new float[] { 0, -1, 0 })]
+        [TestCase(new float[] { 0.5f, 1, 0 },  new float[] { 0, -1, 0 })]
+        [TestCase(new float[] { 0, 1, 0.5f },  new float[] { 0, -1, 0 })]
+        [TestCase(new float[] { 0, 2, 0 },  new float[] { 0, 1, 0 })]
+        [TestCase(new float[] { 0.5f, 2, 0 }, new float[] { 0, 1, 0 })]
+        [TestCase(new float[] { 0, 2, 0.5f }, new float[] { 0, 1, 0 })]
+        public void Capped_cylinder_normal_tests(float[] point, float[] norm)
         {
             var cyl = new Cylinder();
             cyl.Minimum = 1;

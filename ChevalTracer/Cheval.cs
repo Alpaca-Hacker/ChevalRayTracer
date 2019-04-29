@@ -11,7 +11,7 @@ namespace Cheval
 {
     public class Cheval
     {
-        public const double Epsilon = 0.00001;
+        public const float Epsilon = 0.00001F;
         public const int MaxNoOfReflections = 5;
         public const float Size = 2f;
 

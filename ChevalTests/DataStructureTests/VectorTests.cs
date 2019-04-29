@@ -26,13 +26,13 @@ namespace ChevalTests.DataStructureTests
            Then magnitude(v) = √14
          */
 
-        [TestCase(1D, 0D, 0D, ExpectedResult = 1D)]
-        [TestCase(0D, 01, 0D, ExpectedResult = 1D)]
-        [TestCase(0D, 0D, 1D, ExpectedResult = 1D)]
-        [TestCase(1D, 2D, 3D, ExpectedResult = 3.7416573867739413D)] // √14
-        [TestCase(-1D, -2D, -3D, ExpectedResult = 3.7416573867739413D)]
-        [TestCase(-2D, -3D, -6D, ExpectedResult = 7)]
-        public double MagnitudeTest(double x, double y, double z)
+        [TestCase(1, 0, 0, ExpectedResult = 1)]
+        [TestCase(0, 1, 0, ExpectedResult = 1)]
+        [TestCase(0, 0, 1, ExpectedResult = 1)]
+        [TestCase(1, 2, 3, ExpectedResult = 3.7416573867739413f)] // √14
+        [TestCase(-1, -2, -3, ExpectedResult = 3.7416573867739413f)]
+        [TestCase(-2, -3, -6, ExpectedResult = 7)]
+        public float MagnitudeTest(float x, float y, float z)
         {
             //Assign
             var test = ChevalTuple.Vector(x, y, z);
@@ -60,7 +60,7 @@ namespace ChevalTests.DataStructureTests
             //Act
             var expected1 = ChevalTuple.Vector(1, 0, 0);
             var result1 = ChevalTuple.Normalize(v1);
-            var expected2 = ChevalTuple.Vector(1/Math.Sqrt(14), 2 / Math.Sqrt(14), 3 / Math.Sqrt(14));
+            var expected2 = ChevalTuple.Vector(1/MathF.Sqrt(14), 2 / MathF.Sqrt(14), 3 / MathF.Sqrt(14));
             var result2 = ChevalTuple.Normalize(v2);
             //Assert
             result1.Should().BeEquivalentTo(expected1);
@@ -81,7 +81,7 @@ namespace ChevalTests.DataStructureTests
             var norm = ChevalTuple.Normalize(v1);
             var result = ChevalTuple.Magnitude(norm);
             //Assert
-            result.Should().Be(1);
+            MathF.Round(result).Should().Be(1);
         }
         /*
          * Scenario: The dot product of two tuples

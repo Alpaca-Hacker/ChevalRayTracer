@@ -8,32 +8,32 @@ namespace Cheval.Models
 {
     public class Material
     {
-        public double Ambient { get; set; }
-        public double Diffuse { get; set; }
-        public double Specular { get; set; } 
-        public double Shininess { get; set; }
+        public float Ambient { get; set; }
+        public float Diffuse { get; set; }
+        public float Specular { get; set; } 
+        public float Shininess { get; set; }
         public ChevalColour Colour { get; set; }
         public Pattern Pattern { get; set; }
-        public double Reflective { get; set; } 
-        public double RefractiveIndex { get; set; }
-        public double Transparency { get; set; }
+        public float Reflective { get; set; } 
+        public float RefractiveIndex { get; set; }
+        public float Transparency { get; set; }
 
 
         public Material()
         {
             Colour = new ChevalColour(1,1,1);
-            Ambient = 0.1;
-            Diffuse = 0.9;
-            Specular = 0.9;
+            Ambient = 0.1f;
+            Diffuse = 0.9f;
+            Specular = 0.9f;
             Shininess = 200;
             Reflective = 0;
-            Transparency = 0.0;
-            RefractiveIndex = 1.0;
+            Transparency = 0.0f;
+            RefractiveIndex = 1.0f;
         }
 
 
 
-        public Material(ChevalColour colour, double ambient, double diffuse, double specular, double shininess)
+        public Material(ChevalColour colour, float ambient, float diffuse, float specular, float shininess)
         {
             Colour = colour;
             Ambient = ambient;
@@ -54,8 +54,8 @@ namespace Cheval.Models
             var ambient = effectiveColour * Ambient;
 
             var lightDotNormal = Dot(lightV, normalV);
-            var diffuse = new ChevalColour(0.0,0.0,0.0);
-            var specular = new ChevalColour(0.0, 0.0, 0.0);
+            var diffuse = new ChevalColour(0.0f,0.0f,0.0f);
+            var specular = new ChevalColour(0.0f, 0.0f, 0.0f);
 
             if (lightDotNormal >= 0)
             {
@@ -65,7 +65,7 @@ namespace Cheval.Models
                 var reflectDotEye = Dot(reflectV, eyeV);
                 if (reflectDotEye > 0)
                 {
-                    var factor = Math.Pow(reflectDotEye, Shininess);
+                    var factor = MathF.Pow(reflectDotEye, Shininess);
                     specular = light.Intensity * Specular * factor;
                 }
             }

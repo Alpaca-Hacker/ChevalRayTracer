@@ -6,7 +6,7 @@ using Cheval.Models.Shapes;
 using Cheval.Patterns;
 using FluentAssertions;
 using NUnit.Framework;
-using static System.Math;
+using static System.MathF;
 using static Cheval.DataStructure.ChevalTuple;
 using static Cheval.Helper.Transform;
 using static Cheval.Templates.ColourTemplate;
@@ -142,13 +142,13 @@ namespace ChevalTests.DataStructureTests
         // - |   3   | 2.5 | 2.5 |
         // - |   4   | 2.5 | 1.5 |
         // - |   5   | 1.5 | 1.0 |
-        [TestCase(0, 1.0D, 1.5D)]
-        [TestCase(1, 1.5D, 2.0D)]
-        [TestCase(2, 2.0D, 2.5D)]
-        [TestCase(3, 2.5D, 2.5D)]
-        [TestCase(4, 2.5D, 1.5D)]
-        [TestCase(5, 1.5D, 1.0D)]
-        public void Refraction_tests(int index, double n1, double n2)
+        [TestCase(0, 1.0f, 1.5f)]
+        [TestCase(1, 1.5f, 2.0f)]
+        [TestCase(2, 2.0f, 2.5f)]
+        [TestCase(3, 2.5f, 2.5f)]
+        [TestCase(4, 2.5f, 1.5f)]
+        [TestCase(5, 1.5f, 1.0f)]
+        public void Refraction_tests(int index, float n1, float n2)
         {
             //Assign
             var sphereA = new Sphere
@@ -156,27 +156,27 @@ namespace ChevalTests.DataStructureTests
                 Transform = Scaling(2, 2, 2),
                 Material = Glass
             };
-            sphereA.Material.RefractiveIndex = 1.5;
+            sphereA.Material.RefractiveIndex = 1.5f;
             var sphereB = new Sphere
             {
-                Transform = Translation(0, 0, -0.25),
+                Transform = Translation(0, 0, -0.25f),
                 Material = Glass
             };
-            sphereB.Material.RefractiveIndex = 2.0;
+            sphereB.Material.RefractiveIndex = 2.0f;
             var sphereC = new Sphere
             {
-                Transform = Translation(0, 0, 0.25),
+                Transform = Translation(0, 0, 0.25f),
                 Material = Glass
             };
-            sphereC.Material.RefractiveIndex = 2.5;
+            sphereC.Material.RefractiveIndex = 2.5f;
             var ray = new Ray(Point(0, 0, -4), Vector(0, 0, 1));
             var xs = new Intersections(new List<Intersection>
             {
                 new Intersection(2,sphereA),
-                new Intersection(2.75, sphereB),
-                new Intersection(3.25, sphereC),
-                new Intersection(4.75, sphereB),
-                new Intersection(5.25, sphereC),
+                new Intersection(2.75f, sphereB),
+                new Intersection(3.25f, sphereC),
+                new Intersection(4.75f, sphereB),
+                new Intersection(5.25f, sphereC),
                 new Intersection(6,sphereA)
 
             });
@@ -235,8 +235,8 @@ namespace ChevalTests.DataStructureTests
             //Assign
             var scene = Scene.Default();
             var shape = scene.Shapes[0];
-            shape.Material.Transparency = 1.0;
-            shape.Material.RefractiveIndex = 1.5;
+            shape.Material.Transparency = 1.0f;
+            shape.Material.RefractiveIndex = 1.5f;
             var ray = new Ray(Point(0, 0,PI/2), Vector(0, 1, 0));
             var xs = new Intersections(new List<Intersection>
             {
@@ -274,25 +274,25 @@ namespace ChevalTests.DataStructureTests
             //Assign
             var scene = Scene.Default();
             var shapeA = scene.Shapes[0];
-            shapeA.Material.Ambient = 1.0;
+            shapeA.Material.Ambient = 1.0f;
             shapeA.Material.Pattern = new TestPattern();
 
             var shapeB = scene.Shapes[1];
-            shapeB.Material.Transparency = 1.0;
-            shapeB.Material.RefractiveIndex = 1.5;
+            shapeB.Material.Transparency = 1.0f;
+            shapeB.Material.RefractiveIndex = 1.5f;
 
-            var ray = new Ray(Point(0, 0, 0.1), Vector(0, 1, 0));
+            var ray = new Ray(Point(0, 0, 0.1f), Vector(0, 1, 0));
             var xs = new Intersections(new List<Intersection>
             {
-                new Intersection(-0.9899, shapeA),
-                new Intersection(-0.4899, shapeB),
-                new Intersection(0.4899, shapeB),
-                new Intersection(0.9899, shapeA)
+                new Intersection(-0.9899f, shapeA),
+                new Intersection(-0.4899f, shapeB),
+                new Intersection(0.4899f, shapeB),
+                new Intersection(0.9899f, shapeA)
             });
             //Act
             var comps = new Computations(xs.List[2], ray, xs);
             var colour = scene.RefractedColour(comps, 5);
-            var expected = new ChevalColour(0, 0.99887, 0.04722);
+            var expected = new ChevalColour(0, 0.99887f, 0.04722f);
             //Assert
             Round(colour.Red, 5).Should().Be(expected.Red);
             Round(colour.Green, 5).Should().Be(expected.Green);
@@ -322,9 +322,9 @@ namespace ChevalTests.DataStructureTests
             });
             //Act
             var comps = new Computations(xs.List[1], ray, xs);
-            double reflectance = comps.Schlick();
+            float reflectance = comps.Schlick();
             //Assert
-            reflectance.Should().Be(1.0);
+            reflectance.Should().Be(1.0f);
 
         }
         /*
@@ -351,9 +351,9 @@ namespace ChevalTests.DataStructureTests
             });
             //Act
             var comps = new Computations(xs.List[1], ray, xs);
-            double reflectance = comps.Schlick();
+            float reflectance = comps.Schlick();
             //Assert
-            Round(reflectance,5).Should().Be(0.04);
+            Round(reflectance,5).Should().Be(0.04f);
 
         }
         /*
@@ -371,17 +371,17 @@ namespace ChevalTests.DataStructureTests
             //Assign
             var shape = new Sphere();
             shape.Material = Glass;
-            var ray = new Ray(Point(0, 0.99, -2), Vector(0, 0, 1));
+            var ray = new Ray(Point(0, 0.99f, -2), Vector(0, 0, 1));
             var xs = new Intersections(new List<Intersection>
             {
-                new Intersection(1.8589, shape),
+                new Intersection(1.8589f, shape),
                // new Intersection(1, shape)
             });
             //Act
             var comps = new Computations(xs.List[0], ray, xs);
-            double reflectance = comps.Schlick();
+            float reflectance = comps.Schlick();
             //Assert
-            Round(reflectance, 5).Should().Be(0.42113); //Check this for issues
+            Round(reflectance, 5).Should().Be(0.42113f); //Check this for issues
 
         }
     }

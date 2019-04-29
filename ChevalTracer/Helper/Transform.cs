@@ -7,14 +7,14 @@ namespace Cheval.Helper
 {
     public static class Transform
     {
-        public static Matrix IdentityMatrix => new Matrix(new double[,]
+        public static Matrix IdentityMatrix => new Matrix(new float[,]
             {{1, 0, 0, 0}, 
              {0, 1, 0, 0},
              {0, 0, 1, 0},
              {0, 0, 0, 1}
             });
 
-        public static Matrix Translation(double x, double y, double z)
+        public static Matrix Translation(float x, float y, float z)
         {
             var translation = IdentityMatrix;
             translation[0, 3] = x;
@@ -23,7 +23,7 @@ namespace Cheval.Helper
             return translation;
         }
 
-        public static Matrix Scaling(double x, double y, double z)
+        public static Matrix Scaling(float x, float y, float z)
         {
             var translation = IdentityMatrix;
             translation[0, 0] = x;
@@ -32,43 +32,43 @@ namespace Cheval.Helper
             return translation;
         }
 
-        public static Matrix RotationX(double rads)
+        public static Matrix RotationX(float rads)
         {
             var rotation = new Matrix(new[,]
             {
                 {1, 0, 0, 0},
-                {0, Math.Cos(rads),-Math.Sin(rads), 0},
-                {0, Math.Sin(rads), Math.Cos(rads), 0},
+                {0, MathF.Cos(rads),-MathF.Sin(rads), 0},
+                {0, MathF.Sin(rads), MathF.Cos(rads), 0},
                 {0, 0, 0, 1}
             });
             return rotation;
         }
-        public static Matrix RotationY(double rads)
+        public static Matrix RotationY(float rads)
         {
             var rotation = new Matrix(new[,]
             {
-                {Math.Cos(rads), 0, Math.Sin(rads),  0},
+                {MathF.Cos(rads), 0, MathF.Sin(rads),  0},
                 {0, 1,0, 0},
-                {-Math.Sin(rads),0, Math.Cos(rads), 0},
+                {-MathF.Sin(rads),0, MathF.Cos(rads), 0},
                 {0, 0, 0, 1}
             });
             return rotation;
         }
-        public static Matrix RotationZ(double rads)
+        public static Matrix RotationZ(float rads)
         {
             var rotation = new Matrix(new[,]
             {
-                {Math.Cos(rads),-Math.Sin(rads), 0, 0},
-                {Math.Sin(rads), Math.Cos(rads), 0, 0},
+                {MathF.Cos(rads),-MathF.Sin(rads), 0, 0},
+                {MathF.Sin(rads), MathF.Cos(rads), 0, 0},
                 {0, 0, 1, 0},
                 {0, 0, 0, 1}
             });
             return rotation;
         }
 
-        public static Matrix Shearing(double xy, double xz, double yx, double yz, double zx, double zy)
+        public static Matrix Shearing(float xy, float xz, float yx, float yz, float zx, float zy)
         {
-            var shear = new Matrix(new double[,]{
+            var shear = new Matrix(new float[,]{
             
                {  1, xy, xz, 0},
                { yx,  1, yz, 0},
@@ -84,7 +84,7 @@ namespace Cheval.Helper
             var upN = Normalize(up);
             var left = Cross(forward, upN);
             var trueUp = Cross(left, forward);
-            var orientation = new Matrix(new double[,]
+            var orientation = new Matrix(new float[,]
             {
                 { left.X, left.Y, left.Z, 0},
                 { trueUp.X, trueUp.Y, trueUp.Z, 0},

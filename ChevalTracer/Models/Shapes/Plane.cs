@@ -10,7 +10,7 @@ namespace Cheval.Models.Shapes
         protected override List<Intersection> LocalIntersect(Ray localRay)
         {
 
-            if (Math.Abs(localRay.Direction.Y) < Cheval.Epsilon)
+            if (MathF.Abs(localRay.Direction.Y) < Cheval.Epsilon)
             {
                 return new List<Intersection>();
             }
@@ -27,8 +27,8 @@ namespace Cheval.Models.Shapes
 
         public override BoundingBox Bounds()
         {
-            var min = Point(double.NegativeInfinity, 0, double.NegativeInfinity);
-            var max = Point(double.PositiveInfinity, 0, double.PositiveInfinity);
+            var min = Point(float.NegativeInfinity, 0, float.NegativeInfinity);
+            var max = Point(float.PositiveInfinity, 0, float.PositiveInfinity);
             return new BoundingBox(min, max);
         }
     }
