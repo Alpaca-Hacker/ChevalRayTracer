@@ -10,6 +10,9 @@ namespace Cheval.Models.Shapes
         public Guid Id { get; }
         private Matrix _transform;
         private Matrix _inverseTransform;
+        private BoundingBox _boundingBox;
+        private bool _hasBoundingBox;
+
         public Matrix Transform
         {
             get => _transform;
@@ -25,12 +28,26 @@ namespace Cheval.Models.Shapes
         public Material Material { get; set; } = new Material();
         public bool NoShadow { get; set; }
         public Shape Parent { get; set; }
-        public BoundingBox BoundingBox { get; }
+        public BoundingBox BoundingBox
+        {
+            get
+            {
+                if (_hasBoundingBox)
+                {
+                    return _boundingBox;
+                }
+
+                _hasBoundingBox = true;
+                _boundingBox = Bounds();
+
+                return _boundingBox;
+            }
+        }
+
         protected Shape()
         {
             Transform = Helper.Transform.IdentityMatrix;
             Id = Guid.NewGuid();
-            BoundingBox = Bounds();
         }
 
         protected abstract List<Intersection> LocalIntersect(Ray localRay);
@@ -75,8 +92,8 @@ namespace Cheval.Models.Shapes
             return normal;
         }
 
-        public abstract BoundingBox Bounds();
-
+        public virtual BoundingBox Bounds() => BoundingBox.Infinity;
+           
         public virtual BoundingBox ParentSpaceBounds() => Bounds() * Transform;
     }
 

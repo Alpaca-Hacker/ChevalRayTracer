@@ -101,5 +101,14 @@ namespace Cheval.Models.Shapes
         public bool IsReadOnly => false;
         public IEnumerator<Shape> GetEnumerator() => _children.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public void AddRange(List<Shape> shapes)
+        {
+            _children.AddRange(shapes);
+            foreach (var shape in shapes)
+            {
+                shape.Parent = this;
+            }
+        }
     }
 }
