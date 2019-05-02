@@ -92,7 +92,7 @@ namespace Cheval.Models.Shapes
             }
         }
 
-        protected override ChevalTuple LocalNormalAt(ChevalTuple localPoint)
+        protected override ChevalTuple LocalNormalAt(ChevalTuple localPoint, Intersection hit = null)
         {
             var dist = localPoint.X * localPoint.X + localPoint.Z* localPoint.Z;
             if (dist < 1 && localPoint.Y >= Maximum - Cheval.Epsilon)

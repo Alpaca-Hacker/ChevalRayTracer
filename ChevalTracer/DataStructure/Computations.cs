@@ -28,7 +28,7 @@ namespace Cheval.DataStructure
             Shape = intersection.Object;
             Point = ray.Position(T);
             EyeV = -ray.Direction;
-            NormalV = Shape.NormalAt(Point);
+            NormalV = Shape.NormalAt(Point, intersection);
             if (Dot(NormalV, EyeV) < 0)
             {
                 Inside = true;

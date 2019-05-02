@@ -20,7 +20,7 @@ namespace Cheval.Models.Shapes
             return new List<Intersection>{new Intersection(t, this)};
         }
 
-        protected override ChevalTuple LocalNormalAt(ChevalTuple localPoint)
+        protected override ChevalTuple LocalNormalAt(ChevalTuple point, Intersection hit = null)
         {
             return Vector(0,1,0);
         }

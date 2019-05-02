@@ -8,11 +8,16 @@ namespace Cheval.DataStructure
     {
         public float T { get; set; }
         public Shape Object { get; set; }
+        public float U { get; set; }
+        public float V { get; set; }
 
-        public Intersection(float t, Shape o)
+
+        public Intersection(float t, Shape o, float u = 0, float v = 0)
         {
             T = t;
             Object = o;
+            U = u;
+            V = v;
         }
 
         public Intersection()

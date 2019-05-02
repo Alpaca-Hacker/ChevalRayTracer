@@ -7,7 +7,7 @@ namespace Cheval.Models.Shapes
 {
     public class Sphere : Shape
     {
-        protected override ChevalTuple LocalNormalAt(ChevalTuple point)
+        protected override ChevalTuple LocalNormalAt(ChevalTuple point, Intersection hit = null)
         {
             var objectNormal = Normalize(point - Point(0,0,0));
             objectNormal = Vector(objectNormal.X,objectNormal.Y,objectNormal.Z);

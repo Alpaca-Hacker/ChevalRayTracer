@@ -3,6 +3,7 @@ using Cheval.DataStructure;
 using Cheval.Models.Shapes;
 using FluentAssertions;
 using NUnit.Framework;
+using static Cheval.DataStructure.ChevalTuple;
 
 namespace ChevalTests.DataStructureTests
 {
@@ -142,6 +143,24 @@ namespace ChevalTests.DataStructureTests
             Intersection hit = xs.Hit();
             //Assert
             hit.Should().BeEquivalentTo(i4);
+        }
+        /*
+         * Scenario: An intersection can encapsulate `u` and `v`
+           Given s ← triangle(point(0, 1, 0), point(-1, 0, 0), point(1, 0, 0))
+           When i ← intersection_with_uv(3.5, s, 0.2, 0.4)
+           Then i.u = 0.2
+           And i.v = 0.4
+         */
+        [Test]
+        public void Intersection_has_u_and_v()
+        {
+            //Assign
+            var shape = new Triangle(Point(0,1,0), Point(-1, 0, 0), Point(1, 0, 0));
+            //Act
+            var i = new Intersection(3.5f,shape,0.2f, 0.4f);
+            //Assert
+            i.U.Should().Be(0.2f);
+            i.V.Should().Be(0.4f);
         }
     }
 }

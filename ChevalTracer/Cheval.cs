@@ -13,7 +13,7 @@ namespace Cheval
     {
         public const float Epsilon = 0.00001F;
         public const int MaxNoOfReflections = 5;
-        public const float Size = 1f;
+        public const float Size = 2f;
 
         public static void Run()
         {

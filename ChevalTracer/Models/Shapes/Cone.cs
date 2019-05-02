@@ -107,7 +107,7 @@ namespace Cheval.Models.Shapes
             return new Intersections(xs).List;
         }
 
-        protected override ChevalTuple LocalNormalAt(ChevalTuple point)
+        protected override ChevalTuple LocalNormalAt(ChevalTuple point, Intersection hit = null)
         {
             var dist = point.X * point.X + point.Z * point.Z;
             if (dist < 1 && point.Y >= Maximum - Cheval.Epsilon)

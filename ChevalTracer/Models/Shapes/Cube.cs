@@ -56,7 +56,7 @@ namespace Cheval.Models.Shapes
             return new Tuple<float, float>(tMin, tMax);
         }
 
-        protected override ChevalTuple LocalNormalAt(ChevalTuple localPoint)
+        protected override ChevalTuple LocalNormalAt(ChevalTuple localPoint, Intersection hit = null)
         {
             var max = Maximum(Abs(localPoint.X), Abs(localPoint.Y), Abs(localPoint.Z));
             

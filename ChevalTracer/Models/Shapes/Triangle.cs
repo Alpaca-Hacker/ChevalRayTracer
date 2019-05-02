@@ -47,7 +47,7 @@ namespace Cheval.Models.Shapes
             var originCrossE1 = Cross(p1ToOrigin, Edge1); //Can Precompute
             var v = f * Dot(localRay.Direction, originCrossE1);
 
-            if (v < 0 || (u + v) > 1)//
+            if (v < 0 || (u + v) > 1)
             {
                 return result;
             }
@@ -59,7 +59,7 @@ namespace Cheval.Models.Shapes
             return result;
         }
 
-        protected override ChevalTuple LocalNormalAt(ChevalTuple localPoint)
+        protected override ChevalTuple LocalNormalAt(ChevalTuple point, Intersection hit = null)
         {
             return Normal;
         }

@@ -51,12 +51,12 @@ namespace Cheval.Models.Shapes
         }
 
         protected abstract List<Intersection> LocalIntersect(Ray localRay);
-        protected abstract ChevalTuple LocalNormalAt(ChevalTuple localPoint);
+        protected abstract ChevalTuple LocalNormalAt(ChevalTuple localPoint, Intersection hit = null);
 
-        public ChevalTuple NormalAt(ChevalTuple point)
+        public ChevalTuple NormalAt(ChevalTuple point, Intersection intersection = null)
         {
             var localPoint = WorldToObject(point);
-            var localNormal = LocalNormalAt(localPoint);
+            var localNormal = LocalNormalAt(localPoint, intersection);
 
             var worldNormal = NormalToWorld(localNormal);
 

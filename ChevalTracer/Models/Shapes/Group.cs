@@ -34,7 +34,7 @@ namespace Cheval.Models.Shapes
             return xs.OrderBy(x => x.T).ToList();
         }
 
-        protected override ChevalTuple LocalNormalAt(ChevalTuple localPoint)
+        protected override ChevalTuple LocalNormalAt(ChevalTuple point, Intersection hit = null)
         {
             throw new System.NotImplementedException();
         }

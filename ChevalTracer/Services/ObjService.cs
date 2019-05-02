@@ -14,6 +14,7 @@ namespace Cheval.Services
     {
         public int Ignored{ get; set; }
         public  List<ChevalTuple> Vertices = new List<ChevalTuple>{new ChevalTuple(0,0,0, 0)};
+        public List<ChevalTuple> Normals = new List<ChevalTuple> { new ChevalTuple(0, 0, 0, 0) };
         public Dictionary<string,Group> Groups { get; set; } = new Dictionary<string, Group>();
         public Group GetAllGroups
         {
@@ -59,6 +60,11 @@ namespace Cheval.Services
                     {
                         groupName = args[1];
                         break;
+                    }
+                    case "vn":
+                    {
+                        Normals.Add(ChevalTuple.Point(Parse(args[1]), Parse(args[2]), Parse(args[3])));
+                            break;
                     }
                     default:
                         Ignored++;
