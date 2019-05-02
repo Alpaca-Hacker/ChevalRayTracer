@@ -65,10 +65,20 @@ namespace Cheval.Models
                 var sampler = samplerFactory();
                 for (var x = 0; x < HSize; x++)
                 {
-                   // var ray = RayForPixel(x, y);
-                    image.WritePixel(x, y, sampler.Sample(x,y));
+                    // var ray = RayForPixel(x, y);
+                    image.WritePixel(x, y, sampler.Sample(x, y));
                 }
             });
+
+            //for (var y = 0; y < VSize; y++) 
+            //{
+            //    var sampler = samplerFactory();
+            //    for (var x = 0; x < HSize; x++)
+            //    {
+            //        // var ray = RayForPixel(x, y);
+            //        image.WritePixel(x, y, sampler.Sample(x, y));
+            //    }
+            //}
 
             return image;
            

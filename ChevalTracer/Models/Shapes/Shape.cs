@@ -37,8 +37,8 @@ namespace Cheval.Models.Shapes
                     return _boundingBox;
                 }
 
-                _hasBoundingBox = true;
                 _boundingBox = Bounds();
+                _hasBoundingBox = true;
 
                 return _boundingBox;
             }

@@ -15,7 +15,20 @@ namespace Cheval.Services
         public int Ignored{ get; set; }
         public  List<ChevalTuple> Vertices = new List<ChevalTuple>{new ChevalTuple(0,0,0, 0)};
         public Dictionary<string,Group> Groups { get; set; } = new Dictionary<string, Group>();
-        public List<Group> GetAllGroups => Groups.Values.ToList();
+        public Group GetAllGroups
+        {
+            get
+            {
+                var newGroup = new Group();
+                var allGroups = Groups.Values.ToList();
+                foreach (var allGroup in allGroups)
+                {
+                    newGroup.Add(allGroup);
+                }
+
+                return newGroup;
+            }
+        }
 
         public void ParseString(string data)
         {

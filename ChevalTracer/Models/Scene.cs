@@ -50,9 +50,11 @@ namespace Cheval.Models
         {
 
             var lighting = new ChevalColour(0,0,0);
+            //Find Mat for object (parent-parent)
             foreach (var light in Lights)
             {
                 var inShadow = IsShadowed(comps.OverPoint, light);
+                
                 lighting += comps.Shape.Material.Lighting(comps.Shape, light, comps.OverPoint, comps.EyeV, comps.NormalV, inShadow);
              
             }
