@@ -105,18 +105,18 @@ namespace Cheval.Scenes
                 Material = wallMaterial
             };
 
-            var glassObject  = File.ReadAllText(@"Glass.obj");
+            var duckFile  = File.ReadAllText(@"ducky.obj");
             var parser = new ObjService();
-            parser.ParseString(glassObject);
-            var glass = parser.GetAllGroups;
+            parser.ParseString(duckFile);
+            var ducky = parser.GetAllGroups;
 
-            glass[0].Transform = Translation(0, 1.2f, 0) *
-                                 Scaling(.25f, .25f, .25f);
+           // ducky[0].Transform = //Translation(0, 1.2f, 0) *
+                                 //Scaling(.25f, .25f, .25f);
 
-            foreach (var triangle in (Group)glass[0])
-            {
-                triangle.Material = MaterialTemplate.Glass;
-            }
+            //foreach (var triangle in (Group)ducky[0])
+            //{
+            //    triangle.Material = MaterialTemplate.Glass;
+            //}
 
             var lightPos = Point(-4.9f, 4.9f, -1);
             var lightColour = new ChevalColour(1, 1, 1);
@@ -145,7 +145,7 @@ namespace Cheval.Scenes
             };
 
             scene.Shapes.AddRange(room);
-            scene.Shapes.AddRange(glass);
+            scene.Shapes.AddRange(ducky);
 
             world.Scene = scene;
 

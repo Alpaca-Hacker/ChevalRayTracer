@@ -13,7 +13,7 @@ namespace Cheval
     {
         public const float Epsilon = 0.00001F;
         public const int MaxNoOfReflections = 5;
-        public const float Size = 2f;
+        public const float Size = 0.25f;
 
         public static void Run()
         {
@@ -35,7 +35,7 @@ namespace Cheval
             stopwatch.Stop();
             Console.WriteLine($"Render Time elapsed: {stopwatch.Elapsed}");
 
-            canvas.ToPPM(@".\GlassScene.ppm");
+            canvas.ToPPM(@".\DuckScene.ppm");
         }
 
     }

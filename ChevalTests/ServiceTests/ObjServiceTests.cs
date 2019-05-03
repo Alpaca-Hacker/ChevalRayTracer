@@ -237,7 +237,7 @@ f 1 3 4
             t2.Point3.Should().BeEquivalentTo(parser.Vertices[4]);
 
         }
-
+        [Test]
         public void Getting_all_groups_from_obj()
         {
             //Assign
@@ -260,5 +260,71 @@ f 1 3 4
             result.Should().HaveCount(2);
 
         }
+        /*
+         * Scenario: Faces with normals
+           Given file ← a file containing:
+           """
+           v 0 1 0
+           v -1 0 0
+           v 1 0 0
+           vn -1 0 0
+           vn 1 0 0
+           vn 0 1 0
+           f 1//3 2//1 3//2
+           f 1/0/3 2/102/1 3/14/2
+           """
+           When parser ← parse_obj_file(file)
+           And g ← parser.default_group
+           And t1 ← first child of g
+           And t2 ← second child of g
+           Then t1.p1 = parser.vertices[1]
+           And t1.p2 = parser.vertices[2]
+           And t1.p3 = parser.vertices[3]
+           And t1.n1 = parser.normals[3]
+           And t1.n2 = parser.normals[1]
+           And t1.n3 = parser.normals[2]
+           And t2 = t1
+         */
+        [Test]
+        public void Faces_with_normals()
+        {
+            //Assign
+            var parser = new ObjService();
+            var data = @"
+v 0 1 0
+v -1 0 0
+v 1 0 0
+vn -1 0 0
+vn 1 0 0
+vn 0 1 0
+f 1//3 2//1 3//2
+f 1/0/3 2/102/1 3/14/2
+";
+            //Act
+            parser.ParseString(data);
+
+            var group = parser.Groups["default"];
+            var t1 = (SmoothTriangle)group[0];
+            var t2 = (SmoothTriangle)group[1];
+
+            //Assert
+            t1.Point1.Should().BeEquivalentTo(parser.Vertices[1]);
+            t1.Point2.Should().BeEquivalentTo(parser.Vertices[2]);
+            t1.Point3.Should().BeEquivalentTo(parser.Vertices[3]);
+
+            t1.Normal1.Should().BeEquivalentTo(parser.Normals[3]);
+            t1.Normal2.Should().BeEquivalentTo(parser.Normals[1]);
+            t1.Normal3.Should().BeEquivalentTo(parser.Normals[2]);
+
+            t2.Point1.Should().BeEquivalentTo(parser.Vertices[1]);
+            t2.Point2.Should().BeEquivalentTo(parser.Vertices[2]);
+            t2.Point3.Should().BeEquivalentTo(parser.Vertices[3]);
+             
+            t2.Normal1.Should().BeEquivalentTo(parser.Normals[3]);
+            t2.Normal2.Should().BeEquivalentTo(parser.Normals[1]);
+            t2.Normal3.Should().BeEquivalentTo(parser.Normals[2]);
+
+        }
+
     }
 }
