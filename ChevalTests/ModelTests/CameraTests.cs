@@ -1,4 +1,5 @@
 ﻿using System;
+using Cheval.Integrators;
 using Cheval.Models;
 using FluentAssertions;
 using NUnit.Framework;
@@ -137,8 +138,9 @@ namespace ChevalTests.ModelTests
             var to = Point(0, 0, 0);
             var up = Vector(0, 1, 0);
             cam.Transform = ViewTransform(from, to, up);
+            var integrator = new DefaultIntegrator();
             //Act
-            Canvas image = cam.Render(scene);
+            Canvas image = cam.Render(scene, integrator);
             var result = image.GetPixel(5, 5);
             var expected = new ChevalColour(0.38066f, 0.47583f, 0.2855f);
             //Assert

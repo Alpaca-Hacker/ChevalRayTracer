@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Cheval.DataStructure;
+using Cheval.Integrators;
 using Cheval.Samplers;
 
 namespace Cheval.Models
@@ -56,7 +57,7 @@ namespace Cheval.Models
             return new Ray(origin, direction);
         }
 
-        public Canvas Render(Scene s) => Render(s, () => new DefaultSampler(s, this));
+        public Canvas Render(Scene s, IIntegrator i) => Render(s, () => new DefaultSampler(s, this, i));
         public Canvas Render(Scene scene, Func<ISampler> samplerFactory)
         {
             var image = new Canvas(HSize, VSize);
@@ -69,16 +70,6 @@ namespace Cheval.Models
                     image.WritePixel(x, y, sampler.Sample(x, y));
                 }
             });
-
-            //for (var y = 0; y < VSize; y++) 
-            //{
-            //    var sampler = samplerFactory();
-            //    for (var x = 0; x < HSize; x++)
-            //    {
-            //        // var ray = RayForPixel(x, y);
-            //        image.WritePixel(x, y, sampler.Sample(x, y));
-            //    }
-            //}
 
             return image;
            

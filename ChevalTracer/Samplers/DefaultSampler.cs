@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using System.Threading;
+﻿using Cheval.Integrators;
 using Cheval.Models;
 using static Cheval.DataStructure.ChevalTuple;
 
@@ -12,11 +8,13 @@ namespace Cheval.Samplers
     {
         private readonly Scene _scene;
         private readonly Camera _camera;
+        private readonly IIntegrator _integrator;
 
-        public DefaultSampler(Scene world, Camera camera)
+        public DefaultSampler(Scene world, Camera camera, IIntegrator integrator)
         {
             _scene = world;
             _camera = camera;
+            _integrator = integrator;
         }
 
         public Ray RayForPixel(int px, int py)
@@ -45,7 +43,7 @@ namespace Cheval.Samplers
         {
             //Interlocked.Increment(ref Stats.PrimaryRays);
             var ray = RayForPixel(x, y);
-            return _scene.ColourAt(ray, Cheval.MaxNoOfReflections);
+            return _integrator.ColourAt(ray, Cheval.MaxNoOfReflections, _scene);
         }
     }
 }

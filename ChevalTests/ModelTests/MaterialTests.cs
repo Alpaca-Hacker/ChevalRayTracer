@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using Cheval.Integrators;
 using Cheval.Models;
 using Cheval.Models.Shapes;
 using Cheval.Patterns;
@@ -58,8 +59,9 @@ namespace ChevalTests.ModelTests
             var eyeV = Vector(0, 0, -1);
             var normalV = Vector(0, 0, -1);
             var light = PointLight(Point(0, 0, -10), new ChevalColour(1, 1, 1));
+            var integrator = new DefaultIntegrator();
             //Act
-            var result = m.Lighting(new Sphere(), light, position, eyeV, normalV);
+            var result = integrator.Lighting(new Sphere(), light, position, eyeV, normalV);
             var expected = new ChevalColour(1.9f,1.9f,1.9f);
             //Assert
             result.Should().BeEquivalentTo(expected);
@@ -81,8 +83,9 @@ namespace ChevalTests.ModelTests
             var eyeV = Vector(0, MathF.Sqrt(2) / 2, -MathF.Sqrt(2) / 2);
             var normalV = Vector(0, 0, -1);
             var light = PointLight(Point(0, 0, -10), new ChevalColour(1, 1, 1));
+            var integrator = new DefaultIntegrator();
             //Act
-            var result = m.Lighting(new Sphere(), light, position, eyeV, normalV);
+            var result = integrator.Lighting(new Sphere(), light, position, eyeV, normalV);
             var expected = new ChevalColour(1.0f, 1.0f, 1.0f);
             //Assert
             result.Should().BeEquivalentTo(expected);
@@ -104,8 +107,9 @@ namespace ChevalTests.ModelTests
             var eyeV = Vector(0, 0,-1);
             var normalV = Vector(0, 0, -1);
             var light = PointLight(Point(0, 10, -10), new ChevalColour(1, 1, 1));
+            var integrator = new DefaultIntegrator();
             //Act
-            var result = m.Lighting(new Sphere(), light, position, eyeV, normalV);
+            var result = integrator.Lighting(new Sphere(), light, position, eyeV, normalV);
             var expected = new ChevalColour(0.7364f, 0.7364f, 0.7364f);
             //Assert
             result.Should().BeEquivalentTo(expected);
@@ -127,8 +131,9 @@ namespace ChevalTests.ModelTests
             var eyeV = Vector(0, -MathF.Sqrt(2) / 2, -MathF.Sqrt(2) / 2);
             var normalV = Vector(0, 0, -1);
             var light = PointLight(Point(0, 10, -10), new ChevalColour(1, 1, 1));
+            var integrator = new DefaultIntegrator();
             //Act
-            var result = m.Lighting(new Sphere(), light, position, eyeV, normalV);
+            var result = integrator.Lighting(new Sphere(), light, position, eyeV, normalV);
             var expected = new ChevalColour(1.63638532f, 1.63638532f, 1.63638532f);
             //Assert
             result.Should().BeEquivalentTo(expected);
@@ -150,8 +155,9 @@ namespace ChevalTests.ModelTests
             var eyeV = Vector(0, 0, -1);
             var normalV = Vector(0, 0, -1);
             var light = PointLight(Point(0, 0, 10), new ChevalColour(1, 1, 1));
+            var integrator = new DefaultIntegrator();
             //Act
-            var result = m.Lighting(new Sphere(), light, position, eyeV, normalV);
+            var result = integrator.Lighting(new Sphere(), light, position, eyeV, normalV);
             var expected = new ChevalColour(0.1f, 0.1f, 0.1f);
             //Assert
             result.Should().BeEquivalentTo(expected);
@@ -175,8 +181,9 @@ namespace ChevalTests.ModelTests
             var normalV = Vector(0, 0, -1);
             var light = PointLight(Point(0, 0, -10), new ChevalColour(1, 1, 1));
             var inShadow = true;
+            var integrator = new DefaultIntegrator();
             //Act
-            var result = m.Lighting(new Sphere(), light, position, eyeV, normalV, inShadow);
+            var result = integrator.Lighting(new Sphere(), light, position, eyeV, normalV, inShadow);
             var expected = new ChevalColour(0.1f, 0.1f, 0.1f);
             //Assert
             result.Should().BeEquivalentTo(expected);
@@ -210,9 +217,14 @@ namespace ChevalTests.ModelTests
             var eyeV = Vector(0, 0, -1);
             var normalV = Vector(0, 0, -1);
             var light = PointLight(Point(0, 0, -10), White);
+            var sphere = new Sphere
+            {
+                Material = mat
+            };
+            var integrator = new DefaultIntegrator();
             //Act
-            var result1 = mat.Lighting(new Sphere(), light, Point(0.9f, 0, 0), eyeV, normalV, false);
-            var result2 = mat.Lighting(new Sphere(), light, Point(1.1f, 0, 0), eyeV, normalV, false);
+            var result1 = integrator.Lighting(sphere, light, Point(0.9f, 0, 0), eyeV, normalV, false);
+            var result2 = integrator.Lighting(sphere, light, Point(1.1f, 0, 0), eyeV, normalV, false);
             //Assert
             result1.Should().BeEquivalentTo(White);
             result2.Should().BeEquivalentTo(Black);

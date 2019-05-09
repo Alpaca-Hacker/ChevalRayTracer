@@ -1,8 +1,4 @@
-﻿using System;
-using Cheval.DataStructure;
-using Cheval.Models.Shapes;
-using Cheval.Patterns;
-using static Cheval.DataStructure.ChevalTuple;
+﻿using Cheval.Patterns;
 
 namespace Cheval.Models
 {
@@ -42,42 +38,5 @@ namespace Cheval.Models
             Shininess = shininess;
         }
 
-        public ChevalColour Lighting(Shape shape, Light light, ChevalTuple point, ChevalTuple eyeV, ChevalTuple normalV, bool inShadow = false)
-        {
-            var localColour = Colour;
-            if (Pattern != null)
-            {
-                localColour = Pattern.ColourAtObject(shape, point);
-            }
-            var effectiveColour = localColour * light.Intensity;
-            var lightV = Normalize(light.Position - point);
-            var ambient = effectiveColour * Ambient;
-
-            var lightDotNormal = Dot(lightV, normalV);
-            var diffuse = new ChevalColour(0.0f,0.0f,0.0f);
-            var specular = new ChevalColour(0.0f, 0.0f, 0.0f);
-
-            if (lightDotNormal >= 0)
-            {
-                diffuse = effectiveColour * Diffuse * lightDotNormal;
-
-                var reflectV = Reflect(-lightV, normalV);
-                var reflectDotEye = Dot(reflectV, eyeV);
-                if (reflectDotEye > 0)
-                {
-                    var factor = MathF.Pow(reflectDotEye, Shininess);
-                    specular = light.Intensity * Specular * factor;
-                }
-            }
-
-            var returnValue = ambient;
-            if (!inShadow)
-            {
-                returnValue += diffuse + specular;
-            }
-
-
-            return returnValue;
-        }
     }
 }

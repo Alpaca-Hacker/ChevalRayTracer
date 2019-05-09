@@ -1,6 +1,7 @@
 ﻿using System;
 using Cheval.DataStructure;
 using Cheval.Helper;
+using Cheval.Integrators;
 using Cheval.Models;
 using Cheval.Models.Shapes;
 using FluentAssertions;
@@ -108,8 +109,9 @@ namespace ChevalTests.ModelTests
             //Assign
             var w = Scene.Default();
             var p = Point(0, 10, 0);
+            var integrator = new DefaultIntegrator();
             //Assert
-            w.IsShadowed(p, w.Lights[0]).Should().BeFalse();
+           integrator.IsShadowed(p, w.Lights[0],w).Should().BeFalse();
         }
 
         /*
@@ -124,8 +126,9 @@ namespace ChevalTests.ModelTests
             //Assign
             var w = Scene.Default();
             var p = Point(10, -10, 10);
+            var integrator = new DefaultIntegrator();
             //Assert
-            w.IsShadowed(p, w.Lights[0]).Should().BeTrue();
+            integrator.IsShadowed(p, w.Lights[0],w).Should().BeTrue();
         }
 
         /*
@@ -140,8 +143,9 @@ namespace ChevalTests.ModelTests
             //Assign
             var w = Scene.Default();
             var p = Point(-20, 20, -20);
+            var integrator = new DefaultIntegrator();
             //Assert
-            w.IsShadowed(p, w.Lights[0]).Should().BeFalse();
+            integrator.IsShadowed(p, w.Lights[0], w).Should().BeFalse();
         }
         /*
          *Scenario: There is no shadow when an object is behind the point
@@ -156,8 +160,9 @@ namespace ChevalTests.ModelTests
             //Assign
             var w = Scene.Default();
             var p = Point(-2, 2, -2);
+            var integrator = new DefaultIntegrator();
             //Assert
-            w.IsShadowed(p, w.Lights[0]).Should().BeFalse();
+            integrator.IsShadowed(p, w.Lights[0],w).Should().BeFalse();
         }
 
         /*
@@ -189,9 +194,10 @@ namespace ChevalTests.ModelTests
             scene.Shapes.Add(s2);
             var ray = new Ray(Point(0, 0, 5), Vector(0, 0, 1));
             var inter = new Intersection(4, s2);
+            var integrator = new DefaultIntegrator();
             //Act
             var comps = new Computations(inter, ray);
-            var result = scene.ShadeHit(comps,1);
+            var result = integrator.ShadeHit(comps,1, scene);
             var expected = new ChevalColour(0.1f, 0.1f, 0.1f);
             //Assert
             result.Should().BeEquivalentTo(expected);
@@ -217,9 +223,10 @@ namespace ChevalTests.ModelTests
             var ray = new Ray(Point(0, 0, 0), Vector(0, 0, 1));
             scene.Shapes[1].Material.Ambient = 1;
             var inter = new Intersection(1, scene.Shapes[1]);
+            var integrator = new DefaultIntegrator();
             //Act
             var comps = new Computations(inter, ray);
-            ChevalColour colour = scene.ReflectedColour(comps,1);
+            ChevalColour colour = integrator.ReflectedColour(comps,1, scene);
             //Assert
             colour.Should().BeEquivalentTo(Black);
         }
@@ -249,9 +256,10 @@ namespace ChevalTests.ModelTests
             scene.Shapes.Add(shape);
             var ray = new Ray(Point(0, 0, -3), Vector(0, -MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2));
             var inter = new Intersection(MathF.Sqrt(2), shape);
+            var integrator = new DefaultIntegrator();
             //Act
             var comps = new Computations(inter, ray);
-            var colour = scene.ReflectedColour(comps,1);
+            var colour = integrator.ReflectedColour(comps,1, scene);
             var expected = new ChevalColour(0.19033f, 0.23792f, 0.14275f);
             //Assert
             MathF.Round(colour.Red, 5).Should().Be(expected.Red);
@@ -284,9 +292,10 @@ namespace ChevalTests.ModelTests
             scene.Shapes.Add(shape);
             var ray = new Ray(Point(0, 0, -3), Vector(0, -MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2));
             var inter = new Intersection(MathF.Sqrt(2), shape);
+            var integrator = new DefaultIntegrator();
             //Act
             var comps = new Computations(inter, ray);
-            var colour = scene.ShadeHit(comps,1);
+            var colour = integrator.ShadeHit(comps,1,scene);
             var expected = new ChevalColour(0.87676f, 0.92434f, 0.82917f);
             //Assert
             MathF.Round(colour.Red, 5).Should().Be(expected.Red);
@@ -328,10 +337,10 @@ namespace ChevalTests.ModelTests
             scene.Shapes.Add(shape2);
 
             var ray = new Ray(Point(0, 0, 0), Vector(0,1,0));
-
+            var integrator = new DefaultIntegrator();
             //Act
 
-            var colour = scene.ColourAt(ray, 5);
+            var colour = integrator.ColourAt(ray, 5, scene);
             //Assert
             colour.Should().NotBeNull();
         }

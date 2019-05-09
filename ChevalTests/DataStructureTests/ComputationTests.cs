@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cheval.DataStructure;
+using Cheval.Integrators;
 using Cheval.Models;
 using Cheval.Models.Shapes;
 using Cheval.Patterns;
@@ -208,9 +209,11 @@ namespace ChevalTests.DataStructureTests
                 new Intersection(4, shape),
                 new Intersection(6, shape)
             });
+            var integrator = new DefaultIntegrator();
             //Act
             var comps = new Computations(xs.List[0], ray, xs);
-            ChevalColour colour = scene.RefractedColour(comps, 5);
+
+            ChevalColour colour = integrator.RefractedColour(comps, 5, scene);
             //Assert
             colour.Should().BeEquivalentTo(Black);
         }
@@ -243,9 +246,10 @@ namespace ChevalTests.DataStructureTests
                 new Intersection(-PI/2, shape),
                 new Intersection(PI/2, shape)
             });
+            var integrator = new DefaultIntegrator();
             //Act
             var comps = new Computations(xs.List[1], ray, xs);
-            var colour = scene.RefractedColour(comps, 5);
+            var colour = integrator.RefractedColour(comps, 5, scene);
             //Assert
             colour.Should().BeEquivalentTo(Black);
         }
@@ -289,9 +293,10 @@ namespace ChevalTests.DataStructureTests
                 new Intersection(0.4899f, shapeB),
                 new Intersection(0.9899f, shapeA)
             });
+            var integrator = new DefaultIntegrator();
             //Act
             var comps = new Computations(xs.List[2], ray, xs);
-            var colour = scene.RefractedColour(comps, 5);
+            var colour = integrator.RefractedColour(comps, 5, scene);
             var expected = new ChevalColour(0, 0.99887f, 0.04722f);
             //Assert
             Round(colour.Red, 5).Should().Be(expected.Red);

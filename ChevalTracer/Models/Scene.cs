@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
-using Cheval.DataStructure;
 using Cheval.Helper;
 using Cheval.Models.Shapes;
-using static System.MathF;
 using static Cheval.DataStructure.ChevalTuple;
 using static Cheval.Models.Light;
-using static Cheval.Templates.ColourTemplate;
 
 namespace Cheval.Models
 {
@@ -44,99 +41,6 @@ namespace Cheval.Models
                 Lights = lights
             };
             return defaultScene;
-        }
-
-        public ChevalColour ShadeHit(Computations comps, int remaining)
-        {
-
-            var lighting = new ChevalColour(0,0,0);
-            //Find Mat for object (parent-parent)
-            foreach (var light in Lights)
-            {
-                var inShadow = IsShadowed(comps.OverPoint, light);
-                
-                lighting += comps.Shape.Material.Lighting(comps.Shape, light, comps.OverPoint, comps.EyeV, comps.NormalV, inShadow);
-             
-            }
-            //Todo For each light?
-            var reflected = ReflectedColour(comps, remaining);
-            var refracted = RefractedColour(comps, remaining);
-
-            var material = comps.Shape.Material;
-            if (material.Reflective > 0 && material.Transparency > 0)
-            {
-                var reflectance = comps.Schlick();
-                return lighting + reflected * reflectance + refracted * (1 - reflectance);
-            }
-
-            return lighting + reflected + refracted;
-        }
-
-        public ChevalColour ColourAt(Ray ray, int remaining)
-        {
-            var colour = new ChevalColour(0,0,0);
-            var inters = new Intersections(ray.Intersect(this));
-            var hit = inters.Hit();
-            if (hit != null)
-            {
-                var comps = new Computations(hit,ray, inters);
-                colour = ShadeHit(comps, remaining);
-            }
-
-            return colour;
-
-        }
-
-        public bool IsShadowed(ChevalTuple point, Light light)
-        {
-            var v = light.Position - point;
-            var distance = Magnitude(v);
-            var direction = Normalize(v);
-            var ray = new Ray(point, direction);
-            var inters = new Intersections(ray.Intersect(this));
-            var hit = inters.Hit();
-            return hit != null && hit.T < distance && !hit.Object.NoShadow;
-        }
-
-        public ChevalColour ReflectedColour(Computations comps, int remaining)
-        {
-
-            if (remaining < 1 || Abs(comps.Shape.Material.Reflective) < Cheval.Epsilon)
-            {
-                return Black;
-            }
-
-            remaining--;
-
-            var reflectRay = new Ray(comps.OverPoint, comps.ReflectV);
-            var colour = ColourAt(reflectRay, remaining);
-            return colour * comps.Shape.Material.Reflective;
-        }
-
-        public ChevalColour RefractedColour(Computations comps, int remaining)
-        {
-            if (remaining < 1 || Abs(comps.Shape.Material.Transparency) < Cheval.Epsilon)
-            {
-                return Black;
-
-            }
-
-            var nRatio = comps.N1 / comps.N2;
-            var cosI = Dot(comps.EyeV, comps.NormalV);
-            var sin2T = Pow(nRatio, 2) * (1 - Pow(cosI, 2));
-
-            if (sin2T > 1)
-            {
-                return Black;
-            }
-
-            var cosT = Sqrt(1.0f - sin2T);
-            var direction = comps.NormalV * (nRatio * cosI - cosT) - comps.EyeV * nRatio;
-            var refractRay = new Ray(comps.UnderPoint, direction);
-            remaining--;
-            var resultColour = ColourAt(refractRay, remaining) * comps.Shape.Material.Transparency;
-
-            return resultColour;
         }
 
     }
