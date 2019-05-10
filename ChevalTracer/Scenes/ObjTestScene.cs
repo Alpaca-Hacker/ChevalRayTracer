@@ -105,13 +105,13 @@ namespace Cheval.Scenes
                 Material = wallMaterial
             };
 
-            var duckFile  = File.ReadAllText(@"ducky.obj");
+            var objFile  = File.ReadAllText(@"dragonegg.obj");
             var parser = new ObjService();
-            parser.ParseString(duckFile);
-            var ducky = parser.GetAllGroups;
+            parser.ParseString(objFile);
+            var obj = parser.GetAllGroups;
 
-           // ducky[0].Transform = //Translation(0, 1.2f, 0) *
-                                 //Scaling(.25f, .25f, .25f);
+            obj.Transform = //Translation(0, 1.2f, 0) *
+                                 Scaling(.25f, .25f, .25f);
 
             //foreach (var triangle in (Group)ducky[0])
             //{
@@ -145,7 +145,7 @@ namespace Cheval.Scenes
             };
 
             scene.Shapes.AddRange(room);
-            scene.Shapes.AddRange(ducky);
+            scene.Shapes.AddRange(obj);
 
             world.Scene = scene;
 

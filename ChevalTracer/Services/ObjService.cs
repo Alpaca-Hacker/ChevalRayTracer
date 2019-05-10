@@ -48,7 +48,8 @@ namespace Cheval.Services
 
             foreach (var line in lines)
             {
-                var args = line.Split(" ");
+                var cleanLine = Regex.Replace(line, @"\s+", " ");
+                var args = cleanLine.Split(" ");
 
                 switch (args[0])
                 {
